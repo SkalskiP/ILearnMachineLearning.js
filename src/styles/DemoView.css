@@ -2,4 +2,38 @@
     background-color: #424242;
     width: 100%;
     height: 100%;
+    padding: 20px 0;
+
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: stretch;
+    align-items: center;
+}
+
+.PrettyContainer {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.PrettyContainerHeader {
+    position: absolute;
+    /* width: 100px; */
+    padding: 0 10px;
+    left: 30px;
+    top: -5px;
+    font-size: 20px;
+    color: white;
+    background-color: #424242;
+    box-sizing: border-box
+}
+
+.PrettyFiller {
+    width: 100%;
+    height: 100%;
+    border: solid white 1px;
 }
