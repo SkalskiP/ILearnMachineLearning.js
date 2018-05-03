@@ -3,9 +3,8 @@
     padding: 10px;
     background-color: #212121;
     color: white;
-
     box-sizing: border-box;
-
+    user-select: none;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

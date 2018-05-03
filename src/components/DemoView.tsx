@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './../styles/DemoView.css';
+import { DrawingBoard } from './DrawingBoard';
 
 
 export class DemoView extends React.Component {
@@ -12,7 +13,9 @@ export class DemoView extends React.Component {
                     <div className="PrettyContainerHeader">
                         Draw
                     </div>
-                    <div className="PrettyFiller"/>
+                    <div className="PrettyFiller">
+                        <DrawingBoard/>
+                    </div>
                 </div>
                 <div className="PrettyContainer">
                     <div className="PrettyContainerHeader">
