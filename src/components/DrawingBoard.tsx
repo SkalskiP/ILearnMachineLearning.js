@@ -2,6 +2,7 @@ import * as React from 'react'
 import { IPoint } from '../interfaces/IPoint';
 import { DrawUtil } from '../utils/DrawUtil';
 import './../styles/DrawingBoard.css';
+import { SimpleButton } from './SimpleButton';
 
 
 export class DrawingBoard extends React.Component {
@@ -36,6 +37,10 @@ export class DrawingBoard extends React.Component {
             DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition);
     }
 
+    protected clearCanvas = () => {
+        DrawUtil.clearCanvas(this.canvas);
+    }
+
     protected updateMousePosition (mousePosition:IPoint) {
         const boardRect = this.canvas.getBoundingClientRect();
         this.mousePosition.x = mousePosition.x - boardRect.left;
@@ -63,11 +68,15 @@ export class DrawingBoard extends React.Component {
 
     public render() {
         return(
-            <div className="DrawingBoard" ref = {ref => this.drawingBoardBox = ref}>
-                <canvas className="Board" ref = {ref => this.canvas = ref} 
+            <div className={"DrawingBoard"} ref = {ref => this.drawingBoardBox = ref}>
+                <canvas className={"Board"} ref = {ref => this.canvas = ref} 
                     onMouseMove={this.onMouseMove} 
                     onMouseDown={this.startDrawing}
                 />
+                <div className={"ButtonsRow"}>
+                    <SimpleButton name={"Predict"} width={100} height={50} onClick={this.clearCanvas}/>
+                    <SimpleButton name={"Clear"} width={100} height={50} onClick={this.clearCanvas}/>
+                </div>
             </div>
         );
     }

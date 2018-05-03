@@ -1,0 +1,20 @@
+.SimpleButton {
+    transition: background-color 0.7s ease;
+    background-color: #212121;
+    color: white;
+    margin: 10px 10px 10px 10px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: space-around;
+    align-items: center;
+    user-select: none;
+}
+
+.SimpleButton:hover {
+    background-color: white;
+    color: #212121;
+    cursor: pointer;
+}

@@ -4,7 +4,8 @@
     "curly": false,
     "member-ordering": false,
     "no-console": false,
-    "prefer-const": false
+    "prefer-const": false,
+    "object-literal-sort-keys": false
   },
   "linterOptions": {
     "exclude": [

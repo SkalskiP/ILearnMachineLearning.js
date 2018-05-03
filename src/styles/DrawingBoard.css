@@ -11,4 +11,14 @@
 
 .Board {
     background-color: white;
+    margin-bottom: 10px;
+}
+
+.ButtonsRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-around;
+    align-items: center;
 }
