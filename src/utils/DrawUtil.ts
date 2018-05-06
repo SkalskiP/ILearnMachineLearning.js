@@ -2,7 +2,7 @@ import { IPoint } from '../interfaces/IPoint';
 
 export class DrawUtil {
 
-    public static drawLine(canvas:HTMLCanvasElement, startPoint:IPoint, endPoint:IPoint, color:string = "#000", thickness:number = 30): void {
+    public static drawLine(canvas:HTMLCanvasElement, startPoint:IPoint, endPoint:IPoint, color:string = "#111111", thickness:number = 25): void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
         ctx.strokeStyle = color;
         ctx.lineWidth = thickness;
@@ -25,5 +25,9 @@ export class DrawUtil {
         let scaledCtx:CanvasRenderingContext2D = scaled.getContext('2d');
         scaledCtx.drawImage(canvas, 0, 0, 28, 28);
         return scaledCtx.getImageData(0, 0, 28, 28);
+
+        // let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+        // const scaled = ctx.drawImage(canvas, 0, 0, 28, 28);
+        // return ctx.getImageData(0, 0, 28, 28);
     }
 }

@@ -40,7 +40,7 @@ export class DrawingBoard extends React.Component {
     protected onMouseMove = (event) => {
         this.updateMousePosition({x: event.clientX, y: event.clientY});
         if(this.isDrawing)
-            DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition);
+            DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, "#111111");
     }
 
     protected clearCanvas = () => {
