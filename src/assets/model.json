@@ -155,7 +155,7 @@
   },
   "weightsManifest": [
     {
-      "paths": ["https://github.com/SkalskiP//SkalskiP/ILearnMachineLearning.js/blob/master/src/assets/group1-shard1of1?raw=true"],
+      "paths": ["https://github.com/SkalskiP/ILearnMachineLearning.js/blob/master/src/assets/group1-shard1of1?raw=true"],
       "weights": [
         {
           "dtype": "float32",
