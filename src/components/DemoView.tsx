@@ -1,6 +1,8 @@
 import * as React from 'react';
 import './../styles/DemoView.css';
+import { BarChart } from './BarChart';
 import { DrawingBoard } from './DrawingBoard';
+
 
 
 export class DemoView extends React.Component {
@@ -21,7 +23,9 @@ export class DemoView extends React.Component {
                     <div className="PrettyContainerHeader">
                         Predictions
                     </div>
-                    <div className="PrettyFiller"/>
+                    <div className="PrettyFiller">
+                        <BarChart/>
+                    </div>
                 </div>
             </div>
         );

@@ -1,12 +1,10 @@
 import * as tf from '@tensorflow/tfjs';
 import * as React from 'react'
-import { IPoint } from '../interfaces/IPoint';
+import { IPoint } from '../store/mnist/types';
 import { DrawUtil } from '../utils/DrawUtil';
 import { MLUtil } from '../utils/MLUtil';
 import './../styles/DrawingBoard.css';
 import { SimpleButton } from './SimpleButton';
-
-
 
 export class DrawingBoard extends React.Component {
 
@@ -14,8 +12,8 @@ export class DrawingBoard extends React.Component {
     protected canvas:HTMLCanvasElement;
     protected mousePosition:IPoint = {x: 0, y: 0}
     protected isDrawing:boolean = false;
-    protected model: tf.Model;
-    protected predictions: any;
+    protected model:tf.Model;
+    protected predictions:number[];
 
     public componentDidMount() {
         this.setUpBoard();
@@ -67,14 +65,12 @@ export class DrawingBoard extends React.Component {
 
         const pred = await tf.tidy(() => {
     
-          // Convert the canvas pixels to 
           let img:any = tf.fromPixels(imageData, 1);
           img = img.reshape([1, 28, 28, 1]);
           img = tf.cast(img, 'float32');
-          // Make and format the predications
+
           const output = this.model.predict(img) as any;
     
-          // Save predictions on the component
           this.predictions = Array.from(output.dataSync());
         });
     }

@@ -1,4 +1,4 @@
-import { IPoint } from '../interfaces/IPoint';
+import { IPoint } from "../store/mnist/types";
 
 export class DrawUtil {
 

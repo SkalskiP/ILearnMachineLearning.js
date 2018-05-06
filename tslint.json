@@ -5,7 +5,8 @@
     "member-ordering": false,
     "no-console": false,
     "prefer-const": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "interface-name": [false, "always-prefix"]
   },
   "linterOptions": {
     "exclude": [
