@@ -1,8 +1,11 @@
+import * as tf from '@tensorflow/tfjs';
 import * as React from 'react'
 import { IPoint } from '../interfaces/IPoint';
 import { DrawUtil } from '../utils/DrawUtil';
+import { MLUtil } from '../utils/MLUtil';
 import './../styles/DrawingBoard.css';
 import { SimpleButton } from './SimpleButton';
+
 
 
 export class DrawingBoard extends React.Component {
@@ -11,9 +14,12 @@ export class DrawingBoard extends React.Component {
     protected canvas:HTMLCanvasElement;
     protected mousePosition:IPoint = {x: 0, y: 0}
     protected isDrawing:boolean = false;
+    protected model: tf.Model;
+    protected predictions: any;
 
     public componentDidMount() {
         this.setUpBoard();
+        this.loadModel();
         window.addEventListener("resize", this.setUpBoard);
     }
 
@@ -41,10 +47,36 @@ export class DrawingBoard extends React.Component {
         DrawUtil.clearCanvas(this.canvas);
     }
 
+    protected makePrediction = () => {
+        let image = DrawUtil.getImgData(this.canvas);        
+        this.predict(image);
+        console.log(this.predictions);
+    }
+
     protected updateMousePosition (mousePosition:IPoint) {
         const boardRect = this.canvas.getBoundingClientRect();
         this.mousePosition.x = mousePosition.x - boardRect.left;
         this.mousePosition.y = mousePosition.y - boardRect.top;
+    }
+
+    protected async loadModel() {
+        this.model = await tf.loadModel('https://raw.githubusercontent.com/AngularFirebase/97-tensorflowjs-quick-start/master/src/assets/model.json');
+    }
+
+    protected async predict(imageData: ImageData) {
+
+        const pred = await tf.tidy(() => {
+    
+          // Convert the canvas pixels to 
+          let img:any = tf.fromPixels(imageData, 1);
+          img = img.reshape([1, 28, 28, 1]);
+          img = tf.cast(img, 'float32');
+          // Make and format the predications
+          const output = this.model.predict(img) as any;
+    
+          // Save predictions on the component
+          this.predictions = Array.from(output.dataSync());
+        });
     }
 
     protected setUpBoard = () => {
@@ -74,11 +106,10 @@ export class DrawingBoard extends React.Component {
                     onMouseDown={this.startDrawing}
                 />
                 <div className={"ButtonsRow"}>
-                    <SimpleButton name={"Predict"} width={100} height={50} onClick={this.clearCanvas}/>
+                    <SimpleButton name={"Predict"} width={100} height={50} onClick={this.makePrediction}/>
                     <SimpleButton name={"Clear"} width={100} height={50} onClick={this.clearCanvas}/>
                 </div>
             </div>
         );
     }
-
 } 
