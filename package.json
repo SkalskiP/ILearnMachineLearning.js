@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "@tensorflow/tfjs": "^0.10.3",
+    "@types/react-redux": "^5.0.19",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-redux": "^5.0.7",
     "react-scripts-ts": "2.15.1",
     "redux": "3.7.2"
   },

@@ -3,6 +3,7 @@
   "rules": {
     "curly": false,
     "member-ordering": false,
+    "ordered-imports": false,
     "no-console": false,
     "prefer-const": false,
     "object-literal-sort-keys": false,

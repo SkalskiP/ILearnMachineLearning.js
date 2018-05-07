@@ -5,8 +5,18 @@ import { DrawUtil } from '../utils/DrawUtil';
 import { MLUtil } from '../utils/MLUtil';
 import './../styles/DrawingBoard.css';
 import { SimpleButton } from './SimpleButton';
+import { Dispatch, connect } from 'react-redux';
+import { ApplicationState } from '../store/index';
+import { updateModelPredictions } from '../store/mnist/actions';
 
-export class DrawingBoard extends React.Component {
+interface Props {
+    onNewPrediction: (predictions:number[]) => any;
+}
+
+class DrawingBoardComponent extends React.Component<Props, {}> {
+    constructor(props: any) {
+        super(props);
+    }
 
     protected drawingBoardBox:HTMLDivElement;
     protected canvas:HTMLCanvasElement;
@@ -48,7 +58,7 @@ export class DrawingBoard extends React.Component {
     protected makePrediction = () => {
         let image = DrawUtil.getImgData(this.canvas);        
         this.predict(image);
-        console.log(this.predictions);
+        this.props.onNewPrediction(this.predictions);
     }
 
     protected updateMousePosition (mousePosition:IPoint) {
@@ -108,4 +118,16 @@ export class DrawingBoard extends React.Component {
             </div>
         );
     }
-} 
+}
+
+const mapStateToProps = (state: ApplicationState) => ({
+    predictions: state.predictions.predictionValues
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<ApplicationState>) => ({
+    onNewPrediction: (predictions:number[]) => dispatch(updateModelPredictions(predictions))
+});
+
+export const DrawingBoard = connect(mapStateToProps, mapDispatchToProps)(
+    DrawingBoardComponent
+);

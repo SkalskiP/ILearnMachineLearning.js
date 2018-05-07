@@ -8,5 +8,5 @@ export interface ApplicationState {
 }
 
 export const reducers: Reducer<ApplicationState> = combineReducers<ApplicationState>({
-    mnist: mnistReducer
+    predictions: mnistReducer
 });

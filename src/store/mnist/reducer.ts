@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 import { MnistActions, MnistState } from './types';
 
 export const initialState: MnistState = {
-    predictions: []
+    predictionValues: []
 };
 
 export const mnistReducer: Reducer<MnistState> = (
@@ -12,7 +12,7 @@ export const mnistReducer: Reducer<MnistState> = (
   
     switch ((action as MnistActions).type) {
       case '@@mnist/PREDICTIONS_LIST_UPDATED':
-        return { ...state, predictions: action.payload.predictions };
+        return { ...state, predictionValues: action.payload.predictions };
       default:
         return state;
     }

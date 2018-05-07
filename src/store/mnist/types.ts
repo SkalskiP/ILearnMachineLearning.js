@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 
 export interface MnistState {
-    predictions:number[]
+    predictionValues:number[]
 }
 
 export interface IModelPredictions {
