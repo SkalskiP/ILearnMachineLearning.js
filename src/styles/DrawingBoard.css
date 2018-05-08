@@ -9,12 +9,12 @@
     align-items: center;
 }
 
-.Board {
+.DrawingBoard > .Board {
     background-color: white;
     margin-bottom: 10px;
 }
 
-.ButtonsRow {
+.DrawingBoard > .ButtonsRow {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

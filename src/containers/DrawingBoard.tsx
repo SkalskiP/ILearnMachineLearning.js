@@ -3,11 +3,11 @@ import * as React from 'react'
 import { IPoint } from '../store/mnist/types';
 import { DrawUtil } from '../utils/DrawUtil';
 import { MLUtil } from '../utils/MLUtil';
-import './../styles/DrawingBoard.css';
-import { SimpleButton } from './SimpleButton';
+import './../styles/DrawingBoard.css'; 
 import { Dispatch, connect } from 'react-redux';
 import { ApplicationState } from '../store/index';
 import { updateModelPredictions } from '../store/mnist/actions';
+import { SimpleButton } from '../components/SimpleButton';
 
 interface Props {
     onNewPrediction: (predictions:number[]) => any;
@@ -26,21 +26,21 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     protected predictions:number[];
 
     public componentDidMount() {
-        this.setUpBoard();
+        this.setUpCanvas();
         this.loadModel();
-        window.addEventListener("resize", this.setUpBoard);
+        window.addEventListener("resize", this.setUpCanvas);
     }
 
     public componentWillUnmount() {
-        window.addEventListener("resize", this.setUpBoard);
+        window.addEventListener("resize", this.setUpCanvas);
     }
 
-    protected startDrawing = (event) => {
+    protected startDrawing = () => {
         this.isDrawing = true;
         window.addEventListener("mouseup", this.endDrawing);
     }
 
-    protected endDrawing = (event) => {
+    protected endDrawing = () => {
         this.isDrawing = false;
         window.removeEventListener("mouseup", this.endDrawing);
     }
@@ -85,7 +85,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
         });
     }
 
-    protected setUpBoard = () => {
+    protected setUpCanvas = () => {
         const maxDim:number = 400;
         const drawingBoardBoxRect = this.drawingBoardBox.getBoundingClientRect();
 

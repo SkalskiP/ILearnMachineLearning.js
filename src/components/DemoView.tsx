@@ -1,33 +1,38 @@
 import * as React from 'react';
 import './../styles/DemoView.css';
-import { BarChart } from './BarChart';
-import { DrawingBoard } from './DrawingBoard';
+import { DrawingBoard } from '../containers/DrawingBoard';
+import { CircleChart } from '../containers/CircleChart';
 
+export const DemoView = () => {
 
+    let prettyContainerLeft:React.CSSProperties = {
+        width: "30%",
+        height: "100%"
+    }
 
-export class DemoView extends React.Component {
+    let prettyContainerRight:React.CSSProperties = {
+        width: "70%",
+        height: "100%"
+    }
 
-    public render() {
-
-        return(
-            <div className="DemoView">
-                <div className="PrettyContainer">
-                    <div className="PrettyContainerHeader">
-                        Draw
-                    </div>
-                    <div className="PrettyFiller">
-                        <DrawingBoard/>
-                    </div>
+    return(
+        <div className="DemoView">
+            <div className="PrettyContainer" style={prettyContainerLeft}>
+                <div className="PrettyContainerHeader">
+                    Draw
                 </div>
-                <div className="PrettyContainer">
-                    <div className="PrettyContainerHeader">
-                        Predictions
-                    </div>
-                    <div className="PrettyFiller">
-                        <BarChart/>
-                    </div>
+                <div className="PrettyFiller">
+                    <DrawingBoard/>
                 </div>
             </div>
-        );
-    }
+            <div className="PrettyContainer" style={prettyContainerRight}>
+                <div className="PrettyContainerHeader">
+                    Predictions
+                </div>
+                <div className="PrettyFiller">
+                    <CircleChart/>
+                </div>
+            </div>
+        </div>
+    );
 }
