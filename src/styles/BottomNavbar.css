@@ -1,4 +1,4 @@
-.HorizontalNavbar {
+.BottomNavbar {
     width: 100%;
     padding: 10px;
     background-color: #212121;
@@ -8,17 +8,11 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-content: stretch;
+    justify-content: center;
+    align-content: space-around;
     align-items: center;
 }
 
-.MainHeader {
-    font-size: 25px;
-    margin: 0 10px;
-}
-
-.AdditionalHeader {
-    font-size: 15px;
-    margin: 0 25px;
+.BottomNavbar > .GitHubLogo > img {
+    max-height: 30px;
 }

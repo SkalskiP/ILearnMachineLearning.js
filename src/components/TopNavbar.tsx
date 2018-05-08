@@ -1,10 +1,10 @@
 import * as React from 'react';
-import './../styles/HorizontalNavbar.css';
+import './../styles/TopNavbar.css';
 
-export const HorizontalNavbar = () => {
+export const TopNavbar = () => {
     
     return(
-        <div className="HorizontalNavbar">
+        <div className="TopNavbar">
             <div className="MainHeader">
                 ILearnMachineLearning.js
             </div>

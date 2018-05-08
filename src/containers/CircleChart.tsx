@@ -9,11 +9,16 @@ interface Props {
 }
 
 class CircleChartComponent extends React.Component<Props, {}> {
+    
+    protected chart:HTMLDivElement;
+    protected canvas:HTMLCanvasElement;
+    
     constructor(props: any) {
         super(props);
     }
 
     public componentDidMount() {
+        this.setUpCanvas();
         console.log('BAR CHART MOUNTED');
         console.log(this.props.predictions);
     }
@@ -23,11 +28,28 @@ class CircleChartComponent extends React.Component<Props, {}> {
         console.log(this.props.predictions);
     }
 
-    public render() {
-        console.log('TEST');
+    protected setUpCanvas = () => {
+        const chartRect = this.chart.getBoundingClientRect();
+
+        console.log(chartRect);
         
+
+        if (chartRect.width >= chartRect.height) {
+            this.canvas.width = chartRect.height;
+            this.canvas.height = chartRect.height;
+        }
+        else {
+            this.canvas.width = chartRect.width;
+            this.canvas.height = chartRect.width;
+        }
+        
+    }
+
+    public render() {
         return(
-            <div className="CircleChart"/>
+            <div className="CircleChart" ref = {ref => this.chart = ref}>
+                <canvas className={"ChartCanvas"} ref = {ref => this.canvas = ref}/>
+            </div>
         )
     }
 }
