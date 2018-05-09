@@ -1,9 +1,9 @@
 .SimpleButton {
     transition: background-color 0.7s ease;
     background-color: #212121;
-    /* background-color: #ef6c00; */
     color: white;
     margin: 10px 10px 10px 10px;
+    font-size: 20px;
 
     display: flex;
     flex-direction: row;

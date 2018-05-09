@@ -1,18 +1,18 @@
 import * as React from 'react';
 import './../styles/SimpleButton.css';
+import { ISize } from '../interfaces/ISize';
 
 interface IProps {
     name:string,
-    width:number,
-    height:number,
+    size:ISize
     onClick:() => void
 }
 
 export const SimpleButton = (props:IProps) => {
 
     let simpleButtonStyle:React.CSSProperties = {
-        width: props.width,
-        height: props.height
+        width: props.size.width,
+        height: props.size.height
     }
 
     return(

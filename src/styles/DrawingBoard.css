@@ -9,15 +9,33 @@
     align-items: center;
 }
 
-.DrawingBoard > .Board {
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    border-width: 4px;  
-    border-style: dashed;
-    border-color: white;
+.BoardWrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+    transition:0s 180s;
+    font-size: 30px;
+    color: white;
 }
 
-.DrawingBoard > .ButtonsRow {
+.BoardWrapper:hover {
+    color: transparent;
+    transition:0.3s;
+}
+
+.DrawingBoard .Board {
+    box-sizing: border-box;
+    border-width: 3px;  
+    border-style: dashed;
+    border-color: white;
+    position: absolute;
+}
+
+.DrawingBoard .ButtonsRow {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

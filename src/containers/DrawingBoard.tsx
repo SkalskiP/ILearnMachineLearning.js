@@ -18,6 +18,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     }
 
     protected drawingBoardBox:HTMLDivElement;
+    protected boardWrapper:HTMLDivElement;
     protected canvas:HTMLCanvasElement;
     protected mousePosition:IPoint = {x: 0, y: 0}
     protected isDrawing:boolean = false;
@@ -47,7 +48,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     protected onMouseMove = (event) => {
         this.updateMousePosition({x: event.clientX, y: event.clientY});
         if(this.isDrawing)
-            DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, "#fff");
+            DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, "#fff", 35);
     }
 
     protected clearCanvas = () => {
@@ -85,7 +86,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     }
 
     protected setUpCanvas = () => {
-        const maxDim:number = 400;
+        const maxDim:number = 500;
         const drawingBoardBoxRect = this.drawingBoardBox.getBoundingClientRect();
 
         if(drawingBoardBoxRect.width >= maxDim && drawingBoardBoxRect.height >= maxDim) {
@@ -100,19 +101,26 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
             this.canvas.width = drawingBoardBoxRect.width;
             this.canvas.height = drawingBoardBoxRect.width;
         }
-        
+
+        this.boardWrapper.style.width = this.canvas.width + "px";
+        this.boardWrapper.style.height = this.canvas.height + "px";
     }
 
     public render() {
         return(
             <div className={"DrawingBoard"} ref = {ref => this.drawingBoardBox = ref}>
-                <canvas className={"Board"} ref = {ref => this.canvas = ref} 
-                    onMouseMove={this.onMouseMove} 
-                    onMouseDown={this.startDrawing}
-                />
+                <div className={"BoardWrapper"} ref = {ref => this.boardWrapper = ref}>
+                    <canvas className={"Board"} ref = {ref => this.canvas = ref} 
+                        onMouseMove={this.onMouseMove} 
+                        onMouseDown={this.startDrawing}
+                    />
+                    <div className={"BoardText"}>
+                        DRAW HERE
+                    </div>
+                </div>
                 <div className={"ButtonsRow"}>
-                    <SimpleButton name={"Predict"} width={100} height={50} onClick={this.makePrediction}/>
-                    <SimpleButton name={"Clear"} width={100} height={50} onClick={this.clearCanvas}/>
+                    <SimpleButton name={"Predict"} size={{width:150, height:60}} onClick={this.makePrediction}/>
+                    <SimpleButton name={"Clear"} size={{width:150, height:60}} onClick={this.clearCanvas}/>
                 </div>
             </div>
         );

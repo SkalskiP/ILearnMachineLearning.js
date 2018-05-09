@@ -33,14 +33,14 @@ class CircleChartComponent extends React.Component<Props, {}> {
     protected drawChart() {
         let chartCenter:Point = this.canvasRect.getCenterPoint();
         let maxCircleRadious:number = 0.9 * this.canvas.height/2;
-        // let
+        let minCircleRadious:number = 0.3 * this.canvas.height/2;
         let startAngle:number = - 90;
 
         DrawUtil.clearCanvas(this.canvas);
 
         this.props.predictions.forEach((value:number, index:number) => {
 
-            let currentCircleRadious:number = maxCircleRadious * (index + 1)/this.props.predictions.length;
+            let currentCircleRadious:number = minCircleRadious + (maxCircleRadious - minCircleRadious) * (index + 1)/this.props.predictions.length;
             let currentCircleAngle:number = 320 * value;
             DrawUtil.drawCircle(this.canvas, chartCenter, currentCircleRadious, 0, 360, "rgba(255,255,255,0.05)", 15);
         });
