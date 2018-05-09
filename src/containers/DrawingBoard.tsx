@@ -51,8 +51,9 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
             DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, "#fff", 35);
     }
 
-    protected clearCanvas = () => {
+    protected clearPrediction = () => {
         DrawUtil.clearCanvas(this.canvas);
+        this.props.onNewPrediction([]);
     }
 
     protected makePrediction = () => {
@@ -115,12 +116,12 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
                         onMouseDown={this.startDrawing}
                     />
                     <div className={"BoardText"}>
-                        DRAW HERE
+                        <b>DRAW HERE</b>
                     </div>
                 </div>
                 <div className={"ButtonsRow"}>
                     <SimpleButton name={"Predict"} size={{width:150, height:60}} onClick={this.makePrediction}/>
-                    <SimpleButton name={"Clear"} size={{width:150, height:60}} onClick={this.clearCanvas}/>
+                    <SimpleButton name={"Clear"} size={{width:150, height:60}} onClick={this.clearPrediction}/>
                 </div>
             </div>
         );

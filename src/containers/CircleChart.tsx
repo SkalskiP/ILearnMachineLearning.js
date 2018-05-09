@@ -16,6 +16,16 @@ class CircleChartComponent extends React.Component<Props, {}> {
     protected chart:HTMLDivElement;
     protected canvas:HTMLCanvasElement;
     protected canvasRect:Rect;
+    protected circlePaths:number[];
+
+    // Settings
+    protected startAngle:number = -90;
+    protected maxAngle:number = 360;
+    protected numberOfClasses:number = 10;
+    protected baseCircleThickness:number = 15;
+    protected inactiveCircleColor:string = "rgba(255,255,255,0.05)";
+    protected activeCircleColor:string = "#fff"
+    protected bestCircleColor:string = "#ef6c00"
     
     constructor(props: any) {
         super(props);
@@ -23,27 +33,48 @@ class CircleChartComponent extends React.Component<Props, {}> {
 
     public componentDidMount() {
         this.setUpCanvas();
+        this.initCirclePaths();
+        this.initChart();
     }
 
     public componentDidUpdate() {
-        console.log(this.props.predictions);
+        this.initChart();
         this.drawChart();
+    }
+
+    protected initChart() {
+        DrawUtil.clearCanvas(this.canvas);
+        let chartCenter:Point = this.canvasRect.getCenterPoint();
+        this.circlePaths.forEach((radious:number) => {
+            DrawUtil.drawCircle(this.canvas, chartCenter, radious, 0, 360, this.inactiveCircleColor, this.baseCircleThickness);
+        });
+    }
+
+    protected initCirclePaths():void {
+        let maxCircleRadious:number = 0.9 * this.canvas.height/2;
+        let minCircleRadious:number = 0.3 * this.canvas.height/2;
+        let newCirclePaths:number[] = [];
+
+        for(let i = 1; i <= this.numberOfClasses; i++) {
+            newCirclePaths.push(minCircleRadious + (maxCircleRadious - minCircleRadious) * i/this.numberOfClasses);
+        }
+
+        this.circlePaths = newCirclePaths;
     }
 
     protected drawChart() {
         let chartCenter:Point = this.canvasRect.getCenterPoint();
-        let maxCircleRadious:number = 0.9 * this.canvas.height/2;
-        let minCircleRadious:number = 0.3 * this.canvas.height/2;
-        let startAngle:number = - 90;
-
-        DrawUtil.clearCanvas(this.canvas);
+        let predictions = this.props.predictions;
+        let indexOfMax = predictions.indexOf(Math.max(...predictions));
 
         this.props.predictions.forEach((value:number, index:number) => {
-
-            let currentCircleRadious:number = minCircleRadious + (maxCircleRadious - minCircleRadious) * (index + 1)/this.props.predictions.length;
-            let currentCircleAngle:number = 320 * value;
-            DrawUtil.drawCircle(this.canvas, chartCenter, currentCircleRadious, 0, 360, "rgba(255,255,255,0.05)", 15);
+            let endAngle:number = this.maxAngle * value + this.startAngle;
+            let color = index === indexOfMax ? this.bestCircleColor : this.activeCircleColor;
+            DrawUtil.drawCircle(this.canvas, chartCenter, this.circlePaths[index], this.startAngle, endAngle, color, this.baseCircleThickness);
         });
+
+        if(predictions.length > 0)
+            DrawUtil.drawText(this.canvas, "" + indexOfMax, 120, chartCenter, this.bestCircleColor);
     }
 
     protected setUpCanvas = () => {

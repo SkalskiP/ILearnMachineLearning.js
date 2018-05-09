@@ -9,10 +9,10 @@ export const TopNavbar = () => {
         <div className="TopNavbar">
             <div className="NavbarGroup">
                 <div className="MainHeader">
-                    ILearnMachineLearning.js
+                    <b>ILearnMachineLearning.js</b>
                 </div>
                 <div className="AdditionalHeader">
-                    Demo Project
+                    MNIST Project
                 </div>
             </div>
             <div className="NavbarGroup">
