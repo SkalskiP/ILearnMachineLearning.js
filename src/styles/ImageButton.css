@@ -1,0 +1,16 @@
+.ImageButton {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-sizing: border-box;
+    transition: background-color 0.7s ease;
+    margin: 5px;
+}
+
+.ImageButton:hover {
+    background-color: rgba(200, 200, 200, 0.1);
+}

@@ -3,6 +3,9 @@ import { Dispatch, connect } from 'react-redux';
 import { ApplicationState } from '../store/index';
 import './../styles/CircleChart.css';
 import { updateModelPredictions } from '../store/mnist/actions';
+import { Point } from '../utils/geometry/Point';
+import { Rect } from '../utils/geometry/Rect';
+import { DrawUtil } from '../utils/DrawUtil';
 
 interface Props {
     predictions:number[];
@@ -12,6 +15,7 @@ class CircleChartComponent extends React.Component<Props, {}> {
     
     protected chart:HTMLDivElement;
     protected canvas:HTMLCanvasElement;
+    protected canvasRect:Rect;
     
     constructor(props: any) {
         super(props);
@@ -19,20 +23,31 @@ class CircleChartComponent extends React.Component<Props, {}> {
 
     public componentDidMount() {
         this.setUpCanvas();
-        console.log('BAR CHART MOUNTED');
-        console.log(this.props.predictions);
     }
 
     public componentDidUpdate() {
-        console.log('BAR CHART UPDATED');
         console.log(this.props.predictions);
+        this.drawChart();
+    }
+
+    protected drawChart() {
+        let chartCenter:Point = this.canvasRect.getCenterPoint();
+        let maxCircleRadious:number = 0.9 * this.canvas.height/2;
+        // let
+        let startAngle:number = - 90;
+
+        DrawUtil.clearCanvas(this.canvas);
+
+        this.props.predictions.forEach((value:number, index:number) => {
+
+            let currentCircleRadious:number = maxCircleRadious * (index + 1)/this.props.predictions.length;
+            let currentCircleAngle:number = 320 * value;
+            DrawUtil.drawCircle(this.canvas, chartCenter, currentCircleRadious, 0, 360, "rgba(255,255,255,0.05)", 15);
+        });
     }
 
     protected setUpCanvas = () => {
         const chartRect = this.chart.getBoundingClientRect();
-
-        console.log(chartRect);
-        
 
         if (chartRect.width >= chartRect.height) {
             this.canvas.width = chartRect.height;
@@ -42,7 +57,8 @@ class CircleChartComponent extends React.Component<Props, {}> {
             this.canvas.width = chartRect.width;
             this.canvas.height = chartRect.width;
         }
-        
+
+        this.canvasRect = new Rect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     public render() {

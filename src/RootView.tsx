@@ -2,7 +2,6 @@ import * as React from 'react';
 import { DemoView } from './components/DemoView';
 import { TopNavbar } from './components/TopNavbar';
 import './RootView.css';
-import { BottomNavbar } from './components/BottomNavbar';
 
 export class RootView extends React.Component {
 
@@ -11,7 +10,6 @@ export class RootView extends React.Component {
         <div className="RootView">
             <TopNavbar/>
             <DemoView/>
-            <BottomNavbar/>
         </div>
         );
     }

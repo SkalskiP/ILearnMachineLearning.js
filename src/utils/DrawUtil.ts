@@ -1,9 +1,17 @@
-import { IPoint } from "../store/mnist/types";
+import { IPoint } from '../interfaces/IPoint';
+import { ISize } from '../interfaces/ISize';
+import { UnitUtil } from './UnitUtil';
 
 export class DrawUtil {
 
+    public static clearCanvas(canvas:HTMLCanvasElement): void {
+        let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
     public static drawLine(canvas:HTMLCanvasElement, startPoint:IPoint, endPoint:IPoint, color:string = "#111111", thickness:number = 25): void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+
         ctx.strokeStyle = color;
         ctx.lineWidth = thickness;
         ctx.lineCap = 'round';
@@ -13,21 +21,26 @@ export class DrawUtil {
         ctx.stroke();
     }
 
-    public static clearCanvas(canvas:HTMLCanvasElement): void {
+    public static drawCircle(canvas:HTMLCanvasElement, anchorPoint:IPoint, radius:number, startAngleDeg:number, endAngleDeg:number, color:string = "#ffffff", thickness:number = 20): void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let startAngleRad = UnitUtil.deg2rad(startAngleDeg);
+        let endAngleRad = UnitUtil.deg2rad(endAngleDeg);
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = thickness;
+        ctx.beginPath();
+        ctx.arc(anchorPoint.x, anchorPoint.y, radius, startAngleRad, endAngleRad, false);
+        ctx.stroke();
     }
 
-    public static getImgData(canvas): ImageData {
-        let scaled:HTMLCanvasElement = document.createElement("canvas");
-        scaled.width = 28;
-        scaled.height = 28;
-        let scaledCtx:CanvasRenderingContext2D = scaled.getContext('2d');
-        scaledCtx.drawImage(canvas, 0, 0, 28, 28);
-        return scaledCtx.getImageData(0, 0, 28, 28);
+    
 
-        // let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
-        // const scaled = ctx.drawImage(canvas, 0, 0, 28, 28);
-        // return ctx.getImageData(0, 0, 28, 28);
+    public static getImageDataAndScale(canvas:HTMLCanvasElement, outputSize:ISize): ImageData {
+        let scaled:HTMLCanvasElement = document.createElement("canvas");
+        let scaledCtx:CanvasRenderingContext2D = scaled.getContext('2d');
+        scaled.width = outputSize.width;
+        scaled.height = outputSize.height;
+        scaledCtx.drawImage(canvas, 0, 0, outputSize.width, outputSize.height);
+        return scaledCtx.getImageData(0, 0, outputSize.width, outputSize.height);
     }
 }

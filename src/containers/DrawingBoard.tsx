@@ -1,13 +1,12 @@
 import * as tf from '@tensorflow/tfjs';
 import * as React from 'react'
-import { IPoint } from '../store/mnist/types';
 import { DrawUtil } from '../utils/DrawUtil';
-import { MLUtil } from '../utils/MLUtil';
 import './../styles/DrawingBoard.css'; 
 import { Dispatch, connect } from 'react-redux';
 import { ApplicationState } from '../store/index';
 import { updateModelPredictions } from '../store/mnist/actions';
 import { SimpleButton } from '../components/SimpleButton';
+import { IPoint } from '../interfaces/IPoint';
 
 interface Props {
     onNewPrediction: (predictions:number[]) => any;
@@ -48,7 +47,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     protected onMouseMove = (event) => {
         this.updateMousePosition({x: event.clientX, y: event.clientY});
         if(this.isDrawing)
-            DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, "#111111");
+            DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, "#fff");
     }
 
     protected clearCanvas = () => {
@@ -56,7 +55,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     }
 
     protected makePrediction = () => {
-        let image = DrawUtil.getImgData(this.canvas);        
+        let image = DrawUtil.getImageDataAndScale(this.canvas, {width: 28, height: 28});        
         this.predict(image);
         this.props.onNewPrediction(this.predictions);
     }
@@ -68,7 +67,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     }
 
     protected async loadModel() {
-        this.model = await tf.loadModel('https://raw.githubusercontent.com/AngularFirebase/97-tensorflowjs-quick-start/master/src/assets/model.json');
+        this.model = await tf.loadModel('https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/src/assets/models/mnist/model.json');
     }
 
     protected async predict(imageData: ImageData) {

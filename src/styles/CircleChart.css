@@ -8,7 +8,3 @@
     align-content: space-around;
     align-items: center;
 }
-
-.CircleChart > canvas {
-    background-color: red;
-}

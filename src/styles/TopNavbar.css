@@ -8,17 +8,26 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+}
+
+.NavbarGroup {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: flex-start;
     align-content: stretch;
     align-items: center;
 }
 
-.TopNavbar > .MainHeader {
+.NavbarGroup > .MainHeader {
     font-size: 30px;
     margin: 0 10px;
 }
 
-.TopNavbar > .AdditionalHeader {
+.NavbarGroup > .AdditionalHeader {
     font-size: 20px;
     margin: 0 25px;
 }
