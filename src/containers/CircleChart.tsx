@@ -51,8 +51,9 @@ class CircleChartComponent extends React.Component<Props, {}> {
     }
 
     protected initCirclePaths():void {
-        let maxCircleRadious:number = 0.9 * this.canvas.height/2;
-        let minCircleRadious:number = 0.3 * this.canvas.height/2;
+        let minDimention:number = Math.min(this.canvas.height, this.canvas.width)
+        let maxCircleRadious:number = 0.9 * minDimention/2;
+        let minCircleRadious:number = 0.3 * minDimention/2;
         let newCirclePaths:number[] = [];
 
         for(let i = 1; i <= this.numberOfClasses; i++) {
@@ -67,27 +68,22 @@ class CircleChartComponent extends React.Component<Props, {}> {
         let predictions = this.props.predictions;
         let indexOfMax = predictions.indexOf(Math.max(...predictions));
 
+        if(predictions.length > 0)
+            DrawUtil.drawText(this.canvas, "" + indexOfMax, 120, chartCenter, this.bestCircleColor);
+
         this.props.predictions.forEach((value:number, index:number) => {
             let endAngle:number = this.maxAngle * value + this.startAngle;
             let color = index === indexOfMax ? this.bestCircleColor : this.activeCircleColor;
             DrawUtil.drawCircle(this.canvas, chartCenter, this.circlePaths[index], this.startAngle, endAngle, color, this.baseCircleThickness);
         });
 
-        if(predictions.length > 0)
-            DrawUtil.drawText(this.canvas, "" + indexOfMax, 120, chartCenter, this.bestCircleColor);
     }
 
     protected setUpCanvas = () => {
         const chartRect = this.chart.getBoundingClientRect();
 
-        if (chartRect.width >= chartRect.height) {
-            this.canvas.width = chartRect.height;
-            this.canvas.height = chartRect.height;
-        }
-        else {
-            this.canvas.width = chartRect.width;
-            this.canvas.height = chartRect.width;
-        }
+        this.canvas.width = chartRect.width;
+        this.canvas.height = chartRect.height
 
         this.canvasRect = new Rect(0, 0, this.canvas.width, this.canvas.height);
     }
