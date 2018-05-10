@@ -14,7 +14,8 @@ interface Props {
 class CircleChartComponent extends React.Component<Props, {}> {
     
     protected chart:HTMLDivElement;
-    protected canvas:HTMLCanvasElement;
+    protected passiveCanvas:HTMLCanvasElement;
+    protected activeCanvas:HTMLCanvasElement;
     protected canvasRect:Rect;
     protected circlePaths:number[];
 
@@ -39,19 +40,19 @@ class CircleChartComponent extends React.Component<Props, {}> {
 
     public componentDidUpdate() {
         this.initChart();
-        this.drawChart();
+        this.animate(250);
     }
 
     protected initChart() {
-        DrawUtil.clearCanvas(this.canvas);
+        DrawUtil.clearCanvas(this.passiveCanvas);
         let chartCenter:Point = this.canvasRect.getCenterPoint();
         this.circlePaths.forEach((radious:number) => {
-            DrawUtil.drawCircle(this.canvas, chartCenter, radious, 0, 360, this.inactiveCircleColor, this.baseCircleThickness);
+            DrawUtil.drawCircle(this.passiveCanvas, chartCenter, radious, 0, 360, this.inactiveCircleColor, this.baseCircleThickness);
         });
     }
 
     protected initCirclePaths():void {
-        let minDimention:number = Math.min(this.canvas.height, this.canvas.width)
+        let minDimention:number = Math.min(this.canvasRect.height, this.canvasRect.width)
         let maxCircleRadious:number = 0.9 * minDimention/2;
         let minCircleRadious:number = 0.3 * minDimention/2;
         let newCirclePaths:number[] = [];
@@ -63,35 +64,62 @@ class CircleChartComponent extends React.Component<Props, {}> {
         this.circlePaths = newCirclePaths;
     }
 
-    protected drawChart() {
+    protected animate(duration) {
+        let start = new Date().getTime();
+        let end = start + duration;
+
         let chartCenter:Point = this.canvasRect.getCenterPoint();
         let predictions = this.props.predictions;
+        let canvas = this.activeCanvas;
+        let circlePaths = this.circlePaths;
+        let startAngle = this.startAngle;
+        let maxAngle = this.maxAngle;
+        let bestCircleColor = this.bestCircleColor;
+        let activeCircleColor = this.activeCircleColor;
+        let baseCircleThickness = this.baseCircleThickness;
+
         let indexOfMax = predictions.indexOf(Math.max(...predictions));
 
-        if(predictions.length > 0)
-            DrawUtil.drawText(this.canvas, "" + indexOfMax, 120, chartCenter, this.bestCircleColor);
+        let step = function() {
+            let timestamp = new Date().getTime();
+            let progress = Math.min((duration - (end - timestamp)) / duration, 1);
+            
+            DrawUtil.clearCanvas(canvas);
 
-        this.props.predictions.forEach((value:number, index:number) => {
-            let endAngle:number = this.maxAngle * value + this.startAngle;
-            let color = index === indexOfMax ? this.bestCircleColor : this.activeCircleColor;
-            DrawUtil.drawCircle(this.canvas, chartCenter, this.circlePaths[index], this.startAngle, endAngle, color, this.baseCircleThickness);
-        });
+            if(predictions.length > 0) {    
+                DrawUtil.drawText(canvas, "" + indexOfMax, 120, chartCenter, bestCircleColor);
+            }
 
+            
+            predictions.forEach((value:number, index:number) => {
+                let endAngle:number = maxAngle * value * progress + startAngle;
+                let color = index === indexOfMax ? bestCircleColor : activeCircleColor;
+                DrawUtil.drawCircle(canvas, chartCenter, circlePaths[index], startAngle, endAngle, color, baseCircleThickness);
+            });
+            if (progress < 1) requestAnimationFrame(step);
+        }
+        return step();
     }
+
+    
 
     protected setUpCanvas = () => {
         const chartRect = this.chart.getBoundingClientRect();
 
-        this.canvas.width = chartRect.width;
-        this.canvas.height = chartRect.height
+        this.passiveCanvas.width = chartRect.width;
+        this.passiveCanvas.height = chartRect.height
 
-        this.canvasRect = new Rect(0, 0, this.canvas.width, this.canvas.height);
+        this.activeCanvas.width = chartRect.width;
+        this.activeCanvas.height = chartRect.height
+
+        this.canvasRect = new Rect(0, 0, chartRect.width, chartRect.height);
     }
 
     public render() {
         return(
             <div className="CircleChart" ref = {ref => this.chart = ref}>
-                <canvas className={"ChartCanvas"} ref = {ref => this.canvas = ref}/>
+                <canvas className={"ChartCanvas"} ref = {ref => this.passiveCanvas = ref}/>
+                <canvas className={"ChartCanvas"} ref = {ref => this.activeCanvas = ref}/>
             </div>
         )
     }

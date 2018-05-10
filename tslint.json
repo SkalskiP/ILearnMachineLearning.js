@@ -1,6 +1,7 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "rules": {
+    "only-arrow-functions": false,
     "curly": false,
     "member-ordering": false,
     "ordered-imports": false,

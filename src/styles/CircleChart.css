@@ -8,3 +8,7 @@
     align-content: space-around;
     align-items: center;
 }
+
+.ChartCanvas{
+    position: absolute;
+}

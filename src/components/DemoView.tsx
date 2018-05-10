@@ -6,12 +6,12 @@ import { CircleChart } from '../containers/CircleChart';
 export const DemoView = () => {
 
     let prettyContainerLeft:React.CSSProperties = {
-        width: "40%",
+        width: "50%",
         height: "100%"
     }
 
     let prettyContainerRight:React.CSSProperties = {
-        width: "60%",
+        width: "50%",
         height: "100%"
     }
 
