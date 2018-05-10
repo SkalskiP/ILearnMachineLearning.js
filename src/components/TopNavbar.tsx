@@ -20,7 +20,7 @@ export const TopNavbar = () => {
                     image={GHLogo}
                     imageAlt={"GitHubLogo"}
                     href={"https://github.com/SkalskiP"}
-                    size={{width: 55, height: 55}}
+                    size={{width: 45, height: 45}}
                 />
             </div>
         </div>

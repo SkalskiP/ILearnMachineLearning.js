@@ -33,13 +33,13 @@ export class DrawUtil {
         ctx.stroke();
     }
 
-    public static drawText(canvas:HTMLCanvasElement, text:string, textSize:number, anchorPoint:IPoint, color:string = "#ffffff") {
+    public static drawText(canvas:HTMLCanvasElement, text:string, textSize:number, anchorPoint:IPoint, color:string = "#ffffff", bold:boolean = false) {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
         
         ctx.fillStyle = color;
         ctx.textAlign = "center";
         ctx.textBaseline="middle"; 
-        ctx.font = textSize + "px Titillium Web";
+        ctx.font = (bold ? "bold " : "") + textSize + "px Titillium Web";
         ctx.fillText(text, anchorPoint.x, anchorPoint.y); 
     }
 

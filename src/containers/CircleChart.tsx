@@ -23,7 +23,7 @@ class CircleChartComponent extends React.Component<Props, {}> {
     protected startAngle:number = -90;
     protected maxAngle:number = 360;
     protected numberOfClasses:number = 10;
-    protected baseCircleThickness:number = 15;
+    protected baseCircleThickness:number = 12;
     protected inactiveCircleColor:string = "rgba(255,255,255,0.05)";
     protected activeCircleColor:string = "#fff"
     protected bestCircleColor:string = "#ef6c00"
@@ -87,10 +87,9 @@ class CircleChartComponent extends React.Component<Props, {}> {
             DrawUtil.clearCanvas(canvas);
 
             if(predictions.length > 0) {    
-                DrawUtil.drawText(canvas, "" + indexOfMax, 120, chartCenter, bestCircleColor);
+                DrawUtil.drawText(canvas, "" + indexOfMax, 120, chartCenter, bestCircleColor, true);
             }
 
-            
             predictions.forEach((value:number, index:number) => {
                 let endAngle:number = maxAngle * value * progress + startAngle;
                 let color = index === indexOfMax ? bestCircleColor : activeCircleColor;

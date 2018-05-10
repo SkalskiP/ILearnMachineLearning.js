@@ -87,7 +87,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     }
 
     protected setUpCanvas = () => {
-        const maxDim:number = 500;
+        const maxDim:number = 400;
         const drawingBoardBoxRect = this.drawingBoardBox.getBoundingClientRect();
 
         if(drawingBoardBoxRect.width >= maxDim && drawingBoardBoxRect.height >= maxDim) {
@@ -120,8 +120,8 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
                     </div>
                 </div>
                 <div className={"ButtonsRow"}>
-                    <SimpleButton name={"Predict"} size={{width:150, height:60}} onClick={this.makePrediction}/>
-                    <SimpleButton name={"Clear"} size={{width:150, height:60}} onClick={this.clearPrediction}/>
+                    <SimpleButton name={"Predict"} size={{width:100, height:50}} onClick={this.makePrediction}/>
+                    <SimpleButton name={"Clear"} size={{width:100, height:50}} onClick={this.clearPrediction}/>
                 </div>
             </div>
         );

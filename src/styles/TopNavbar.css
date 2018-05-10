@@ -1,6 +1,6 @@
 .TopNavbar {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     background-color: #212121;
     color: white;
     box-sizing: border-box;
@@ -23,11 +23,11 @@
 }
 
 .NavbarGroup > .MainHeader {
-    font-size: 30px;
+    font-size: 25px;
     margin: 0 10px;
 }
 
 .NavbarGroup > .AdditionalHeader {
-    font-size: 20px;
+    font-size: 15px;
     margin: 0 25px;
 }

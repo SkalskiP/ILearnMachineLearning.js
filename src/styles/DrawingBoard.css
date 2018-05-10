@@ -16,7 +16,7 @@
     justify-content: center;
     align-content: space-around;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     transition:0s 180s;
     font-size: 30px;
     color: rgba(255, 255, 255, 0.3);
@@ -45,5 +45,5 @@
 }
 
 .DrawingBoard .BoardText {
-    font-size: 40px;
+    font-size: 30px;
 }
