@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './../styles/DemoView.css';
 import { DrawingBoard } from '../containers/DrawingBoard';
 import { CircleChart } from '../containers/CircleChart';
 import { PreetyBox } from './PreetyBox';

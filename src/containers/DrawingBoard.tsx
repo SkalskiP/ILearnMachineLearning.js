@@ -1,7 +1,6 @@
 import * as tf from '@tensorflow/tfjs';
 import * as React from 'react'
 import { DrawUtil } from '../utils/DrawUtil';
-import './../styles/DrawingBoard.css'; 
 import { Dispatch, connect } from 'react-redux';
 import { ApplicationState } from '../store/index';
 import { updateModelPredictions } from '../store/mnist/actions';

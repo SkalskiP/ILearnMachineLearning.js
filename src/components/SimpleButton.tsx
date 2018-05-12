@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './../styles/SimpleButton.css';
 import { ISize } from '../interfaces/ISize';
 
 interface IProps {

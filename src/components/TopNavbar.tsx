@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './../styles/TopNavbar.css';
 import { ImageButton } from './ImageButton';
 import GHLogo from './../assets/images/GitHub-Mark-Light-64px.png';
 

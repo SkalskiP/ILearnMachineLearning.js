@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './../styles/PreetyBox.css';
 
 interface IProps {
     name:string,

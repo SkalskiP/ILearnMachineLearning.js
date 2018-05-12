@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Dispatch, connect } from 'react-redux';
 import { ApplicationState } from '../store/index';
-import './../styles/CircleChart.css';
 import { updateModelPredictions } from '../store/mnist/actions';
 import { Point } from '../utils/geometry/Point';
 import { Rect } from '../utils/geometry/Rect';

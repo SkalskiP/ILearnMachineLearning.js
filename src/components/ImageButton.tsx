@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './../styles/ImageButton.css';
 import { ISize } from '../interfaces/ISize';
 
 interface Props {

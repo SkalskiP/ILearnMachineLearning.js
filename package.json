@@ -5,6 +5,8 @@
   "dependencies": {
     "@tensorflow/tfjs": "^0.10.3",
     "@types/react-redux": "^5.0.19",
+    "node-sass-chokidar": "^1.3.0",
+    "npm-run-all": "^4.1.3",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
@@ -12,8 +14,12 @@
     "redux": "3.7.2"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "build-css": "node-sass-chokidar src/index.scss src/index.css",
+    "watch-css": "npm run build-css && node-sass-chokidar src/index.scss src/index.css --watch",
+    "start-js": "react-scripts-ts start",
+    "build-js": "react-scripts-ts build",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && build-js",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
