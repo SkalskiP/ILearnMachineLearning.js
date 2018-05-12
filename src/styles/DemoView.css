@@ -12,29 +12,3 @@
     align-items: center;
     box-shadow: inset 0px 10px 30px -10px rgba(0,0,0,1);
 }
-
-.DemoView > .PrettyContainer {
-    position: relative;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.DemoView > .PrettyContainer > .PrettyContainerHeader {
-    position: absolute;
-    user-select: none;
-    padding: 0 10px;
-    left: 30px;
-    top: -5px;
-    font-size: 20px;
-    color: white;
-    background-color: #424242;
-    box-sizing: border-box
-}
-
-.DemoView > .PrettyContainer > .PrettyFiller {
-    width: 100%;
-    height: 100%;
-    border: solid white 1px;
-    padding: 20px;
-    box-sizing: border-box;
-}

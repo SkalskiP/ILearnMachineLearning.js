@@ -1,0 +1,25 @@
+.PrettyBox {
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.PrettyBox > .PrettyBoxHeader {
+    position: absolute;
+    user-select: none;
+    padding: 0 10px;
+    left: 30px;
+    top: -5px;
+    font-size: 20px;
+    color: white;
+    background-color: #424242;
+    box-sizing: border-box
+}
+
+.PrettyBox > .PrettyBoxPayload {
+    width: 100%;
+    height: 100%;
+    border: solid white 1px;
+    padding: 20px;
+    box-sizing: border-box;
+}
