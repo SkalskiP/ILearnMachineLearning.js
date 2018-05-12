@@ -19,7 +19,7 @@
     "start-js": "react-scripts-ts start",
     "build-js": "react-scripts-ts build",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && build-js",
+    "build": "npm run build-css && react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
