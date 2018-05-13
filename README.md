@@ -24,8 +24,15 @@ npm run
 
 If you're interested in machine learning, check out my other [projects][4] and check my profile on [Kaggle][5].
 
+## Read more about Machine Learning using JS
+
+1. [TensorFlow.js Tutorials & Guides][6]
+2. [Introducing TensorFlow.js: Machine Learning in Javascript][7]
+
 [1]: https://github.com/tensorflow/tfjs
 [2]: https://learn-machine-learning.herokuapp.com/
 [3]: http://yann.lecun.com/exdb/mnist/
-[4]: https://github.com/SkalskiP/My_Machine_Learning
+[4]: https://github.com/SkalskiP/ILearnMachineLearning.py
 [5]: https://www.kaggle.com/skalskip
+[6]: https://js.tensorflow.org/tutorials/
+[7]: https://medium.com/tensorflow/introducing-tensorflow-js-machine-learning-in-javascript-bf3eab376db
