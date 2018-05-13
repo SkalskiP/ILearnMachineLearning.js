@@ -5,12 +5,17 @@ import { updateModelPredictions } from '../store/mnist/actions';
 import { Point } from '../utils/geometry/Point';
 import { Rect } from '../utils/geometry/Rect';
 import { DrawUtil } from '../utils/DrawUtil';
+import { AppSettings } from '../settings/AppSettings';
 
 interface Props {
     predictions:number[];
 }
 
-class CircleChartComponent extends React.Component<Props, {}> {
+interface State {
+    circleScale:number;
+}
+
+class CircleChartComponent extends React.Component<Props, State> {
     
     protected chart:HTMLDivElement;
     protected passiveCanvas:HTMLCanvasElement;
@@ -22,19 +27,24 @@ class CircleChartComponent extends React.Component<Props, {}> {
     protected startAngle:number = -90;
     protected maxAngle:number = 360;
     protected numberOfClasses:number = 10;
-    protected baseCircleThickness:number = 12;
     protected inactiveCircleColor:string = "rgba(255,255,255,0.05)";
     protected activeCircleColor:string = "#fff"
     protected bestCircleColor:string = "#ef6c00"
     
     constructor(props: any) {
         super(props);
+        this.state = { circleScale: 1 };
     }
 
     public componentDidMount() {
         this.setUpCanvas();
         this.initCirclePaths();
         this.initChart();
+        window.addEventListener("resize", this.onResize);
+    }
+
+    public componentWillUnmount() {
+        window.addEventListener("resize", this.onResize);
     }
 
     public componentDidUpdate() {
@@ -42,18 +52,30 @@ class CircleChartComponent extends React.Component<Props, {}> {
         this.animate(250);
     }
 
-    protected initChart() {
-        DrawUtil.clearCanvas(this.passiveCanvas);
-        let chartCenter:Point = this.canvasRect.getCenterPoint();
-        this.circlePaths.forEach((radious:number) => {
-            DrawUtil.drawCircle(this.passiveCanvas, chartCenter, radious, 0, 360, this.inactiveCircleColor, this.baseCircleThickness);
-        });
+    protected onResize = () => {
+        this.setUpCanvas();
+        this.initCirclePaths();
+        this.initChart();
+    }
+
+    protected setUpCanvas = () => {
+        const chartRect = this.chart.getBoundingClientRect();
+
+        this.passiveCanvas.width = chartRect.width;
+        this.passiveCanvas.height = chartRect.height
+
+        this.activeCanvas.width = chartRect.width;
+        this.activeCanvas.height = chartRect.height
+
+        this.canvasRect = new Rect(0, 0, chartRect.width, chartRect.height);
     }
 
     protected initCirclePaths():void {
-        let minDimention:number = Math.min(this.canvasRect.height, this.canvasRect.width)
-        let maxCircleRadious:number = 0.9 * minDimention/2;
-        let minCircleRadious:number = 0.3 * minDimention/2;
+        let diameter:number = Math.min(this.canvasRect.height, this.canvasRect.width, AppSettings.circleChartBaseDiameter)
+        this.setState({ circleScale: diameter/AppSettings.circleChartBaseDiameter });
+        
+        let maxCircleRadious:number = 0.9 * diameter/2;
+        let minCircleRadious:number = 0.3 * diameter/2;
         let newCirclePaths:number[] = [];
 
         for(let i = 1; i <= this.numberOfClasses; i++) {
@@ -61,6 +83,15 @@ class CircleChartComponent extends React.Component<Props, {}> {
         }
 
         this.circlePaths = newCirclePaths;
+    }
+
+    protected initChart() {
+        DrawUtil.clearCanvas(this.passiveCanvas);
+        let chartCenter:Point = this.canvasRect.getCenterPoint();
+        let circleThickness = this.state.circleScale * AppSettings.circleChartBaseCircleThickness;
+        this.circlePaths.forEach((radious:number) => {
+            DrawUtil.drawCircle(this.passiveCanvas, chartCenter, radious, 0, 360, this.inactiveCircleColor, circleThickness);
+        });
     }
 
     protected animate(duration) {
@@ -75,18 +106,20 @@ class CircleChartComponent extends React.Component<Props, {}> {
         let maxAngle = this.maxAngle;
         let bestCircleColor = this.bestCircleColor;
         let activeCircleColor = this.activeCircleColor;
-        let baseCircleThickness = this.baseCircleThickness;
+        let baseCircleThickness = this.state.circleScale * AppSettings.circleChartBaseCircleThickness;
+        let circleScale = this.state.circleScale;
 
         let indexOfMax = predictions.indexOf(Math.max(...predictions));
 
         let step = function() {
             let timestamp = new Date().getTime();
             let progress = Math.min((duration - (end - timestamp)) / duration, 1);
-            
+            let predictionTextSize = circleScale * AppSettings.circleChartBaseTextSize;
+
             DrawUtil.clearCanvas(canvas);
 
             if(predictions.length > 0) {    
-                DrawUtil.drawText(canvas, "" + indexOfMax, 120, chartCenter, bestCircleColor, true);
+                DrawUtil.drawText(canvas, "" + indexOfMax, predictionTextSize, chartCenter, bestCircleColor, true);
             }
 
             predictions.forEach((value:number, index:number) => {
@@ -97,20 +130,6 @@ class CircleChartComponent extends React.Component<Props, {}> {
             if (progress < 1) requestAnimationFrame(step);
         }
         return step();
-    }
-
-    
-
-    protected setUpCanvas = () => {
-        const chartRect = this.chart.getBoundingClientRect();
-
-        this.passiveCanvas.width = chartRect.width;
-        this.passiveCanvas.height = chartRect.height
-
-        this.activeCanvas.width = chartRect.width;
-        this.activeCanvas.height = chartRect.height
-
-        this.canvasRect = new Rect(0, 0, chartRect.width, chartRect.height);
     }
 
     public render() {

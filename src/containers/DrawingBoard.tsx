@@ -6,17 +6,22 @@ import { ApplicationState } from '../store/index';
 import { updateModelPredictions } from '../store/mnist/actions';
 import { SimpleButton } from '../components/SimpleButton';
 import { IPoint } from '../interfaces/IPoint';
+import { AppSettings } from '../settings/AppSettings';
 
 interface Props {
     onNewPrediction: (predictions:number[]) => any;
 }
 
-class DrawingBoardComponent extends React.Component<Props, {}> {
+interface State {
+    drawingBoardScale:number;
+}
+
+class DrawingBoardComponent extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
+        this.state = { drawingBoardScale: 1 };
     }
 
-    protected drawingBoardBox:HTMLDivElement;
     protected boardWrapper:HTMLDivElement;
     protected canvas:HTMLCanvasElement;
     protected mousePosition:IPoint = {x: 0, y: 0}
@@ -34,20 +39,27 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
         window.addEventListener("resize", this.setUpCanvas);
     }
 
-    protected startDrawing = () => {
+    protected onMouseDown = () => {
         this.isDrawing = true;
-        window.addEventListener("mouseup", this.endDrawing);
+        this.draw();
+        window.addEventListener("mouseup", this.onMouseUp);
     }
 
-    protected endDrawing = () => {
+    protected onMouseUp = () => {
         this.isDrawing = false;
-        window.removeEventListener("mouseup", this.endDrawing);
+        window.removeEventListener("mouseup", this.onMouseUp);
     }
 
     protected onMouseMove = (event) => {
         this.updateMousePosition({x: event.clientX, y: event.clientY});
         if(this.isDrawing)
-            DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, "#fff", 35);
+            this.draw();
+    }
+
+    protected draw() {
+        const brushDiameter = this.state.drawingBoardScale * AppSettings.drawingBoardBaseBrushDiameter;
+        const brushColor = AppSettings.drawingBoardBaseBrushColor;
+        DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, brushColor, brushDiameter);
     }
 
     protected clearPrediction = () => {
@@ -68,7 +80,7 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     }
 
     protected async loadModel() {
-        this.model = await tf.loadModel('https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/src/assets/models/mnist/model.json');
+        this.model = await tf.loadModel(AppSettings.mnistModelUrl);
     }
 
     protected async predict(imageData: ImageData) {
@@ -86,35 +98,39 @@ class DrawingBoardComponent extends React.Component<Props, {}> {
     }
 
     protected setUpCanvas = () => {
-        const maxDim:number = 400;
-        const drawingBoardBoxRect = this.drawingBoardBox.getBoundingClientRect();
+        const maxDim:number = AppSettings.drawingBoardBaseDim;
+        const boardWrapperRect = this.boardWrapper.getBoundingClientRect();
 
-        if(drawingBoardBoxRect.width >= maxDim && drawingBoardBoxRect.height >= maxDim) {
+        if(boardWrapperRect.width >= maxDim && boardWrapperRect.height >= maxDim) {
             this.canvas.width = maxDim;
             this.canvas.height = maxDim;
         }
-        else if (drawingBoardBoxRect.width >= drawingBoardBoxRect.height) {
-            this.canvas.width = drawingBoardBoxRect.height;
-            this.canvas.height = drawingBoardBoxRect.height;
+        else if (boardWrapperRect.width >= boardWrapperRect.height) {
+            this.canvas.width = boardWrapperRect.height;
+            this.canvas.height = boardWrapperRect.height;
         }
         else {
-            this.canvas.width = drawingBoardBoxRect.width;
-            this.canvas.height = drawingBoardBoxRect.width;
+            this.canvas.width = boardWrapperRect.width;
+            this.canvas.height = boardWrapperRect.width;
         }
-
-        this.boardWrapper.style.width = this.canvas.width + "px";
-        this.boardWrapper.style.height = this.canvas.height + "px";
+   
+        this.setState({ drawingBoardScale: this.canvas.width/maxDim });
     }
 
     public render() {
+
+        let boardTextStyle:React.CSSProperties = {
+            fontSize: this.state.drawingBoardScale * AppSettings.drawingBoardBaseTextSize
+        }
+ 
         return(
-            <div className={"DrawingBoard"} ref = {ref => this.drawingBoardBox = ref}>
+            <div className={"DrawingBoard"}>
                 <div className={"BoardWrapper"} ref = {ref => this.boardWrapper = ref}>
                     <canvas className={"Board"} ref = {ref => this.canvas = ref} 
                         onMouseMove={this.onMouseMove} 
-                        onMouseDown={this.startDrawing}
+                        onMouseDown={this.onMouseDown}
                     />
-                    <div className={"BoardText"}>
+                    <div className={"BoardText"} style={boardTextStyle}>
                         <b>DRAW HERE</b>
                     </div>
                 </div>
