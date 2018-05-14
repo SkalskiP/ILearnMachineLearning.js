@@ -20,14 +20,33 @@ npm run
 <img src="docs/mnist_project.gif">
 </p>
 
+## Build Keras models
+
+If you are interested in neural networks and would like to know how to create models used in this project, I encourage you to test the scripts on your computer.
+
+``` bash
+# clone repository
+git clone https://github.com/SkalskiP/ILearnMachineLearning.js.git
+
+# navigate to models directory
+cd ILearnMachineLearning.js/models
+
+# install all required packages and dependencies as well as python environment
+./setup.sh
+
+# activate python environment
+source .env/bin/activate
+```
+
 ## Related projects
 
 If you're interested in machine learning, check out my other [projects][4] and check my profile on [Kaggle][5].
 
-## Read more about Machine Learning using JS
+## Read more about In-Browser ML
 
 1. [TensorFlow.js Tutorials & Guides][6]
 2. [Introducing TensorFlow.js: Machine Learning in Javascript][7]
+3. [Neural Network 3D Simulation][8]
 
 [1]: https://github.com/tensorflow/tfjs
 [2]: https://learn-machine-learning.herokuapp.com/
@@ -36,3 +55,4 @@ If you're interested in machine learning, check out my other [projects][4] and c
 [5]: https://www.kaggle.com/skalskip
 [6]: https://js.tensorflow.org/tutorials/
 [7]: https://medium.com/tensorflow/introducing-tensorflow-js-machine-learning-in-javascript-bf3eab376db
+[8]: https://www.youtube.com/watch?v=3JQ3hYko51Y
