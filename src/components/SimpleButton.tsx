@@ -3,19 +3,14 @@ import { ISize } from '../interfaces/ISize';
 
 interface IProps {
     name:string,
-    size:ISize
+    style:React.CSSProperties,
     onClick:() => void
 }
 
 export const SimpleButton = (props:IProps) => {
 
-    let simpleButtonStyle:React.CSSProperties = {
-        width: props.size.width,
-        height: props.size.height
-    }
-
     return(
-        <div className="SimpleButton" style={simpleButtonStyle} onClick={props.onClick}>
+        <div className="SimpleButton" style={props.style} onClick={props.onClick}>
             {props.name}
         </div>
     );

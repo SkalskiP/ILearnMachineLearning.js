@@ -24,7 +24,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
 
     protected boardWrapper:HTMLDivElement;
     protected canvas:HTMLCanvasElement;
-    protected mousePosition:IPoint = {x: 0, y: 0}
+    protected mousePosition:IPoint = {x: null, y: null}
     protected isDrawing:boolean = false;
     protected model:tf.Model;
     protected predictions:number[];
@@ -39,10 +39,18 @@ class DrawingBoardComponent extends React.Component<Props, State> {
         window.addEventListener("resize", this.setUpCanvas);
     }
 
-    protected onMouseDown = () => {
+    protected onMouseDown = (event) => {
         this.isDrawing = true;
+        this.updateMousePosition({x: event.clientX, y: event.clientY});
         this.draw();
         window.addEventListener("mouseup", this.onMouseUp);
+    }
+
+    protected onTouchStart = (event) => {
+        this.isDrawing = true;
+        this.updateMousePosition({x: event.touches[0].clientX, y: event.touches[0].clientY});
+        this.draw();
+        window.addEventListener("touchend", this.onTouchEnd);
     }
 
     protected onMouseUp = () => {
@@ -50,10 +58,27 @@ class DrawingBoardComponent extends React.Component<Props, State> {
         window.removeEventListener("mouseup", this.onMouseUp);
     }
 
+    protected onTouchEnd = () => {
+        this.isDrawing = false;
+        window.removeEventListener("touchend", this.onTouchEnd);
+    } 
+
     protected onMouseMove = (event) => {
         this.updateMousePosition({x: event.clientX, y: event.clientY});
+
         if(this.isDrawing)
             this.draw();
+
+        event.preventDefault();
+    }
+
+    protected onTouchMove = (event) => {
+        this.updateMousePosition({x: event.touches[0].clientX, y: event.touches[0].clientY});
+        
+        if(this.isDrawing)
+            this.draw();
+
+        event.preventDefault();
     }
 
     protected draw() {
@@ -122,6 +147,13 @@ class DrawingBoardComponent extends React.Component<Props, State> {
         let boardTextStyle:React.CSSProperties = {
             fontSize: this.state.drawingBoardScale * AppSettings.drawingBoardBaseTextSize
         }
+
+        let buttonStyle:React.CSSProperties = {
+            width: "40%",
+            maxWidth: 100,
+            minWidth: 50,
+            height: 45
+        }
  
         return(
             <div className={"DrawingBoard"}>
@@ -129,14 +161,16 @@ class DrawingBoardComponent extends React.Component<Props, State> {
                     <canvas className={"Board"} ref = {ref => this.canvas = ref} 
                         onMouseMove={this.onMouseMove} 
                         onMouseDown={this.onMouseDown}
+                        onTouchStart={this.onTouchStart}
+                        onTouchMove={this.onTouchMove} 
                     />
                     <div className={"BoardText"} style={boardTextStyle}>
                         <b>DRAW HERE</b>
                     </div>
                 </div>
                 <div className={"ButtonsRow"}>
-                    <SimpleButton name={"Predict"} size={{width:100, height:50}} onClick={this.makePrediction}/>
-                    <SimpleButton name={"Clear"} size={{width:100, height:50}} onClick={this.clearPrediction}/>
+                    <SimpleButton name={"Predict"} style={buttonStyle} onClick={this.makePrediction}/>
+                    <SimpleButton name={"Clear"} style={buttonStyle} onClick={this.clearPrediction}/>
                 </div>
             </div>
         );
