@@ -1,7 +1,7 @@
 export class AppSettings {
 
     // MNIST
-    public static mnistModelUrl:string = 'https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/src/assets/models/mnist/model.json';
+    public static mnistModelUrl:string = 'https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/models/mnist/ModelJS/model.json';
     public static drawingBoardBaseDim:number = 400;
     public static drawingBoardBaseTextSize:number = 40;
     public static drawingBoardBaseBrushDiameter:number = 40;
