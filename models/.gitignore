@@ -1,4 +1,4 @@
-./**/.ipynb_checkpoints/
-./**/input/
+./**/.ipynb_checkpoints/*
+./**/input/*
 *.pyc
 .env/*
