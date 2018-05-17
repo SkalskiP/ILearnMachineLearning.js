@@ -21,12 +21,29 @@ export class DrawUtil {
         ctx.stroke();
     }
 
-    public static drawCircle(canvas:HTMLCanvasElement, anchorPoint:IPoint, radius:number, startAngleDeg:number, endAngleDeg:number, color:string = "#ffffff", thickness:number = 20): void {
+    public static drawCircle(canvas:HTMLCanvasElement, anchorPoint:IPoint, radius:number, startAngleDeg:number, endAngleDeg:number, thickness:number = 20, color:string = "#ffffff"): void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
         let startAngleRad = UnitUtil.deg2rad(startAngleDeg);
         let endAngleRad = UnitUtil.deg2rad(endAngleDeg);
 
         ctx.strokeStyle = color;
+        ctx.lineWidth = thickness;
+        ctx.beginPath();
+        ctx.arc(anchorPoint.x, anchorPoint.y, radius, startAngleRad, endAngleRad, false);
+        ctx.stroke();
+    }
+
+    public static drawCircleWithGradient(canvas:HTMLCanvasElement, anchorPoint:IPoint, radius:number, startAngleDeg:number, endAngleDeg:number, thickness:number = 20, colorStart:string = "#ff6138", colorEnd:string = "#ffB700"): void {
+        let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+        let startAngleRad = UnitUtil.deg2rad(startAngleDeg);
+        let endAngleRad = UnitUtil.deg2rad(endAngleDeg);
+
+        let smallCord = Math.min(anchorPoint.x, anchorPoint.y);
+        let gradient = ctx.createLinearGradient(0, anchorPoint.y - smallCord, 2 * anchorPoint.x, anchorPoint.y + smallCord);
+        gradient.addColorStop(0, colorStart);
+        gradient.addColorStop(1, colorEnd);
+
+        ctx.strokeStyle = gradient;
         ctx.lineWidth = thickness;
         ctx.beginPath();
         ctx.arc(anchorPoint.x, anchorPoint.y, radius, startAngleRad, endAngleRad, false);

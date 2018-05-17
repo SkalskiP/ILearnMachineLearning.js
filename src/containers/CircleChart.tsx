@@ -90,7 +90,7 @@ class CircleChartComponent extends React.Component<Props, State> {
         let chartCenter:Point = this.canvasRect.getCenterPoint();
         let circleThickness = this.state.circleScale * AppSettings.circleChartBaseCircleThickness;
         this.circlePaths.forEach((radious:number) => {
-            DrawUtil.drawCircle(this.passiveCanvas, chartCenter, radious, 0, 360, this.inactiveCircleColor, circleThickness);
+            DrawUtil.drawCircle(this.passiveCanvas, chartCenter, radious, 0, 360, circleThickness, this.inactiveCircleColor);
         });
     }
 
@@ -124,8 +124,12 @@ class CircleChartComponent extends React.Component<Props, State> {
 
             predictions.forEach((value:number, index:number) => {
                 let endAngle:number = maxAngle * value * progress + startAngle;
-                let color = index === indexOfMax ? bestCircleColor : activeCircleColor;
-                DrawUtil.drawCircle(canvas, chartCenter, circlePaths[index], startAngle, endAngle, color, baseCircleThickness);
+
+                if(index !== indexOfMax)
+                    DrawUtil.drawCircle(canvas, chartCenter, circlePaths[index], startAngle, endAngle, baseCircleThickness, activeCircleColor);
+                else
+                    DrawUtil.drawCircleWithGradient(canvas, chartCenter, circlePaths[index], startAngle, endAngle, baseCircleThickness);
+                
             });
             if (progress < 1) requestAnimationFrame(step);
         }
