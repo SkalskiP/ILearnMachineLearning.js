@@ -1,5 +1,10 @@
 export class AppSettings {
 
+    // APP SETTINGS
+    public static gitHubUrl:string = 'https://github.com/SkalskiP';
+    public static twitterUrl:string = 'https://twitter.com/PiotrSkalski92';
+    public static mediumUrl:string = 'https://medium.com/@piotr.skalski92';
+
     // MNIST
     public static mnistModelUrl:string = 'https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/models/mnist/ModelJS/model.json';
     public static drawingBoardBaseDim:number = 400;

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { ImageButton } from './ImageButton';
-import GHLogo from './../assets/images/GitHub-Mark-Light-64px.png';
+import { AppSettings } from '../settings/AppSettings';
+import GitHubLogo from './../assets/images/GitHubLogo.png';
+import TwitterLogo from './../assets/images/TwitterLogo.png';
+import MediumLogo from './../assets/images/MediumLogo.png';
 
 export const TopNavbar = () => {
     
@@ -16,9 +19,21 @@ export const TopNavbar = () => {
             </div>
             <div className="NavbarGroup">
                 <ImageButton
-                    image={GHLogo}
+                    image={MediumLogo}
+                    imageAlt={"MediumLogo"}
+                    href={AppSettings.mediumUrl}
+                    size={{width: 45, height: 45}}
+                />
+                <ImageButton
+                    image={TwitterLogo}
+                    imageAlt={"TwitterLogo"}
+                    href={AppSettings.twitterUrl}
+                    size={{width: 45, height: 45}}
+                />
+                <ImageButton
+                    image={GitHubLogo}
                     imageAlt={"GitHubLogo"}
-                    href={"https://github.com/SkalskiP"}
+                    href={AppSettings.gitHubUrl}
                     size={{width: 45, height: 45}}
                 />
             </div>
