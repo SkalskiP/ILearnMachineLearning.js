@@ -11,7 +11,7 @@ export const TopNavbar = () => {
         <div className="TopNavbar">
             <div className="NavbarGroup">
                 <div className="MainHeader">
-                    <b>ILearnMachineLearning.js</b>
+                    <b>ILearnMachineLearning</b>
                 </div>
                 <div className="AdditionalHeader">
                     MNIST Project
