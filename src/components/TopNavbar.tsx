@@ -14,7 +14,7 @@ export const TopNavbar = () => {
                 <div className="Logo">
                 <img alt={"I Learn Machine Learning Logo"} 
                     src={ILMLLogo} 
-                    style={{maxHeight: 45}}/>
+                    style={{maxHeight: 40}}/>
                 </div>
                 <div className="MainHeader">
                     <b>ILearnMachineLearning</b>
