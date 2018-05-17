@@ -4,7 +4,7 @@ import { AppSettings } from '../settings/AppSettings';
 import GitHubLogo from './../assets/images/GitHubLogo.png';
 import TwitterLogo from './../assets/images/TwitterLogo.png';
 import MediumLogo from './../assets/images/MediumLogo.png';
-import ILMLLogo from './../assets/images/logo_color.png';
+import ILMLLogo from './../assets/images/logo_white.png';
 
 export const TopNavbar = () => {
     
