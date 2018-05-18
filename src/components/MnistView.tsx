@@ -3,28 +3,28 @@ import { DrawingBoard } from '../containers/DrawingBoard';
 import { CircleChart } from '../containers/CircleChart';
 import { PreetyBox } from './PreetyBox';
 
-export const DemoView = () => {
+export const MnistView = () => {
 
-    let prettyContainerLeft:React.CSSProperties = {
+    let prettyBoxLeftStyle:React.CSSProperties = {
         width: "40%",
         height: "100%"
     }
 
-    let prettyContainerRight:React.CSSProperties = {
+    let prettyBoxRightStyle:React.CSSProperties = {
         width: "60%",
         height: "100%"
     }
 
     return(
-        <div className="DemoView">
+        <div className="MnistView">
             <PreetyBox 
                 name="Draw" 
-                style={prettyContainerLeft} 
+                style={prettyBoxLeftStyle} 
                 payload={<DrawingBoard/>}
             />
             <PreetyBox 
                 name="Predictions" 
-                style={prettyContainerRight} 
+                style={prettyBoxRightStyle} 
                 payload={<CircleChart/>}
             />
         </div>

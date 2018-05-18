@@ -4,6 +4,7 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Titillium Web', sans-serif;
+  background-color: #1a1a1a;
 }
 
 #root {
@@ -11,8 +12,11 @@ body, html {
   height: 100%;
 }
 
+@import 'styles/ProjectTile';
+@import 'styles/ProjectsList';
+@import 'styles/HomeView';
 @import 'styles/CircleChart';
-@import 'styles/DemoView';
+@import 'styles/MnistView';
 @import 'styles/DrawingBoard';
 @import 'styles/ImageButton';
 @import 'styles/PreetyBox';

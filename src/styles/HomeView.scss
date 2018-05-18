@@ -1,5 +1,4 @@
-.DemoView {
-    background-color: #424242;
+.HomeView {
     width: 100%;
     height: 100%;
     padding: 25px 0 0 0;
@@ -11,4 +10,9 @@
     align-content: stretch;
     align-items: center;
     box-shadow: inset 0px 10px 30px -10px rgba(0,0,0,1);
+
+    background-image: url("./assets/images/background_logo.png");
+    background-repeat:no-repeat;
+    background-position: center;
+    background-size: 40%;
 }
