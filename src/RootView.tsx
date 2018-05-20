@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { DemoView } from './components/DemoView';
+import { MnistView } from './components/MnistView';
 import { TopNavbar } from './components/TopNavbar';
+import { HomeView } from './components/HomeView';
 
 export class RootView extends React.Component {
 
@@ -10,7 +11,8 @@ export class RootView extends React.Component {
         <div className="RootView">
             <TopNavbar/>
             <Switch>
-                <Route exact={true} path="/" component={DemoView} />
+                <Route exact={true} path="/" component={HomeView} />
+                <Route exact={true} path="/mnist/" component={MnistView} />
             </Switch>
         </div>
         );
