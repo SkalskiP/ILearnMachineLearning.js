@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { PreetyBox } from './PreetyBox';
+import { ImageLoader } from '../containers/ImageLoader';
 
 export const ObjectDetectionView = () => {
 
@@ -13,7 +14,7 @@ export const ObjectDetectionView = () => {
             <PreetyBox 
                 name="Where should I look?" 
                 style={prettyBoxStyle} 
-                payload={<div/>}
+                payload={<ImageLoader/>}
             />
         </div>
     );
