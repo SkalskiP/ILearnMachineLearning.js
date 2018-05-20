@@ -44,7 +44,7 @@ class CircleChartComponent extends React.Component<Props, State> {
     }
 
     public componentWillUnmount() {
-        window.addEventListener("resize", this.onResize);
+        window.removeEventListener("resize", this.onResize);
     }
 
     public componentDidUpdate() {

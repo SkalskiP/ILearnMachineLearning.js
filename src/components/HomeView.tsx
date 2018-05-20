@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { PreetyBox } from './PreetyBox';
-import { ProjectList } from './ProjectsList';
+import { ProjectsList } from './ProjectsList';
 
 export const HomeView = () => {
 
     let prettyBoxStyle:React.CSSProperties = {
         width: "100%",
-        height: "100%"
+        height: "100%",
+        backgroundColor: "#fff",
+        color: "#000",
+        borderColor: "#000"
     }
 
     return(
@@ -14,7 +17,7 @@ export const HomeView = () => {
             <PreetyBox 
                 name="Projects" 
                 style={prettyBoxStyle} 
-                payload={<ProjectList/>}
+                payload={<ProjectsList/>}
             />
         </div>
     );

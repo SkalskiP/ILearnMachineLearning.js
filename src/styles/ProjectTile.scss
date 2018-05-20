@@ -1,28 +1,58 @@
 .ProjectTile {
     
-    width: 300px;
-    height: 300px;
     padding: 15px;
-    box-sizing: border-box;
 
     .InnerProjectTile {
-        width: 100%;
-        height: 100%;
-        background-color: #212121;
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
         box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.75);
+     
+        .ProjectTileImage {
+            width: 100%;
+            height: 100%;
+            background-color: #212121;
+            background-position: center;
+            background-size: cover;
+            transition: all .5s;
 
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-content: center;
-        align-items: center;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+
+            span {
+                color: white;
+                font-size: 30px;
+                font-weight: bold;
+                z-index: 10;
+            }
+
+            &::before {
+                content: "";
+                display: none;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(20, 20, 20, 0.75);
+            }
+        }
+
+        &:hover .ProjectTileImage {
+            transform: scale(1.2);
+        }
+
+        &:hover .ProjectTileImage::before {
+            display: block;
+        }
     }
-    
+
     a {
-        text-decoration: none;
-        color: white;
-        font-size: 30px;
         user-select: none;
+        text-decoration: none;
     }
 }

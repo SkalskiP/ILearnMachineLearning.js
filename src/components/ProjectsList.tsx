@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { ProjectTile } from './ProjectTile';
 
-export const ProjectList = () => {
+export const ProjectsList = () => {
     return(
-        <ProjectTile
-            name={"MNIST"}
-            rout={"/mnist/"}
-        />
+        <div className={"ProjectsList"}>
+            <ProjectTile
+                name={"MNIST"}
+                rout={"/mnist/"}
+                backgroudImageSrc={"/images/mnist.png"}
+            />
+        </div>
     );
 }

@@ -3,16 +3,23 @@ import { Link } from 'react-router-dom';
 
 interface IProps {
     name:string,
-    rout:string
+    rout:string,
+    backgroudImageSrc:string
 }
 
 export const ProjectTile = (props:IProps) => {
+
+    let innerTileStyle:React.CSSProperties = {
+        backgroundImage: 'url(' + props.backgroudImageSrc + ')'
+    }
     
     return(
         <div className="ProjectTile">
             <Link to={props.rout}>
                 <div className="InnerProjectTile">
-                    <b>{props.name}</b>
+                    <div className="ProjectTileImage" style={innerTileStyle}>
+                        <span>{props.name}</span>
+                    </div>
                 </div>
             </Link>
         </div>

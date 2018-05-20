@@ -6,6 +6,7 @@ import GitHubLogo from './../assets/images/GitHubLogo.png';
 import TwitterLogo from './../assets/images/TwitterLogo.png';
 import MediumLogo from './../assets/images/MediumLogo.png';
 import ILMLLogo from './../assets/images/logo_white.png';
+import { Route } from 'react-router-dom';
 
 
 export const TopNavbar = () => {
@@ -25,7 +26,7 @@ export const TopNavbar = () => {
                     <b>ILearnMachineLearning</b>
                 </div>
                 <div className="AdditionalHeader">
-                    MNIST Project
+                    {/* MNIST Project */}
                 </div>
             </div>
             <div className="NavbarGroup">

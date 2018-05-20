@@ -36,7 +36,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     }
 
     public componentWillUnmount() {
-        window.addEventListener("resize", this.setUpCanvas);
+        window.removeEventListener("resize", this.setUpCanvas);
     }
 
     protected onMouseDown = (event) => {
