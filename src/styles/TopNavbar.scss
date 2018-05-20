@@ -1,8 +1,10 @@
 .TopNavbar {
     width: 100%;
     padding: 2px 5px;
-    background-color: #212121;
-    color: white;
+    
+    background-color: $navBarBgColor;
+    color: $navBarTexColor;
+
     box-sizing: border-box;
     user-select: none;
     display: flex;

@@ -4,14 +4,13 @@ import { Link } from 'react-router-dom';
 interface IProps {
     name:string,
     rout:string,
-    backgroudImageSrc:string
+    backgroudImageSrc?:string
 }
 
 export const ProjectTile = (props:IProps) => {
 
-    let innerTileStyle:React.CSSProperties = {
-        backgroundImage: 'url(' + props.backgroudImageSrc + ')'
-    }
+    let innerTileStyle:React.CSSProperties = props.backgroudImageSrc ? 
+    {backgroundImage: 'url(' + props.backgroudImageSrc + ')'} : {};
     
     return(
         <div className="ProjectTile">

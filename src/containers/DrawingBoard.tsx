@@ -36,6 +36,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     }
 
     public componentWillUnmount() {
+        this.props.onNewPrediction([]);
         window.removeEventListener("resize", this.setUpCanvas);
     }
 

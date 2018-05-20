@@ -1,7 +1,7 @@
 .SimpleButton {
     transition: background-color 0.7s ease;
-    background-color: #212121;
-    color: white;
+    background-color: $simpleButtonBgColor;
+    color: $simpleButtonTextColor;
     margin: 10px 10px 10px 10px;
     font-size: 15px;
 
@@ -15,7 +15,7 @@
 }
 
 .SimpleButton:hover {
-    background-color: white;
-    color: #212121;
+    background-color: $simpleButtonHoverBgColor;
+    color: $simpleButtonHoverTextColor;
     cursor: pointer;
 }
