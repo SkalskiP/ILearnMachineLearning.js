@@ -16,4 +16,7 @@ export class AppSettings {
     public static circleChartBaseDiameter:number = 600;
     public static circleChartBaseCircleThickness:number = 15;
     public static circleChartBaseTextSize:number = 150;
+
+    // OBJECT DETECTION
+    public static yoloModelUrl:string = 'https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/models/tfjs-yolo-tiny/model.json';
 }
