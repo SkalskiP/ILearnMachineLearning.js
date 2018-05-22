@@ -8,6 +8,8 @@
     "no-console": false,
     "prefer-const": false,
     "object-literal-sort-keys": false,
+    "no-shadowed-variable": false,
+    "prefer-for-of": false,
     "interface-name": [false, "always-prefix"]
   },
   "linterOptions": {

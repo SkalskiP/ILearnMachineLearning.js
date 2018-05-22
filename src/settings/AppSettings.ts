@@ -7,6 +7,7 @@ export class AppSettings {
 
     // MNIST
     public static mnistModelUrl:string = 'https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/models/mnist/ModelJS/model.json';
+    public static mnistModelInputPixelSize:number = 28;
     public static drawingBoardBaseDim:number = 400;
     public static drawingBoardBaseTextSize:number = 40;
     public static drawingBoardBaseBrushDiameter:number = 40;
@@ -19,4 +20,5 @@ export class AppSettings {
 
     // OBJECT DETECTION
     public static yoloModelUrl:string = 'https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/models/tfjs-yolo-tiny/model.json';
+    public static yoloModelInputPixelSize:number = 416;
 }
