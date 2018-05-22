@@ -34,7 +34,7 @@ export class ImageLoader extends React.Component {
           ]);
 
         const iouThreshold = 0.5;
-        const classProbThreshold = 0.9;
+        const classProbThreshold = 0.5;
 
         const numAnchors = anchors.shape[0];
         const anchorsTensor = tf.reshape(anchors, [1, 1, numAnchors, 2]);
@@ -52,10 +52,13 @@ export class ImageLoader extends React.Component {
             const beginWidth = centerWidth - (this.maxPix / 2);
 
             let pixelsCropped = pixels.slice([beginHeight, beginWidth, 0], [this.maxPix, this.maxPix, 3]);
-            pixelsCropped = pixelsCropped.reshape([1, this.maxPix, this.maxPix, 3]);
-            pixelsCropped = tf.cast(pixelsCropped, 'float32');
+            let batchedImage = pixelsCropped.expandDims(0);
+            // batchedImage = tf.cast(batchedImage, 'float32');
+            batchedImage = batchedImage.toFloat().div(tf.scalar(255))
 
-            let output = this.model.predict(pixelsCropped) as any;
+
+
+            let output = this.model.predict(batchedImage) as any;
 
             const [boxXY, boxWH, boxConfidence, boxClassProbs] = this.yolo_head(output, anchors, numClasses);
 
