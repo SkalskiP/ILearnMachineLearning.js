@@ -330,7 +330,8 @@ export class ImageLoader extends React.Component<{}, State> {
                     <canvas className={"PredictionsBoard"} ref = {ref => this.activeCanvas = ref}/>
                     <canvas className={"ImageBoard"} ref = {ref => this.passiveCanvas = ref}/>
                 </div>}
-                <input className={"ImageInput"} type="file" onChange={this.onImageUpload}/>
+                <input className={"ImageInput"} type={"file"} id={"file"} onChange={this.onImageUpload}/>
+                <label htmlFor="file">Choose a file</label>
             </div>
         )
     }
