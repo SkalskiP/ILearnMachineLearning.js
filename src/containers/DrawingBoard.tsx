@@ -118,6 +118,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
             let img:any = tf.fromPixels(imageData, 1);
             img = img.reshape([1, pixSize, pixSize, 1]);
             img = tf.cast(img, 'float32');
+            img = img.div(tf.scalar(255));
 
             const output = this.model.predict(img) as any;
 

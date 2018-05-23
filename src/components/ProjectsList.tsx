@@ -10,8 +10,9 @@ export const ProjectsList = () => {
                 backgroudImageSrc={"/images/mnist.png"}
             />
             <ProjectTile
-                name={"OBJECT DETECTION"}
+                name={"TINY YOLO"}
                 rout={"/object_detection/"}
+                backgroudImageSrc={"/images/yolo.png"}
             />
         </div>
     );

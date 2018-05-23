@@ -11,6 +11,40 @@
     align-items: center;
 
     .ImageInput {
-        margin: 10px;
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    .ImageInput + label {
+        transition: background-color 0.7s ease;
+        background-color: $simpleButtonBgColor;
+        color: $simpleButtonTextColor;
+        margin: 20px;
+        font-size: 15px;
+        padding: 10px 25px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    .ImageInput + label:hover {
+        background-color: $simpleButtonHoverBgColor;
+        color: $simpleButtonHoverTextColor;
+    }
+
+    .ImageInput:focus + label {
+        outline: 1px dotted #000;
+    }
+
+    .BoardWrapper {
+        canvas {
+            position: absolute;
+        }
+        .PredictionsBoard {
+            z-index: 10;
+        }
     }
 }
