@@ -307,9 +307,12 @@ export class ImageLoader extends React.Component<{}, State> {
 
     public onImageUpload = (event:any) => {
         const file:File = event.target.files[0];
-        const url:string = URL.createObjectURL(file);
-        this.setState({ isPredictionActive: true });
-        this.img.src = url;
+        
+        if(file) {
+            const url:string = URL.createObjectURL(file);
+            this.setState({ isPredictionActive: true });
+            this.img.src = url;
+        }
     }
 
     public drawPredRects():void {
