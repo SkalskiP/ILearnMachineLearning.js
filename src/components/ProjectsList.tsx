@@ -9,6 +9,10 @@ export const ProjectsList = () => {
                 rout={"/mnist/"}
                 backgroudImageSrc={"/images/mnist.png"}
             />
+            <ProjectTile
+                name={"OBJECT DETECTION"}
+                rout={"/object_detection/"}
+            />
         </div>
     );
 }

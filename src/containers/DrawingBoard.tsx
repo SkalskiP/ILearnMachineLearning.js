@@ -94,7 +94,8 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     }
 
     protected makePrediction = () => {
-        let image = DrawUtil.getImageDataAndScale(this.canvas, {width: 28, height: 28});        
+        const pixSize:number = AppSettings.mnistModelInputPixelSize;
+        let image = DrawUtil.getImageDataAndScale(this.canvas, {width: pixSize, height: pixSize});        
         this.predict(image);
         this.props.onNewPrediction(this.predictions);
     }
@@ -112,14 +113,15 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     protected async predict(imageData: ImageData) {
 
         const pred = await tf.tidy(() => {
-    
-          let img:any = tf.fromPixels(imageData, 1);
-          img = img.reshape([1, 28, 28, 1]);
-          img = tf.cast(img, 'float32');
+        
+            const pixSize:number = AppSettings.mnistModelInputPixelSize;
+            let img:any = tf.fromPixels(imageData, 1);
+            img = img.reshape([1, pixSize, pixSize, 1]);
+            img = tf.cast(img, 'float32');
 
-          const output = this.model.predict(img) as any;
-    
-          this.predictions = Array.from(output.dataSync());
+            const output = this.model.predict(img) as any;
+
+            this.predictions = Array.from(output.dataSync());
         });
     }
 
