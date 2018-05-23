@@ -51,6 +51,7 @@ If you're interested in machine learning, check out my other [projects][5] and c
 1. [TensorFlow.js Tutorials & Guides][7]
 2. [Introducing TensorFlow.js: Machine Learning in Javascript][8]
 3. [Neural Network 3D Simulation][9]
+4. [YOLO: Real-Time Object Detection][10]
 
 [1]: https://github.com/tensorflow/tfjs
 [2]: https://learn-machine-learning.herokuapp.com/
@@ -61,3 +62,4 @@ If you're interested in machine learning, check out my other [projects][5] and c
 [7]: https://js.tensorflow.org/tutorials/
 [8]: https://medium.com/tensorflow/introducing-tensorflow-js-machine-learning-in-javascript-bf3eab376db
 [9]: https://www.youtube.com/watch?v=3JQ3hYko51Y
+[10]: https://pjreddie.com/darknet/yolo/
