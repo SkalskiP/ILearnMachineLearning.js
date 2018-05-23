@@ -12,7 +12,7 @@ export const ObjectDetectionView = () => {
     return(
         <div className="ObjectDetectionView">
             <PreetyBox 
-                name="Where should I look?" 
+                name="Let me take a look" 
                 style={prettyBoxStyle} 
                 payload={<ImageLoader/>}
             />

@@ -12,6 +12,7 @@ export const ProjectsList = () => {
             <ProjectTile
                 name={"TINY YOLO"}
                 rout={"/object_detection/"}
+                backgroudImageSrc={"/images/yolo.png"}
             />
         </div>
     );

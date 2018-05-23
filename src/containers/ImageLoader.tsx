@@ -5,16 +5,18 @@ import classNames from '../assets/cocoClasses'
 import { IRect } from '../interfaces/IRect';
 import { DrawUtil } from '../utils/DrawUtil';
 import { IDetectedObject } from '../interfaces/IDetectedObject';
+import { LoadingScreen } from './LoadingScreen';
 
 interface State {
     isPredictionActive:boolean;
+    isLoading:boolean;
 }
 
 export class ImageLoader extends React.Component<{}, State> {
 
     constructor(props: any) {
         super(props);
-        this.state = { isPredictionActive: false };
+        this.state = { isPredictionActive: false, isLoading:true};
     }
 
     protected passiveCanvas:HTMLCanvasElement;
@@ -29,7 +31,9 @@ export class ImageLoader extends React.Component<{}, State> {
     protected img:HTMLImageElement = new Image();
 
     public componentDidMount() {
-        this.loadModel();
+        this.loadModel().then(()=>
+            this.setState({ isLoading: false })
+        );
         this.img.addEventListener('load', this.loadScaledImageToCanvas);
     }
 
@@ -324,6 +328,8 @@ export class ImageLoader extends React.Component<{}, State> {
     public render() {
 
         return(
+            this.state.isLoading ? 
+            <LoadingScreen/> : 
             <div className={"ImageLoader"}>
                 {this.state.isPredictionActive && 
                 <div className={"BoardWrapper"} ref = {ref => this.canvasWrapper = ref}>
