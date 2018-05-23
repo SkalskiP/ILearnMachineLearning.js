@@ -2,6 +2,7 @@ import { IPoint } from '../interfaces/IPoint';
 import { ISize } from '../interfaces/ISize';
 import { UnitUtil } from './UnitUtil';
 import { IRect } from '../interfaces/IRect';
+import { IDetectedObject } from '../interfaces/IDetectedObject';
 
 export class DrawUtil {
 
@@ -22,7 +23,7 @@ export class DrawUtil {
         ctx.stroke();
     }
 
-    public static drawRect(canvas:HTMLCanvasElement, rect:IRect, color:string = "#fff", thickness:number = 1) {
+    public static drawRect(canvas:HTMLCanvasElement, rect:IRect, color:string = "#fff", thickness:number = 1): void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
         ctx.strokeStyle = color;
         ctx.lineWidth = thickness;
@@ -30,7 +31,7 @@ export class DrawUtil {
         ctx.stroke();
     }
 
-    public static shadeEverythingButRect(canvas:HTMLCanvasElement, rect:IRect, color:string = "rgba(245,245,245, 0.6)") {
+    public static shadeEverythingButRect(canvas:HTMLCanvasElement, rect:IRect, color:string = "rgba(0, 0, 0, 0.7)"): void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
         ctx.save();
         ctx.fillStyle = color;
@@ -69,7 +70,7 @@ export class DrawUtil {
         ctx.stroke();
     }
 
-    public static drawText(canvas:HTMLCanvasElement, text:string, textSize:number, anchorPoint:IPoint, color:string = "#ffffff", bold:boolean = false) {
+    public static drawText(canvas:HTMLCanvasElement, text:string, textSize:number, anchorPoint:IPoint, color:string = "#ffffff", bold:boolean = false):void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
         
         ctx.fillStyle = color;
@@ -78,6 +79,27 @@ export class DrawUtil {
         ctx.font = (bold ? "bold " : "") + textSize + "px Titillium Web";
         ctx.fillText(text, anchorPoint.x, anchorPoint.y); 
     }
+
+    public static drawPredictionRect(canvas:HTMLCanvasElement, prediction:IDetectedObject, thickness:number = 1, color:string = "#fff", textSize:number = 10): void {
+        DrawUtil.drawRect(canvas, prediction.rect, color, thickness);
+        let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+        let txt = prediction.class + " " + prediction.probability.toFixed(2);
+        let padding = 2;
+
+        ctx.font = "bold " + textSize + "px Titillium Web";
+        ctx.fillStyle = color;
+        ctx.textAlign = "start";
+        ctx.textBaseline = "top";
+
+        let width = ctx.measureText(txt).width;
+
+        ctx.fillRect(prediction.rect.x, prediction.rect.y, width + padding * 2, textSize + padding * 2);
+    
+        ctx.fillStyle = "#000";
+        ctx.fillText(txt, prediction.rect.x, prediction.rect.y); 
+        }
+
+
 
     public static getImageDataAndScale(canvas:HTMLCanvasElement, outputSize:ISize): ImageData {
         let scaled:HTMLCanvasElement = document.createElement("canvas");

@@ -4,6 +4,7 @@ import { AppSettings } from '../settings/AppSettings';
 import classNames from '../assets/cocoClasses'
 import { IRect } from '../interfaces/IRect';
 import { DrawUtil } from '../utils/DrawUtil';
+import { IDetectedObject } from '../interfaces/IDetectedObject';
 
 interface State {
     isPredictionActive:boolean;
@@ -36,7 +37,7 @@ export class ImageLoader extends React.Component<{}, State> {
         this.model = await tf.loadModel(AppSettings.yoloModelUrl); 
     }
 
-    protected async predict() {
+    protected async predict():Promise<IDetectedObject[]> {
 
         const anchors = tf.tensor2d([
             [0.57273, 0.677385], [1.87446, 2.06253], [3.33843, 5.47434],
@@ -101,11 +102,11 @@ export class ImageLoader extends React.Component<{}, State> {
         
           const classesIndxArr = await classes.gather(tf.tensor1d(keepIndx, 'int32')).data();
         
-          const results = [];
+          const results:IDetectedObject[] = [];
         
           classesIndxArr.forEach((classIndx, i) => {
-            const classProb = keepScores[i];
-            if (classProb < this.classProbThreshold) {
+            const classProbability = keepScores[i];
+            if (classProbability < this.classProbThreshold) {
               return;
             }
         
@@ -114,12 +115,12 @@ export class ImageLoader extends React.Component<{}, State> {
         
             top = Math.max(0, top);
             left = Math.max(0, left);
-            bottom = Math.min(416, bottom);
-            right = Math.min(416, right);
+            bottom = Math.min(this.maxPix, bottom);
+            right = Math.min(this.maxPix, right);
         
-            const resultObj = {
+            const nextObject:IDetectedObject = {
               class: className,
-              prob: classProb,
+              probability: classProbability,
               rect: {
                   x: left,
                   y: top,
@@ -128,7 +129,7 @@ export class ImageLoader extends React.Component<{}, State> {
               }
             };
         
-            results.push(resultObj);
+            results.push(nextObject);
           });
         return results;
     }
@@ -290,19 +291,12 @@ export class ImageLoader extends React.Component<{}, State> {
             if(predictions === null)
                 return;
 
-            predictions.forEach((prediction) => {
-                let predictionRect:IRect = {
-                    x: prediction.rect.x + this.predictionsRect.x,
-                    y: prediction.rect.y + this.predictionsRect.y,
-                    width: prediction.rect.width,
-                    height: prediction.rect.height
-                }
-                DrawUtil.drawRect(this.activeCanvas, predictionRect);
-            })
-        })
-        
-   
-        
+            predictions.forEach((prediction:IDetectedObject) => {
+                prediction.rect.x += this.predictionsRect.x;
+                prediction.rect.y += this.predictionsRect.y;
+                DrawUtil.drawPredictionRect(this.activeCanvas, prediction, 2, "#fff", 12);
+            });
+        }) 
     }
 
     public onImageUpload = (event:any) => {
@@ -323,8 +317,8 @@ export class ImageLoader extends React.Component<{}, State> {
             width: size,
             height: size
         }
-        DrawUtil.shadeEverythingButRect(this.activeCanvas, this.predictionsRect);
-        DrawUtil.drawRect(this.activeCanvas, this.predictionsRect);
+        DrawUtil.shadeEverythingButRect(this.activeCanvas, this.predictionsRect, "rgba(0, 0, 0, 0.7)");
+        DrawUtil.drawRect(this.activeCanvas, this.predictionsRect, "#000", 1);
     }
 
     public render() {
