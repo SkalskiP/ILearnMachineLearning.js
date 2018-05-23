@@ -1,7 +1,7 @@
 import * as tf from '@tensorflow/tfjs';
 import * as React from 'react';
 import { AppSettings } from '../settings/AppSettings';
-import classNames from '../assets/cocoClasses'
+import classNames from '../assets/models/cocoClasses'
 import { IRect } from '../interfaces/IRect';
 import { DrawUtil } from '../utils/DrawUtil';
 import { IDetectedObject } from '../interfaces/IDetectedObject';

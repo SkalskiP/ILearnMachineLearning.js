@@ -44,9 +44,9 @@ export class LoadingScreen extends React.Component {
             let startAngleRad2 = startAngleDeg2 % 360;
             startAngleDeg2 -= 3;
             
-            DrawUtil.drawCircleWithGradient(canvas, center, radious1, startAngleRad1, endAngleRad1, 30);
-            DrawUtil.drawCircle(canvas, center, radious2, startAngleRad2, endAngleRad2, 20, "#fff");
-            DrawUtil.drawText(canvas, "Loading model...", 30, center, "#fff", true);
+            DrawUtil.drawCircleWithGradient(canvas, center, radious1, startAngleRad1, endAngleRad1, 20);
+            DrawUtil.drawCircle(canvas, center, radious2, startAngleRad2, endAngleRad2, 10, "#fff");
+            DrawUtil.drawText(canvas, "Loading model...", 20, center, "#fff", true);
 
             requestAnimationFrame(step);
         }
