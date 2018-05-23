@@ -13,4 +13,13 @@
     .ImageInput {
         margin: 10px;
     }
+
+    .BoardWrapper {
+        canvas {
+            position: absolute;
+        }
+        .PredictionsBoard {
+            z-index: 10;
+        }
+    }
 }

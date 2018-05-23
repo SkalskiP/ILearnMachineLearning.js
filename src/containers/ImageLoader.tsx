@@ -2,23 +2,33 @@ import * as tf from '@tensorflow/tfjs';
 import * as React from 'react';
 import { AppSettings } from '../settings/AppSettings';
 import classNames from '../assets/cocoClasses'
+import { IRect } from '../interfaces/IRect';
+import { DrawUtil } from '../utils/DrawUtil';
 
+interface State {
+    isPredictionActive:boolean;
+}
 
-export class ImageLoader extends React.Component {
+export class ImageLoader extends React.Component<{}, State> {
 
     constructor(props: any) {
         super(props);
+        this.state = { isPredictionActive: false };
     }
 
-    protected canvas:HTMLCanvasElement;
+    protected passiveCanvas:HTMLCanvasElement;
+    protected activeCanvas:HTMLCanvasElement;
+    protected canvasWrapper:HTMLDivElement;
     protected predictions:number[];
+    protected predictionsRect:IRect;
     protected model:tf.Model;
+    protected iouThreshold:number = AppSettings.yoloModelIouThreshold;
+    protected classProbThreshold:number = AppSettings.yoloModelClassProbThreshold;
     protected maxPix:number = AppSettings.yoloModelInputPixelSize;
     protected img:HTMLImageElement = new Image();
 
     public componentDidMount() {
         this.loadModel();
-        this.initCanvasSize();
         this.img.addEventListener('load', this.loadScaledImageToCanvas);
     }
 
@@ -33,14 +43,11 @@ export class ImageLoader extends React.Component {
             [7.88282, 3.52778], [9.77052, 9.16828],
           ]);
 
-        const iouThreshold = 0.5;
-        const classProbThreshold = 0.5;
-
         const numAnchors = anchors.shape[0];
         const anchorsTensor = tf.reshape(anchors, [1, 1, numAnchors, 2]);
         const numClasses = 80;
 
-        let imageData = this.canvas.getContext("2d").getImageData(0, 0, this.canvas.width, this.canvas.height);
+        let imageData = this.passiveCanvas.getContext("2d").getImageData(0, 0, this.passiveCanvas.width, this.passiveCanvas.height);
 
         const [allBoxes, boxConfidence, boxClassProbs] = await tf.tidy(() => {
     
@@ -53,7 +60,6 @@ export class ImageLoader extends React.Component {
 
             let pixelsCropped = pixels.slice([beginHeight, beginWidth, 0], [this.maxPix, this.maxPix, 3]);
             let batchedImage = pixelsCropped.expandDims(0);
-            // batchedImage = tf.cast(batchedImage, 'float32');
             batchedImage = batchedImage.toFloat().div(tf.scalar(255))
 
 
@@ -90,7 +96,7 @@ export class ImageLoader extends React.Component {
           const [ keepIndx, boxesArr, keepScores ] = this.nonMaxSuppression(
             preKeepBoxesArr,
             scoresArr,
-            iouThreshold,
+            this.iouThreshold,
           );
         
           const classesIndxArr = await classes.gather(tf.tensor1d(keepIndx, 'int32')).data();
@@ -99,7 +105,7 @@ export class ImageLoader extends React.Component {
         
           classesIndxArr.forEach((classIndx, i) => {
             const classProb = keepScores[i];
-            if (classProb < classProbThreshold) {
+            if (classProb < this.classProbThreshold) {
               return;
             }
         
@@ -112,19 +118,18 @@ export class ImageLoader extends React.Component {
             right = Math.min(416, right);
         
             const resultObj = {
-              className,
-              classProb,
-              bottom,
-              top,
-              left,
-              right,
+              class: className,
+              prob: classProb,
+              rect: {
+                  x: left,
+                  y: top,
+                  width: right - left,
+                  height: bottom - top
+              }
             };
         
             results.push(resultObj);
           });
-        
-        console.log(results);
-        
         return results;
     }
 
@@ -261,39 +266,73 @@ export class ImageLoader extends React.Component {
         return this.boxIntersection(a, b) / this.boxUnion(a, b);
     }
 
-public initCanvasSize() {
-    this.canvas.width = 0;
-    this.canvas.height = 0;
-}
-
     public loadScaledImageToCanvas = () => {
         const aspectRatio = this.img.naturalWidth / this.img.naturalHeight;
 
         if (this.img.naturalWidth >= this.img.naturalHeight) {
-            this.canvas.height = this.maxPix;
-            this.canvas.width = this.maxPix * aspectRatio;
+            this.passiveCanvas.height = this.maxPix;
+            this.passiveCanvas.width = this.maxPix * aspectRatio;
         } else {
-            this.canvas.width = this.maxPix;
-            this.canvas.height = this.maxPix / aspectRatio;
+            this.passiveCanvas.width = this.maxPix;
+            this.passiveCanvas.height = this.maxPix / aspectRatio;
         }
 
-        let ctx = this.canvas.getContext('2d');
-        ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
-    
-        this.predict();
+        this.activeCanvas.width = this.passiveCanvas.width;
+        this.activeCanvas.height = this.passiveCanvas.height;
+
+        this.canvasWrapper.style.width = this.passiveCanvas.width + "px";
+        this.canvasWrapper.style.height = this.passiveCanvas.height + "px";
+
+        let ctx = this.passiveCanvas.getContext('2d');
+        ctx.drawImage(this.img, 0, 0, this.passiveCanvas.width, this.passiveCanvas.height);
+        this.drawPredRects();
+        this.predict().then((predictions) => {
+            if(predictions === null)
+                return;
+
+            predictions.forEach((prediction) => {
+                let predictionRect:IRect = {
+                    x: prediction.rect.x + this.predictionsRect.x,
+                    y: prediction.rect.y + this.predictionsRect.y,
+                    width: prediction.rect.width,
+                    height: prediction.rect.height
+                }
+                DrawUtil.drawRect(this.activeCanvas, predictionRect);
+            })
+        })
+        
+   
+        
     }
 
     public onImageUpload = (event:any) => {
         const file:File = event.target.files[0];
-        const url:string = URL.createObjectURL(file)
+        const url:string = URL.createObjectURL(file);
+        this.setState({ isPredictionActive: true });
         this.img.src = url;
+    }
+
+    public drawPredRects():void {
+        let size = Math.min(this.passiveCanvas.width, this.passiveCanvas.height);
+        this.predictionsRect = {
+            x: this.passiveCanvas.width/2 - size/2,
+            y: this.passiveCanvas.height/2 - size/2,
+            width: size,
+            height: size
+        }
+        DrawUtil.shadeEverythingButRect(this.activeCanvas, this.predictionsRect);
+        DrawUtil.drawRect(this.activeCanvas, this.predictionsRect);
     }
 
     public render() {
 
         return(
             <div className={"ImageLoader"}>
-                <canvas className={"ImageBoard"} ref = {ref => this.canvas = ref}/>
+                {this.state.isPredictionActive && 
+                <div className={"BoardWrapper"} ref = {ref => this.canvasWrapper = ref}>
+                    <canvas className={"PredictionsBoard"} ref = {ref => this.activeCanvas = ref}/>
+                    <canvas className={"ImageBoard"} ref = {ref => this.passiveCanvas = ref}/>
+                </div>}
                 <input className={"ImageInput"} type="file" onChange={this.onImageUpload}/>
             </div>
         )

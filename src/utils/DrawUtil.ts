@@ -22,6 +22,24 @@ export class DrawUtil {
         ctx.stroke();
     }
 
+    public static drawRect(canvas:HTMLCanvasElement, rect:IRect, color:string = "#fff", thickness:number = 1) {
+        let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+        ctx.strokeStyle = color;
+        ctx.lineWidth = thickness;
+        ctx.rect(rect.x, rect.y, rect.width, rect.height);
+        ctx.stroke();
+    }
+
+    public static shadeEverythingButRect(canvas:HTMLCanvasElement, rect:IRect, color:string = "rgba(245,245,245, 0.6)") {
+        let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+        ctx.save();
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+        ctx.restore();
+    }
+
     public static drawCircle(canvas:HTMLCanvasElement, anchorPoint:IPoint, radius:number, startAngleDeg:number, endAngleDeg:number, thickness:number = 20, color:string = "#ffffff"): void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
         let startAngleRad = UnitUtil.deg2rad(startAngleDeg);
@@ -31,14 +49,6 @@ export class DrawUtil {
         ctx.lineWidth = thickness;
         ctx.beginPath();
         ctx.arc(anchorPoint.x, anchorPoint.y, radius, startAngleRad, endAngleRad, false);
-        ctx.stroke();
-    }
-
-    public static drawRect(canvas:HTMLCanvasElement, rect:IRect, color:string = "#fff", thickness:number = 2) {
-        let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
-        ctx.strokeStyle = color;
-        ctx.lineWidth = thickness;
-        ctx.rect(rect.x, rect.y, rect.width, rect.height);
         ctx.stroke();
     }
 

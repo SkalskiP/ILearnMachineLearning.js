@@ -21,4 +21,6 @@ export class AppSettings {
     // OBJECT DETECTION
     public static yoloModelUrl:string = 'https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/models/tfjs-yolo-tiny/model.json';
     public static yoloModelInputPixelSize:number = 416;
+    public static yoloModelIouThreshold:number = 0.5;
+    public static yoloModelClassProbThreshold:number = 0.5;
 }
