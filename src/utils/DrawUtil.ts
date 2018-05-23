@@ -1,6 +1,7 @@
 import { IPoint } from '../interfaces/IPoint';
 import { ISize } from '../interfaces/ISize';
 import { UnitUtil } from './UnitUtil';
+import { IRect } from '../interfaces/IRect';
 
 export class DrawUtil {
 
@@ -30,6 +31,14 @@ export class DrawUtil {
         ctx.lineWidth = thickness;
         ctx.beginPath();
         ctx.arc(anchorPoint.x, anchorPoint.y, radius, startAngleRad, endAngleRad, false);
+        ctx.stroke();
+    }
+
+    public static drawRect(canvas:HTMLCanvasElement, rect:IRect, color:string = "#fff", thickness:number = 2) {
+        let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+        ctx.strokeStyle = color;
+        ctx.lineWidth = thickness;
+        ctx.rect(rect.x, rect.y, rect.width, rect.height);
         ctx.stroke();
     }
 
