@@ -1,4 +1,5 @@
 import * as tf from '@tensorflow/tfjs';
+import * as smartcrop from 'smartcrop';
 import * as React from 'react';
 import { AppSettings } from '../settings/AppSettings';
 import classNames from '../assets/models/cocoClasses'
@@ -61,7 +62,6 @@ export class ImageLoader extends React.Component<{}, State> {
             let modelOutput:tf.Tensor4D = this.model.predict(batchedImage) as tf.Tensor4D;
 
             const [boxXY, boxWH, boxConfidence, boxClassProbs] = YoloDataProcessingUtil.yoloHead(modelOutput, anchors, numClasses);
-
             const allBoxes = YoloDataProcessingUtil.boxesToCorners(boxXY, boxWH);
 
             return [allBoxes, boxConfidence, boxClassProbs];
@@ -92,42 +92,34 @@ export class ImageLoader extends React.Component<{}, State> {
             this.iouThreshold,
         );
     
-        const classesIndxArr = await classes.gather(tf.tensor1d(keepIndx, 'int32')).data();
+        const classesIndexArr = await classes.gather(tf.tensor1d(keepIndx, 'int32')).data();
     
-        const results:IDetectedObject[] = [];
-    
-        classesIndxArr.forEach((classIndx, i) => {
-            const classProbability = keepScores[i];
+        return classesIndexArr.reduce((results:IDetectedObject[], classIndexValue:number, index:number) => {
+            const classProbability = keepScores[index];
             if (classProbability < this.classProbThreshold) {
-                return;
+                return results;
             }
-        
-            const className = classNames[classIndx];
-            let [top, left, bottom, right] = boxesArr[i];
-        
-            top = Math.max(0, top);
-            left = Math.max(0, left);
-            bottom = Math.min(this.maxPix, bottom);
-            right = Math.min(this.maxPix, right);
-        
+
+            const className = classNames[classIndexValue];
+            let [top, left, bottom, right] = boxesArr[index];
+
+            const x = Math.max(0, left);
+            const y = Math.max(0, top);
+            const width = Math.min(this.maxPix, right) - x;
+            const height = Math.min(this.maxPix, bottom) - y;
+            
             const nextObject:IDetectedObject = {
                 class: className,
                 probability: classProbability,
-                rect: {
-                    x: left,
-                    y: top,
-                    width: right - left,
-                    height: bottom - top
-                }
+                rect: new Rect(x, y, width, height)
             };
-        
-            results.push(nextObject);
-        });
-        return results;
+
+            return results.concat([nextObject]);
+        }, []);
     }
     
     public loadScaledImageToCanvas = () => {
-        const aspectRatio = this.img.naturalWidth / this.img.naturalHeight;
+        const aspectRatio:number = this.img.naturalWidth / this.img.naturalHeight;
 
         if (this.img.naturalWidth >= this.img.naturalHeight) {
             this.passiveCanvas.height = this.maxPix;
@@ -143,19 +135,19 @@ export class ImageLoader extends React.Component<{}, State> {
         this.canvasWrapper.style.width = this.passiveCanvas.width + "px";
         this.canvasWrapper.style.height = this.passiveCanvas.height + "px";
 
-        let ctx = this.passiveCanvas.getContext('2d');
+        let ctx:CanvasRenderingContext2D = this.passiveCanvas.getContext('2d');
         ctx.drawImage(this.img, 0, 0, this.passiveCanvas.width, this.passiveCanvas.height);
-        this.drawPredRects();
-        this.predict().then((predictions) => {
-            if(predictions === null)
-                return;
-
-            predictions.forEach((prediction:IDetectedObject) => {
-                prediction.rect.x += this.predictionsRect.x;
-                prediction.rect.y += this.predictionsRect.y;
-                DrawUtil.drawPredictionRect(this.activeCanvas, prediction, 2, "#fff", 12);
-            });
-        }) 
+        this.drawPredRects().then(() => {
+            this.predict().then((predictions) => {
+                if(predictions === null)
+                    return;
+    
+                predictions.forEach((prediction:IDetectedObject) => {
+                    prediction.rect.translateByVector({x: this.predictionsRect.x, y: this.predictionsRect.y});
+                    DrawUtil.drawPredictionRect(this.activeCanvas, prediction, 2, "#fff", 12);
+                });
+            }) 
+        });
     }
 
     public onImageUpload = (event:any) => {
@@ -168,14 +160,20 @@ export class ImageLoader extends React.Component<{}, State> {
         }
     }
 
-    public drawPredRects():void {
+    public async drawPredRects() {
         let size = Math.min(this.passiveCanvas.width, this.passiveCanvas.height);
+        let imgSize = Math.min(this.img.naturalWidth, this.img.naturalHeight);
+        const scale = imgSize/size;
+
+        let smartCropRect = await smartcrop.crop(this.img, { width: imgSize, height: imgSize });
+        
         this.predictionsRect = new Rect(
-            this.passiveCanvas.width/2 - size/2,
-            this.passiveCanvas.height/2 - size/2,
-            size,
-            size
+            smartCropRect.topCrop.x / scale,
+            smartCropRect.topCrop.y / scale,
+            smartCropRect.topCrop.width / scale,
+            smartCropRect.topCrop.height / scale
         );
+
         DrawUtil.shadeEverythingButRect(this.activeCanvas, this.predictionsRect, "rgba(0, 0, 0, 0.7)");
         DrawUtil.drawRect(this.activeCanvas, this.predictionsRect, "rgba(255, 255, 255, 0.5)", 1);
     }

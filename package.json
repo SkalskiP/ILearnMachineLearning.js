@@ -12,7 +12,8 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.15.1",
-    "redux": "3.7.2"
+    "redux": "3.7.2",
+    "smartcrop": "^2.0.3"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/index.scss src/index.css",
