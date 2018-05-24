@@ -1,3 +1,5 @@
+import * as tf from '@tensorflow/tfjs';
+
 export class AppSettings {
 
     // APP SETTINGS
@@ -23,4 +25,9 @@ export class AppSettings {
     public static yoloModelInputPixelSize:number = 416;
     public static yoloModelIouThreshold:number = 0.5;
     public static yoloModelClassProbThreshold:number = 0.5;
+    public static yoloModelClassCount:number = 80;
+    public static yoloModelAnchors:tf.Tensor2D = tf.tensor2d([
+        [0.57273, 0.677385], [1.87446, 2.06253], [3.33843, 5.47434],
+        [7.88282, 3.52778], [9.77052, 9.16828],
+      ]);
 }
