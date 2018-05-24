@@ -52,6 +52,10 @@ If you're interested in machine learning, check out my other [projects][5] and c
 2. [Introducing TensorFlow.js: Machine Learning in Javascript][8]
 3. [Neural Network 3D Simulation][9]
 4. [YOLO: Real-Time Object Detection][10]
+5. [AI Experiments with Google][11]
+6. [Gentle guide on how YOLO Object Localization works with Keras][12]
+7. [How to implement a YOLO (v3) object detector from scratch in PyTorch: Part 1][13]
+8. [You only look once][14]
 
 [1]: https://github.com/tensorflow/tfjs
 [2]: https://learn-machine-learning.herokuapp.com/
@@ -63,3 +67,7 @@ If you're interested in machine learning, check out my other [projects][5] and c
 [8]: https://medium.com/tensorflow/introducing-tensorflow-js-machine-learning-in-javascript-bf3eab376db
 [9]: https://www.youtube.com/watch?v=3JQ3hYko51Y
 [10]: https://pjreddie.com/darknet/yolo/
+[11]: https://experiments.withgoogle.com/collection/ai
+[12]: https://heartbeat.fritz.ai/gentle-guide-on-how-yolo-object-localization-works-with-keras-part-2-65fe59ac12d
+[13]: https://blog.paperspace.com/how-to-implement-a-yolo-object-detector-in-pytorch/
+[14]: https://leonardoaraujosantos.gitbooks.io/artificial-inteligence/content/single-shot-detectors/yolo.html
