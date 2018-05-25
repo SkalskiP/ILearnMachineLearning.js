@@ -61,6 +61,9 @@ export class ImageLoader extends React.Component<{}, State> {
 
             let modelOutput:tf.Tensor4D = this.model.predict(batchedImage) as tf.Tensor4D;
 
+            console.log(tf.ENV);
+            
+
             const [boxXY, boxWH, boxConfidence, boxClassProbs] = YoloDataProcessingUtil.yoloHead(modelOutput, anchors, numClasses);
             const allBoxes = YoloDataProcessingUtil.boxesToCorners(boxXY, boxWH);
 
