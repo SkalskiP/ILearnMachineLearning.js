@@ -7,5 +7,4 @@ export class UnitUtil {
     public static rad2deg(angleRad:number) {
         return(angleRad * 180/Math.PI); 
     }
-
 }

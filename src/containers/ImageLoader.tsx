@@ -144,10 +144,21 @@ export class ImageLoader extends React.Component<{}, State> {
             this.predict().then((predictions) => {
                 if(predictions === null)
                     return;
+
+                let class2ColorLedger:any = {};
     
                 predictions.forEach((prediction:IDetectedObject) => {
                     prediction.rect.translateByVector({x: this.predictionsRect.x, y: this.predictionsRect.y});
-                    DrawUtil.drawPredictionRect(this.activeCanvas, prediction, 2, "#fff", 12);
+                    
+                    let color:string; 
+                    if (prediction.class in class2ColorLedger) {
+                        color = class2ColorLedger[prediction.class];
+                    } else {
+                        color = DrawUtil.getRandomRGBColor();
+                        class2ColorLedger[prediction.class] = color;
+                    }
+                    
+                    DrawUtil.drawPredictionRect(this.activeCanvas, prediction, 2, color, 12);
                 });
             }) 
         });
