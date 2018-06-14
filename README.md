@@ -13,7 +13,7 @@ Thanks to this project I could combine my knowledge from two areas: machine lear
 npm install
 
 # serve with hot reload at localhost:3000
-npm run 
+npm start
 ```
 
 ## MNIST
@@ -22,6 +22,14 @@ npm run
 
 <p align="center"> 
 <img src="docs/mnist_demo_update.gif">
+</p>
+
+## YOLO
+
+Originally written in [Darknet][5] - open source neural network framework  -  [YOLO][6] performs really well in the tasks of locating and recognizing objects on the pictures. After converting to a form understandable to TensorFlow.js, I used Tiny YOLOv2 model to recognize objects in pictures sent by the user. All predictions are made on the client's side, without the need to send photos to the server.
+
+<p align="center"> 
+<img src="docs/yolo_demo.gif">
 </p>
 
 ## Build Keras models
@@ -44,30 +52,32 @@ source .env/bin/activate
 
 ## Related projects
 
-If you're interested in machine learning, check out my other [projects][5] and check my profile on [Kaggle][6].
+If you're interested in machine learning, check out my other [projects][7] and check my profile on [Kaggle][8].
 
 ## Read more about In-Browser ML
 
-1. [TensorFlow.js Tutorials & Guides][7]
-2. [Introducing TensorFlow.js: Machine Learning in Javascript][8]
-3. [Neural Network 3D Simulation][9]
-4. [YOLO: Real-Time Object Detection][10]
-5. [AI Experiments with Google][11]
-6. [Gentle guide on how YOLO Object Localization works with Keras][12]
-7. [How to implement a YOLO (v3) object detector from scratch in PyTorch: Part 1][13]
-8. [You only look once][14]
+1. [TensorFlow.js Tutorials & Guides][9]
+2. [Introducing TensorFlow.js: Machine Learning in Javascript][10]
+3. [Neural Network 3D Simulation][11]
+4. [YOLO: Real-Time Object Detection][12]
+5. [AI Experiments with Google][13]
+6. [Gentle guide on how YOLO Object Localization works with Keras][14]
+7. [How to implement a YOLO (v3) object detector from scratch in PyTorch: Part 1][15]
+8. [You only look once][16]
 
 [1]: https://github.com/tensorflow/tfjs
 [2]: https://learn-machine-learning.herokuapp.com/
 [3]: http://yann.lecun.com/exdb/mnist/
 [4]: https://medium.com/@piotr.skalski92/my-first-tensorflow-js-project-b481bdad17fb
-[5]: https://github.com/SkalskiP/ILearnMachineLearning.py
-[6]: https://www.kaggle.com/skalskip
-[7]: https://js.tensorflow.org/tutorials/
-[8]: https://medium.com/tensorflow/introducing-tensorflow-js-machine-learning-in-javascript-bf3eab376db
-[9]: https://www.youtube.com/watch?v=3JQ3hYko51Y
-[10]: https://pjreddie.com/darknet/yolo/
-[11]: https://experiments.withgoogle.com/collection/ai
-[12]: https://heartbeat.fritz.ai/gentle-guide-on-how-yolo-object-localization-works-with-keras-part-2-65fe59ac12d
-[13]: https://blog.paperspace.com/how-to-implement-a-yolo-object-detector-in-pytorch/
-[14]: https://leonardoaraujosantos.gitbooks.io/artificial-inteligence/content/single-shot-detectors/yolo.html
+[5]: https://pjreddie.com/darknet/
+[6]: https://www.youtube.com/watch?v=VOC3huqHrss
+[7]: https://github.com/SkalskiP/ILearnMachineLearning.py
+[8]: https://www.kaggle.com/skalskip
+[9]: https://js.tensorflow.org/tutorials/
+[10]: https://medium.com/tensorflow/introducing-tensorflow-js-machine-learning-in-javascript-bf3eab376db
+[11]: https://www.youtube.com/watch?v=3JQ3hYko51Y
+[12]: https://pjreddie.com/darknet/yolo/
+[13]: https://experiments.withgoogle.com/collection/ai
+[14]: https://heartbeat.fritz.ai/gentle-guide-on-how-yolo-object-localization-works-with-keras-part-2-65fe59ac12d
+[15]: https://blog.paperspace.com/how-to-implement-a-yolo-object-detector-in-pytorch/
+[16]: https://leonardoaraujosantos.gitbooks.io/artificial-inteligence/content/single-shot-detectors/yolo.html
