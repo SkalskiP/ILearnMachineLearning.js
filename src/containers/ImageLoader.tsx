@@ -3,7 +3,6 @@ import * as smartcrop from 'smartcrop';
 import * as React from 'react';
 import { AppSettings } from '../settings/AppSettings';
 import classNames from '../assets/models/cocoClasses'
-import { IRect } from '../interfaces/IRect';
 import { DrawUtil } from '../utils/DrawUtil';
 import { IDetectedObject } from '../interfaces/IDetectedObject';
 import { LoadingScreen } from './LoadingScreen';
@@ -60,9 +59,6 @@ export class ImageLoader extends React.Component<{}, State> {
             batchedImage = batchedImage.toFloat().div(tf.scalar(255))
 
             let modelOutput:tf.Tensor4D = this.model.predict(batchedImage) as tf.Tensor4D;
-
-            console.log(tf.ENV);
-            
 
             const [boxXY, boxWH, boxConfidence, boxClassProbs] = YoloDataProcessingUtil.yoloHead(modelOutput, anchors, numClasses);
             const allBoxes = YoloDataProcessingUtil.boxesToCorners(boxXY, boxWH);

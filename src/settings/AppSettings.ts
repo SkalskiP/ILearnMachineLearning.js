@@ -6,6 +6,9 @@ export class AppSettings {
     public static gitHubUrl:string = 'https://github.com/SkalskiP';
     public static twitterUrl:string = 'https://twitter.com/PiotrSkalski92';
     public static mediumUrl:string = 'https://medium.com/@piotr.skalski92';
+    public static primaryColor:string = "#212121";
+    public static secondaryColor:string = "#ffffff";
+    public static alernativeColor:string = "#ef6c00";
 
     // MNIST
     public static mnistModelUrl:string = 'https://raw.githubusercontent.com/SkalskiP/ILearnMachineLearning.js/master/models/mnist/ModelJS/model.json';

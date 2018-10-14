@@ -28,8 +28,8 @@ class CircleChartComponent extends React.Component<Props, State> {
     protected maxAngle:number = 360;
     protected numberOfClasses:number = 10;
     protected inactiveCircleColor:string = "rgba(255,255,255,0.05)";
-    protected activeCircleColor:string = "#fff"
-    protected bestCircleColor:string = "#ef6c00"
+    protected activeCircleColor:string = "#fff";
+    protected bestCircleColor:string = "#ef6c00";
     
     constructor(props: any) {
         super(props);
