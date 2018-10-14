@@ -71,8 +71,8 @@ class CircleChartComponent extends React.Component<Props, State> {
     }
 
     protected initCirclePaths():void {
-        let diameter:number = Math.min(this.canvasRect.height, this.canvasRect.width, AppSettings.circleChartBaseDiameter)
-        this.setState({ circleScale: diameter/AppSettings.circleChartBaseDiameter });
+        let diameter:number = Math.min(this.canvasRect.height, this.canvasRect.width, AppSettings.CIRCLE_CHART_BASE_DIAMETER)
+        this.setState({ circleScale: diameter/AppSettings.CIRCLE_CHART_BASE_DIAMETER });
         
         let maxCircleRadious:number = 0.9 * diameter/2;
         let minCircleRadious:number = 0.3 * diameter/2;
@@ -88,7 +88,7 @@ class CircleChartComponent extends React.Component<Props, State> {
     protected initChart() {
         DrawUtil.clearCanvas(this.passiveCanvas);
         let chartCenter:Point = this.canvasRect.getCenterPoint();
-        let circleThickness = this.state.circleScale * AppSettings.circleChartBaseCircleThickness;
+        let circleThickness = this.state.circleScale * AppSettings.CIRCLE_CHART_BASE_CIRCLE_THICKNESS;
         this.circlePaths.forEach((radious:number) => {
             DrawUtil.drawCircle(this.passiveCanvas, chartCenter, radious, 0, 360, circleThickness, this.inactiveCircleColor);
         });
@@ -106,7 +106,7 @@ class CircleChartComponent extends React.Component<Props, State> {
         let maxAngle = this.maxAngle;
         let bestCircleColor = this.bestCircleColor;
         let activeCircleColor = this.activeCircleColor;
-        let baseCircleThickness = this.state.circleScale * AppSettings.circleChartBaseCircleThickness;
+        let baseCircleThickness = this.state.circleScale * AppSettings.CIRCLE_CHART_BASE_CIRCLE_THICKNESS;
         let circleScale = this.state.circleScale;
 
         let indexOfMax = predictions.indexOf(Math.max(...predictions));
@@ -114,7 +114,7 @@ class CircleChartComponent extends React.Component<Props, State> {
         let step = function() {
             let timestamp = new Date().getTime();
             let progress = Math.min((duration - (end - timestamp)) / duration, 1);
-            let predictionTextSize = circleScale * AppSettings.circleChartBaseTextSize;
+            let predictionTextSize = circleScale * AppSettings.CIRCLE_CHART_BASE_TEXT_SIZE;
 
             DrawUtil.clearCanvas(canvas);
 

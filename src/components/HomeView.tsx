@@ -10,7 +10,7 @@ export const HomeView = () => {
         backgroundColor: "#fff",
         color: "#000",
         borderColor: "#000"
-    }
+    };
 
     return(
         <div className="HomeView">
@@ -21,4 +21,4 @@ export const HomeView = () => {
             />
         </div>
     );
-}
+};

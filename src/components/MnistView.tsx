@@ -8,12 +8,12 @@ export const MnistView = () => {
     let prettyBoxLeftStyle:React.CSSProperties = {
         width: "40%",
         height: "100%"
-    }
+    };
 
     let prettyBoxRightStyle:React.CSSProperties = {
         width: "60%",
         height: "100%"
-    }
+    };
 
     return(
         <div className="MnistView">
@@ -29,4 +29,4 @@ export const MnistView = () => {
             />
         </div>
     );
-}
+};

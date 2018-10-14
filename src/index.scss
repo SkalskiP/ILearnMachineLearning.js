@@ -7,6 +7,7 @@ body, html {
   padding: 0;
   font-family: 'Titillium Web', sans-serif;
   background-color: $homePageBgColor;
+  overflow: hidden;
 }
 
 #root {
@@ -28,3 +29,4 @@ body, html {
 @import 'styles/RootView';
 @import 'styles/SimpleButton';
 @import 'styles/TopNavbar';
+@import 'styles/ToggledMenu';

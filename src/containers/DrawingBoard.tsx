@@ -24,7 +24,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
 
     protected boardWrapper:HTMLDivElement;
     protected canvas:HTMLCanvasElement;
-    protected mousePosition:IPoint = {x: null, y: null}
+    protected mousePosition:IPoint = {x: null, y: null};
     protected isDrawing:boolean = false;
     protected model:tf.Model;
     protected predictions:number[];
@@ -83,8 +83,8 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     }
 
     protected draw() {
-        const brushDiameter = this.state.drawingBoardScale * AppSettings.drawingBoardBaseBrushDiameter;
-        const brushColor = AppSettings.drawingBoardBaseBrushColor;
+        const brushDiameter = this.state.drawingBoardScale * AppSettings.MNIST_DRAWING_BOARD_BASE_BRUSH_DIAMETER;
+        const brushColor = AppSettings.MNIST_DRAWING_BOARD_BASE_BRUSH_COLOR;
         DrawUtil.drawLine(this.canvas, this.mousePosition, this.mousePosition, brushColor, brushDiameter);
     }
 
@@ -94,7 +94,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     }
 
     protected makePrediction = () => {
-        const pixSize:number = AppSettings.mnistModelInputPixelSize;
+        const pixSize:number = AppSettings.MNIST_MODEL_INPUT_PIXEL_SIZE;
         let image = DrawUtil.getImageDataAndScale(this.canvas, {width: pixSize, height: pixSize});        
         this.predict(image);
         this.props.onNewPrediction(this.predictions);
@@ -107,14 +107,14 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     }
 
     protected async loadModel() {
-        this.model = await tf.loadModel(AppSettings.mnistModelUrl);
+        this.model = await tf.loadModel(AppSettings.MNIST_MODEL_URL);
     }
 
     protected async predict(imageData: ImageData) {
 
         const pred = await tf.tidy(() => {
         
-            const pixSize:number = AppSettings.mnistModelInputPixelSize;
+            const pixSize:number = AppSettings.MNIST_MODEL_INPUT_PIXEL_SIZE;
             let img:any = tf.fromPixels(imageData, 1);
             img = img.reshape([1, pixSize, pixSize, 1]);
             img = tf.cast(img, 'float32');
@@ -127,7 +127,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     }
 
     protected setUpCanvas = () => {
-        const maxDim:number = AppSettings.drawingBoardBaseDim;
+        const maxDim:number = AppSettings.MNIST_DRAWING_BOARD_BASE_DIM;
         const boardWrapperRect = this.boardWrapper.getBoundingClientRect();
 
         if(boardWrapperRect.width >= maxDim && boardWrapperRect.height >= maxDim) {
@@ -149,7 +149,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     public render() {
 
         let boardTextStyle:React.CSSProperties = {
-            fontSize: this.state.drawingBoardScale * AppSettings.drawingBoardBaseTextSize
+            fontSize: this.state.drawingBoardScale * AppSettings.MNIST_DRAWING_BOARD_BASE_TEXT_SIZE
         }
 
         let buttonStyle:React.CSSProperties = {

@@ -14,12 +14,12 @@ export const ImageButton = (props:Props) => {
     let buttonStyle:React.CSSProperties = {
         width: props.size.width,
         height: props.size.height
-    }
+    };
 
     let imageStyle:React.CSSProperties = {
         maxWidth: props.size.width - imagePadding,
         maxHeight: props.size.height - imagePadding
-    }
+    };
     
     return(
         <div className="ImageButton" style={buttonStyle}>
@@ -28,4 +28,4 @@ export const ImageButton = (props:Props) => {
             </a>
         </div>
     );
-}
+};

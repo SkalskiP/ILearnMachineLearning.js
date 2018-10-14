@@ -7,48 +7,52 @@ import TwitterLogo from './../assets/images/TwitterLogo.png';
 import MediumLogo from './../assets/images/MediumLogo.png';
 import ILMLLogo from './../assets/images/logo_white.png';
 import { Route } from 'react-router-dom';
+import {ToggledMenu} from "./ToggledMenu";
 
+interface IProps {
+    isMobile:boolean;
+}
 
-export const TopNavbar = () => {
-    
+export const TopNavbar = (props:IProps) => {
+    const {isMobile} = props;
     return(
         <div className="TopNavbar">
             <div className="NavbarGroup">
                 <div className="Logo">
-                    <Link to="/" style={{maxHeight: 40}}>
+                    <Link to="/" style={{maxHeight: 45}}>
                         <img alt={"I Learn Machine Learning Logo"} 
                             src={ILMLLogo} 
-                            style={{maxHeight: 40}}
+                            style={{maxHeight: 45}}
                         />
                     </Link>
                 </div>
-                <div className="MainHeader">
+                {!isMobile && <div className="MainHeader">
                     <b>ILearnMachineLearning</b>
-                </div>
-                <div className="AdditionalHeader">
-                    {/* MNIST Project */}
-                </div>
+                </div>}
             </div>
-            <div className="NavbarGroup">
+            {!isMobile && <div className="NavbarGroup">
                 <ImageButton
                     image={MediumLogo}
                     imageAlt={"MediumLogo"}
-                    href={AppSettings.mediumUrl}
-                    size={{width: 45, height: 45}}
+                    href={AppSettings.MEDIUM_URL}
+                    size={{width: 60, height: 60}}
                 />
                 <ImageButton
                     image={TwitterLogo}
                     imageAlt={"TwitterLogo"}
-                    href={AppSettings.twitterUrl}
-                    size={{width: 45, height: 45}}
+                    href={AppSettings.TWITTER_URL}
+                    size={{width: 60, height: 60}}
                 />
                 <ImageButton
                     image={GitHubLogo}
                     imageAlt={"GitHubLogo"}
-                    href={AppSettings.gitHubUrl}
-                    size={{width: 45, height: 45}}
+                    href={AppSettings.GITHUB_URL}
+                    size={{width: 60, height: 60}}
                 />
-            </div>
+            </div>}
+            {isMobile && <ToggledMenu
+                buttonSize={{width: 50, height: 50}}
+            />}
         </div>
     );
 }
