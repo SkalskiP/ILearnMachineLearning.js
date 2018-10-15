@@ -35,19 +35,19 @@ export const TopNavbar = (props:IProps) => {
                     image={MediumLogo}
                     imageAlt={"MediumLogo"}
                     href={AppSettings.MEDIUM_URL}
-                    size={{width: 60, height: 60}}
+                    size={{width: 50, height: 50}}
                 />
                 <ImageButton
                     image={TwitterLogo}
                     imageAlt={"TwitterLogo"}
                     href={AppSettings.TWITTER_URL}
-                    size={{width: 60, height: 60}}
+                    size={{width: 50, height: 50}}
                 />
                 <ImageButton
                     image={GitHubLogo}
                     imageAlt={"GitHubLogo"}
                     href={AppSettings.GITHUB_URL}
-                    size={{width: 60, height: 60}}
+                    size={{width: 50, height: 50}}
                 />
             </div>}
             {isMobile && <ToggledMenu

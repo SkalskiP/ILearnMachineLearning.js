@@ -7,7 +7,12 @@ body, html {
   padding: 0;
   font-family: 'Titillium Web', sans-serif;
   background-color: $homePageBgColor;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+body {
+  position: fixed;
 }
 
 #root {
@@ -30,3 +35,4 @@ body, html {
 @import 'styles/SimpleButton';
 @import 'styles/TopNavbar';
 @import 'styles/ToggledMenu';
+@import 'styles/Particles';

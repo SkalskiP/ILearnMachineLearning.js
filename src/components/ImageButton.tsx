@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const ImageButton = (props:Props) => {
-    let imagePadding:number = 20;
+    let imagePadding:number = 10;
 
     let buttonStyle:React.CSSProperties = {
         width: props.size.width,

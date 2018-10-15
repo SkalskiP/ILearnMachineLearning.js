@@ -31,8 +31,9 @@ export class RootView extends React.Component<{}, IState> {
     protected handleResize = () => {
         const isMobile:boolean = window.innerWidth < AppSettings.MOBILE_BORDER_WIDTH;
 
-        if (isMobile !== this.state.isMobile)
+        if (isMobile !== this.state.isMobile) {
             this.setState({isMobile});
+        }
     };
 
     public render() {

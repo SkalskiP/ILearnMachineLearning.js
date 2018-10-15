@@ -45,6 +45,18 @@ export class DrawUtil {
         ctx.restore();
     }
 
+    public static drawFullCircle(canvas:HTMLCanvasElement, anchorPoint:IPoint, radius:number, color:string = "#ffffff"):void {
+        const ctx:CanvasRenderingContext2D = canvas.getContext('2d');
+        ctx.save();
+        const startAngleRad = UnitUtil.deg2rad(0);
+        const endAngleRad = UnitUtil.deg2rad(360);
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(anchorPoint.x, anchorPoint.y, radius, startAngleRad, endAngleRad, false);
+        ctx.fill();
+        ctx.restore();
+    }
+
     public static drawCircle(canvas:HTMLCanvasElement, anchorPoint:IPoint, radius:number, startAngleDeg:number, endAngleDeg:number, thickness:number = 20, color:string = "#ffffff"): void {
         let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
         let startAngleRad = UnitUtil.deg2rad(startAngleDeg);
