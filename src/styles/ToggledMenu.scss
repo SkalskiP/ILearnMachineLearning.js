@@ -30,7 +30,7 @@
         width: 30px;
         height: 4px;
         border-radius: 2px;
-        background-color: black;
+        background-color: $navBarBgColor;
         position: absolute;
         transition: all 0.3s ease-in-out;
       }
@@ -71,6 +71,9 @@
   &.opened {
     .Button {
       .BarsContainer {
+        .Bar {
+          background-color: black;
+        }
         #first {
           transform: rotate(45deg);
           top: 8px

@@ -3,7 +3,6 @@ import {DrawUtil} from "../utils/DrawUtil";
 import {AnimatedCircle} from "../utils/geometry/AnimatiedCircle";
 import {ParticlesAnimationUtil} from "../utils/ParticlesAnimationUtil";
 import {MathUtil} from "../utils/MathUtil";
-import {Point} from "../utils/geometry/Point";
 
 export class Particles extends React.Component {
 
@@ -13,11 +12,13 @@ export class Particles extends React.Component {
     public componentDidMount() {
         this.handleResize();
         window.addEventListener("resize", this.handleResize);
+        window.addEventListener("deviceorientation", this.handleResize);
         this.animate();
     };
 
     public componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
+        window.addEventListener("deviceorientation", this.handleResize);
     };
 
     public handleResize = () => {
@@ -30,13 +31,15 @@ export class Particles extends React.Component {
     };
 
     public animate = () => {
-        const animationWidth:number = this.canvas.width;
-        const animationHeight:number = this.canvas.height;
-        const quantity:number = Math.floor(animationHeight / 100 * animationWidth / 100);
+        let animationWidth:number = this.canvas.width;
+        let animationHeight:number = this.canvas.height;
+        const quantity:number = Math.floor(animationHeight * animationWidth / 10000);
         const circles:AnimatedCircle[] = ParticlesAnimationUtil.generateRandomAnimatedCircles(quantity, animationWidth, animationHeight);
 
         const loop = () => {
             requestAnimationFrame(loop);
+            let animationWidth:number = this.canvas.width;
+            let animationHeight:number = this.canvas.height;
             DrawUtil.clearCanvas(this.canvas);
 
             for(let i = 0; i < circles.length; i ++) {
