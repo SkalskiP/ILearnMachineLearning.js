@@ -1,0 +1,54 @@
+.TopBar {
+    width: 100%;
+    height: $topBarHeight;
+    padding: 2px 5px;
+    
+    background-color: $topBarBackgroundColor;
+    color: $topBarTexColor;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+
+    box-sizing: border-box;
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: space-between;
+    align-items: center;
+
+    .TopBarGroup {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-content: stretch;
+        align-items: center;
+
+        .Logo {
+            padding: 0 10px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .MainHeader {
+            font-size: 25px;
+            margin: 0 10px;
+        }
+
+        .AdditionalHeader {
+            font-size: 15px;
+            margin: 0 25px;
+        }
+    }
+}
+
+
+
+
+
+

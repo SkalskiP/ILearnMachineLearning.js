@@ -13,11 +13,20 @@ interface IProps {
     isMobile:boolean;
 }
 
-export const TopNavbar = (props:IProps) => {
+export const TopBar = (props:IProps) => {
     const {isMobile} = props;
+
+    const renderToggleMenu = () => {
+        return(
+            <div className="ToggledMenuContentWrapper">
+                null;
+            </div>
+        );
+    };
+
     return(
-        <div className="TopNavbar">
-            <div className="NavbarGroup">
+        <div className="TopBar">
+            <div className="TopBarGroup">
                 <div className="Logo">
                     <Link to="/" style={{maxHeight: 45}}>
                         <img alt={"I Learn Machine Learning Logo"} 
@@ -30,7 +39,7 @@ export const TopNavbar = (props:IProps) => {
                     <b>ILearnMachineLearning</b>
                 </div>}
             </div>
-            {!isMobile && <div className="NavbarGroup">
+            {!isMobile && <div className="TopBarGroup">
                 <ImageButton
                     image={MediumLogo}
                     imageAlt={"MediumLogo"}
@@ -52,7 +61,8 @@ export const TopNavbar = (props:IProps) => {
             </div>}
             {isMobile && <ToggledMenu
                 buttonSize={{width: 50, height: 50}}
+                contentRenderer={renderToggleMenu}
             />}
         </div>
     );
-}
+};

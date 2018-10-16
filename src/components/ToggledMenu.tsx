@@ -3,7 +3,8 @@ import classNames from "classnames";
 import {ISize} from "../interfaces/ISize";
 
 interface IProps {
-    buttonSize:ISize,
+    buttonSize:ISize;
+    contentRenderer:() => React.ReactNode;
 }
 
 interface IState {
@@ -20,8 +21,7 @@ export class ToggledMenu extends React.Component<IProps, IState> {
     }
 
     public toggleBurger = () => {
-        this.setState({isOpened: !this.state.isOpened})
-        console.log("Is opened:", this.state.isOpened)
+        this.setState({isOpened: !this.state.isOpened});
     };
 
     protected getMenuClassName() {
@@ -30,7 +30,7 @@ export class ToggledMenu extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const {buttonSize} = this.props;
+        const {buttonSize, contentRenderer} = this.props;
         const {isOpened} = this.state;
 
         const buttonStyle:React.CSSProperties = {
@@ -40,7 +40,9 @@ export class ToggledMenu extends React.Component<IProps, IState> {
 
         return(
             <div className={this.getMenuClassName()} style={buttonStyle}>
-                <div className="Panel"/>
+                <div className="Panel">
+                     {isOpened && contentRenderer()}
+                </div>
                 <div className="Button" onClick={this.toggleBurger}>
                     <div className="BarsContainer">
                         <div className="Bar" id="first"/>

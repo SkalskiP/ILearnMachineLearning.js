@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { MnistView } from './components/MnistView';
-import { TopNavbar } from './components/TopNavbar';
+import { TopBar } from './components/TopBar';
 import { HomeView } from './components/HomeView';
 import { ObjectDetectionView } from './components/ObjectDetectionView';
 import {AppSettings} from "./settings/AppSettings";
@@ -40,7 +40,7 @@ export class RootView extends React.Component<{}, IState> {
         const {isMobile} = this.state;
         return(
             <div className="RootView">
-                <TopNavbar
+                <TopBar
                     isMobile={isMobile}
                 />
                 <Switch>

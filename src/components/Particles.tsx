@@ -3,22 +3,52 @@ import {DrawUtil} from "../utils/DrawUtil";
 import {AnimatedCircle} from "../utils/geometry/AnimatiedCircle";
 import {ParticlesAnimationUtil} from "../utils/ParticlesAnimationUtil";
 import {MathUtil} from "../utils/MathUtil";
+import {IPoint} from "../interfaces/IPoint";
+import {MouseUtil} from "../utils/MouseUtil";
 
 export class Particles extends React.Component {
 
     private canvas:HTMLCanvasElement;
     private mainDiv:HTMLDivElement;
+    private mousePosition:IPoint = null;
 
     public componentDidMount() {
         this.handleResize();
         window.addEventListener("resize", this.handleResize);
         window.addEventListener("deviceorientation", this.handleResize);
+
+        if (!!this.canvas) {
+            this.canvas.addEventListener("mousemove", this.handleMouseMove);
+            this.canvas.addEventListener("touchmove", this.handleMouseMove);
+            this.canvas.addEventListener("touchend", this.clearMousePosition);
+        }
+
         this.animate();
     };
 
     public componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
-        window.addEventListener("deviceorientation", this.handleResize);
+        window.removeEventListener("deviceorientation", this.handleResize);
+
+        if (!!this.canvas) {
+            this.canvas.removeEventListener("mousemove", this.handleMouseMove);
+            this.canvas.removeEventListener("touchmove", this.handleMouseMove);
+            this.canvas.removeEventListener("touchend", this.clearMousePosition);
+        }
+    };
+
+    public handleMouseMove = (event) => {
+        const clientMousePosition = MouseUtil.clientCoordinatesFromEvent(event);
+        event.preventDefault();
+        event.stopPropagation();
+        if (clientMousePosition && !!this.canvas) {
+            const canvasRect = this.canvas.getBoundingClientRect();
+            this.mousePosition = {x: clientMousePosition.x - canvasRect.left, y: clientMousePosition.y - canvasRect.top};
+        }
+    };
+
+    public clearMousePosition = () => {
+        this.mousePosition = null;
     };
 
     public handleResize = () => {
@@ -56,6 +86,15 @@ export class Particles extends React.Component {
             circles.forEach((circle:AnimatedCircle) => {
                 DrawUtil.drawFullCircle(this.canvas, {x: circle.x, y: circle.y}, circle.radius, "#999999");
                 circle.update(0, animationWidth, 0, animationHeight);
+                if (this.mousePosition) {
+                    const distanceVector:IPoint = MathUtil.subtract(circle as IPoint, this.mousePosition);
+                    if (MathUtil.getLength(distanceVector) < 200) {
+                        const directionVector:IPoint = MathUtil.normalize(distanceVector);
+                        circle.translateByVector(MathUtil.scale(directionVector, 1));
+                    }
+
+                }
+
             });
         };
         loop();

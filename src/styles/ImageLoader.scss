@@ -21,7 +21,7 @@
 
     .ImageInput + label {
         transition: background-color 0.7s ease;
-        background-color: $simpleButtonBgColor;
+        background-color: $simpleButtonBackgroundColor;
         color: $simpleButtonTextColor;
         margin: 20px;
         font-size: 15px;
@@ -31,7 +31,7 @@
     }
     
     .ImageInput + label:hover {
-        background-color: $simpleButtonHoverBgColor;
+        background-color: $simpleButtonHoverBackgroundColor;
         color: $simpleButtonHoverTextColor;
     }
 
