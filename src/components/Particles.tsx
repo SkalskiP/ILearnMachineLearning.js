@@ -18,9 +18,10 @@ export class Particles extends React.Component {
         window.addEventListener("deviceorientation", this.handleResize);
 
         if (!!this.canvas) {
-            this.canvas.addEventListener("mousemove", this.handleMouseMove);
-            this.canvas.addEventListener("touchmove", this.handleMouseMove);
-            this.canvas.addEventListener("touchend", this.clearMousePosition);
+            window.addEventListener("mousemove", this.handleMouseMove);
+            window.addEventListener("touchmove", this.handleMouseMove);
+            window.addEventListener("touchend", this.clearMousePosition);
+            // this.canvas.addEventListener("mouseleave", this.clearMousePosition);
         }
 
         this.animate();
@@ -31,9 +32,10 @@ export class Particles extends React.Component {
         window.removeEventListener("deviceorientation", this.handleResize);
 
         if (!!this.canvas) {
-            this.canvas.removeEventListener("mousemove", this.handleMouseMove);
-            this.canvas.removeEventListener("touchmove", this.handleMouseMove);
-            this.canvas.removeEventListener("touchend", this.clearMousePosition);
+            window.removeEventListener("mousemove", this.handleMouseMove);
+            window.removeEventListener("touchmove", this.handleMouseMove);
+            window.removeEventListener("touchend", this.clearMousePosition);
+            // this.canvas.removeEventListener("mouseleave", this.clearMousePosition);
         }
     };
 
@@ -63,7 +65,7 @@ export class Particles extends React.Component {
     public animate = () => {
         let animationWidth:number = this.canvas.width;
         let animationHeight:number = this.canvas.height;
-        const quantity:number = Math.floor(animationHeight * animationWidth / 10000);
+        const quantity:number = Math.floor(animationHeight * animationWidth / 5000);
         const circles:AnimatedCircle[] = ParticlesAnimationUtil.generateRandomAnimatedCircles(quantity, animationWidth, animationHeight);
 
         const loop = () => {
@@ -77,14 +79,15 @@ export class Particles extends React.Component {
                     let firstPoint = {x: circles[i].x, y: circles[i].y};
                     let secondPoint = {x: circles[j].x, y: circles[j].y};
 
-                    if (i !== j && MathUtil.getDistance(firstPoint, secondPoint) < 100) {
-                        DrawUtil.drawLine(this.canvas, firstPoint, secondPoint, "#999999", 1);
+                    const distance:number = MathUtil.getDistance(firstPoint, secondPoint);
+                    if (i !== j && distance < 150) {
+                        DrawUtil.drawLine(this.canvas, firstPoint, secondPoint, "rgba(204, 204, 204, " + ((150 - distance)/150) + ")", 1);
                     }
                 }
             }
 
             circles.forEach((circle:AnimatedCircle) => {
-                DrawUtil.drawFullCircle(this.canvas, {x: circle.x, y: circle.y}, circle.radius, "#999999");
+                DrawUtil.drawFullCircle(this.canvas, {x: circle.x, y: circle.y}, circle.radius, "#cccccc");
                 circle.update(0, animationWidth, 0, animationHeight);
                 if (this.mousePosition) {
                     const distanceVector:IPoint = MathUtil.subtract(circle as IPoint, this.mousePosition);

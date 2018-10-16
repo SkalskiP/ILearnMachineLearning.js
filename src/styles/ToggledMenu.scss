@@ -11,6 +11,7 @@
     height: 100%;
     border-radius: 50%;
     background-color: #ffffff;
+    transition: background-color 0.7s ease;
     box-sizing: border-box;
     z-index: 1000;
 
@@ -60,6 +61,7 @@
   .Panel {
     position: absolute;
     width: 100%;
+    max-width: 500px;
     height: 100%;
     right: -100%;
     top: 0;
@@ -105,11 +107,64 @@
         height: 100%;
         padding: calc(#{$topBarHeight} + 20px) 20px 20px;
         box-sizing: border-box;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+
+        .MenuButton {
+          width: 100%;
+          padding: 5px 0;
+          background-color: transparent;
+          transition: all 0.3s ease-in-out;
+          //border-bottom: solid 1px rgba(255, 255, 255, 0.5);
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          &:focus {
+            outline: 0;
+          }
+
+          > a {
+            width: 100%;
+            height: 100%;
+            display: block;
+            text-decoration: none;
+            color: #fff;
+
+            .MenuButtonWrapper {
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              justify-content: flex-start;
+              align-items: center;
+              align-content: center;
+
+              > img {
+                width: 40px;
+                height: 40px;
+                margin: 0 20px;
+              }
+
+              .ButtonLabel {
+                font-size: 25px;
+                letter-spacing: 2px;
+                //font-weight: 700;
+              }
+            }
+          }
+        }
       }
     }
   }
 }
 
 .ToggledMenu:hover {
-  background-color: $imageButtonHoverColor;
+  background-color: $imageButtonPrimaryHoverColor;
 }

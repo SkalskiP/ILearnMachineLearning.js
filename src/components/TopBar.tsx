@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ImageButton } from './ImageButton';
-import { AppSettings } from '../settings/AppSettings';
-import GitHubLogo from './../assets/images/GitHubLogo.png';
-import TwitterLogo from './../assets/images/TwitterLogo.png';
-import MediumLogo from './../assets/images/MediumLogo.png';
 import ILMLLogo from './../assets/images/logo_white.png';
 import { Route } from 'react-router-dom';
 import {ToggledMenu} from "./ToggledMenu";
+import SocialMediaData from "../data/SocialMediaData";
+import {ISocialMedia} from "../interfaces/ISocialMedia";
+import {ISize} from "../interfaces/ISize";
 
 interface IProps {
     isMobile:boolean;
@@ -19,9 +18,40 @@ export const TopBar = (props:IProps) => {
     const renderToggleMenu = () => {
         return(
             <div className="ToggledMenuContentWrapper">
-                null;
+                {getToggleMenuButtons()}
             </div>
         );
+    };
+
+    const getTopBarButtons = (size:ISize) => {
+        return SocialMediaData.map((data:ISocialMedia) => {
+            return <ImageButton
+                key={data.displayName}
+                size={size}
+                image={data.image}
+                imageAlt={data.imageAlt}
+                href={data.href}
+            />
+        });
+    };
+
+    const getToggleMenuButtons = () => {
+        return SocialMediaData.map((data:ISocialMedia) => {
+            return (
+                <div
+                    className="MenuButton"
+                    key={data.displayName}
+                >
+                    <a href={data.href}>
+                        <div className="MenuButtonWrapper">
+                            <img alt={data.imageAlt} src={data.image}/>
+                            <span className="ButtonLabel">
+                                {data.displayName}
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            )});
     };
 
     return(
@@ -40,24 +70,7 @@ export const TopBar = (props:IProps) => {
                 </div>}
             </div>
             {!isMobile && <div className="TopBarGroup">
-                <ImageButton
-                    image={MediumLogo}
-                    imageAlt={"MediumLogo"}
-                    href={AppSettings.MEDIUM_URL}
-                    size={{width: 50, height: 50}}
-                />
-                <ImageButton
-                    image={TwitterLogo}
-                    imageAlt={"TwitterLogo"}
-                    href={AppSettings.TWITTER_URL}
-                    size={{width: 50, height: 50}}
-                />
-                <ImageButton
-                    image={GitHubLogo}
-                    imageAlt={"GitHubLogo"}
-                    href={AppSettings.GITHUB_URL}
-                    size={{width: 50, height: 50}}
-                />
+                {getTopBarButtons({width: 50, height: 50})}
             </div>}
             {isMobile && <ToggledMenu
                 buttonSize={{width: 50, height: 50}}
