@@ -3,7 +3,8 @@ import {Particles} from "./Particles";
 import ILMLLogo from '../../assets/images/logo_color.png';
 import {ApplicationState} from "../../store";
 import {connect} from "react-redux";
-import {HomeViewMobileComplement} from "../mobileViews/HomeViewMobileComplement";
+import {HomeViewMobile} from "../mobileViews/HomeViewMobileComplement";
+import {TextButton} from "./TextButton";
 
 interface IProps {
     isMobile:boolean;
@@ -16,7 +17,17 @@ export const HomeViewComponent = (props:IProps) => {
                 <img alt={"I Learn Machine Learning Logo"}
                      src={ILMLLogo}
                 />
-                {props.isMobile && <HomeViewMobileComplement/>}
+                {props.isMobile && <HomeViewMobile/>}
+                {!props.isMobile && <div className="HomeViewComplement">
+                    <p>
+                        The whole application is written in React using TypeScript and Redux, but the engine that drives it is <b>TensorFlow.js</b> - a modern library for training and deploying machine learning models.
+                    </p>
+                    <TextButton
+                        label={"EXPLORE"}
+                        rout={"/projects/"}
+                        style={{margin: 10}}
+                    />
+                </div>}
             </div>
             <Particles/>
         </div>

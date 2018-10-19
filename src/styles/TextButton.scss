@@ -15,9 +15,19 @@
   background: transparent;
   font-weight: 700;
 
+  > a {
+    text-decoration: none;
+    color: $buttonAlternativeHoverColor;
+  }
+
   &:hover {
     box-shadow: inherit;
     color: rgb(255, 255, 255);
     background-color: $buttonAlternativeHoverColor;
+
+    > a {
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+    }
   }
 }

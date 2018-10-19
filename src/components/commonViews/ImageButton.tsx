@@ -6,12 +6,14 @@ interface Props {
     image:string,
     imageAlt:string,
     href:string
+    style?:React.CSSProperties
 }
 
 export const ImageButton = (props:Props) => {
     let imagePadding:number = 10;
 
     let buttonStyle:React.CSSProperties = {
+        ...props.style,
         width: props.size.width,
         height: props.size.height
     };

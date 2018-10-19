@@ -8,13 +8,15 @@ import SocialMediaData from "../../data/SocialMediaData";
 import {ISocialMedia} from "../../interfaces/ISocialMedia";
 import {ISize} from "../../interfaces/ISize";
 import {ToggledMenuButton} from "../mobileViews/ToggledMenuButton";
+import {connect} from "react-redux";
+import {ApplicationState} from "../../store";
 
 interface IProps {
-    isMobile:boolean;
+    isMobile?:boolean;
     backgroudImageSrc?:string;
 }
 
-export const TopBar = (props:IProps) => {
+export const TopBarComponent = (props:IProps) => {
     const {isMobile} = props;
 
     const renderToggleMenu = () => {
@@ -77,3 +79,11 @@ export const TopBar = (props:IProps) => {
         </div>
     );
 };
+
+const mapStateToProps = (state: ApplicationState) => ({
+    isMobile: state.app.isMobile,
+});
+
+export const TopBar = connect(mapStateToProps, null)(
+    TopBarComponent
+);

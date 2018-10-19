@@ -1,19 +1,25 @@
-import { ActionCreator } from 'redux';
-import {
-    SetDeviceAsMobile,
-    SetFullScreenMode
-} from './types';
+import {ActionCreator} from 'redux';
+import {SetDataConsumptionNotificationStatus, SetDeviceAsMobile, SetFullScreenMode} from './types';
+import {FullScreenMode} from "../../data/FullScreenMode";
 
-export const setDeviceAsMobile: ActionCreator<SetDeviceAsMobile> = (isDeviceMobile:boolean) => ({
+export const setDeviceAsMobile: ActionCreator<SetDeviceAsMobile> = (status:boolean) => ({
     type: '@@app/SET_DEVICE_AS_MOBILE',
     payload: {
-        isMobile: isDeviceMobile
+        isMobile: status
     }
 });
 
-export const setFullScreenMode: ActionCreator<SetFullScreenMode> = (isFullScreenOn:boolean) => ({
+export const setFullScreenMode: ActionCreator<SetFullScreenMode> = (mode:FullScreenMode) => ({
     type: '@@app/SET_FULL_SCREEN_MODE',
     payload: {
-        isFullScreen: isFullScreenOn
+        fullScreenMode: mode
+    }
+});
+
+export const setDataConsumptionNotificationStatus: ActionCreator<SetDataConsumptionNotificationStatus> =
+    (status:boolean) => ({
+    type: '@@app/SET_DATA_CONSUMPTION_NOTIFICATION_STATUS',
+    payload: {
+        isNotifiedOfDataConsumption: status
     }
 });

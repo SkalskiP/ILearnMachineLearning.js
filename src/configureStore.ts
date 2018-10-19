@@ -1,11 +1,13 @@
 import { createStore, Store, applyMiddleware } from 'redux';
 import { ApplicationState, reducers } from './store';
 import {createLogger} from "redux-logger";
+import {FullScreenMode} from "./data/FullScreenMode";
 
 const initialApplicationState: ApplicationState = {
     app: {
         isMobile: false,
-        isFullScreen: false
+        fullScreenMode: FullScreenMode.UNKNOWN,
+        isNotifiedOfDataConsumption: false
     },
     predictions: {
         predictionValues: []

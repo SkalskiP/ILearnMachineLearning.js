@@ -11,6 +11,7 @@ export class Particles extends React.Component {
     protected canvas:HTMLCanvasElement;
     protected mainDiv:HTMLDivElement;
     protected mousePosition:IPoint = null;
+    protected stopAnimation:boolean = false;
 
     // SETTINGS - MAGIC NUMBERS
 
@@ -34,6 +35,7 @@ export class Particles extends React.Component {
     };
 
     public componentWillUnmount() {
+        this.stopAnimation = true;
         window.removeEventListener("resize", this.handleResize);
         window.removeEventListener("deviceorientation", this.handleResize);
 
@@ -83,6 +85,9 @@ export class Particles extends React.Component {
         const circles:AnimatedCircle[] = ParticlesAnimationUtil.generateRandomAnimatedCircles(quantity, animationWidth, animationHeight);
 
         const loop = () => {
+            if(this.stopAnimation)
+                return;
+
             requestAnimationFrame(loop);
             let animationWidth:number = this.canvas.width;
             let animationHeight:number = this.canvas.height;

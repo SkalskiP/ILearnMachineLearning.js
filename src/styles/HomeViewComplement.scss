@@ -1,4 +1,4 @@
-.HomeViewMobileComplement {
+.HomeViewComplement {
   width: 100%;
   padding: 0 40px;
   box-sizing: border-box;
@@ -8,11 +8,17 @@
   align-items: center;
   align-content: center;
   color: #fff;
+  max-width: 700px;
 
   > p {
     text-align: center;
     margin: 20px 0;
     font-size: 20px;
     text-shadow: 0 0 8px #000;
+  }
+
+  .ButtonsRow {
+    display: flex;
+    flex-direction: row;
   }
 }

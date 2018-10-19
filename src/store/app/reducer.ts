@@ -17,7 +17,12 @@ export const appReducer: Reducer<AppState> = (
         case '@@app/SET_FULL_SCREEN_MODE':
             return {
                 ...state,
-                isFullScreen: action.payload.isFullScreen
+                fullScreenMode: action.payload.fullScreenMode
+            };
+        case '@@app/SET_DATA_CONSUMPTION_NOTIFICATION_STATUS':
+            return {
+                ...state,
+                isNotifiedOfDataConsumption: action.payload.isNotifiedOfDataConsumption
             };
         default:
             return state;
