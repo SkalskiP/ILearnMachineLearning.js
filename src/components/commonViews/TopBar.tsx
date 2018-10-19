@@ -7,6 +7,7 @@ import {ToggledMenu} from "../mobileViews/ToggledMenu";
 import SocialMediaData from "../../data/SocialMediaData";
 import {ISocialMedia} from "../../interfaces/ISocialMedia";
 import {ISize} from "../../interfaces/ISize";
+import {ToggledMenuButton} from "../mobileViews/ToggledMenuButton";
 
 interface IProps {
     isMobile:boolean;
@@ -37,21 +38,14 @@ export const TopBar = (props:IProps) => {
 
     const getToggleMenuButtons = () => {
         return SocialMediaData.map((data:ISocialMedia) => {
-            return (
-                <div
-                    className="MenuButton"
-                    key={data.displayName}
-                >
-                    <a href={data.href}>
-                        <div className="MenuButtonWrapper">
-                            <img alt={data.imageAlt} src={data.image}/>
-                            <span className="ButtonLabel">
-                                {data.displayName}
-                            </span>
-                        </div>
-                    </a>
-                </div>
-            )});
+            return <ToggledMenuButton
+                key={data.displayName}
+                image={data.image}
+                imageAlt={data.imageAlt}
+                label={data.displayName}
+                href={data.href}
+            />
+        });
     };
 
     return(
