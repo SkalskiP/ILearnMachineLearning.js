@@ -16,10 +16,10 @@ interface IProps {
 export class HomeViewMobileComponent extends React.Component<IProps, {}> {
 
     protected goFullScreen = () => {
-        if (screenfull.enabled) {
+        if (screenfull && screenfull.enabled) {
             screenfull.request();
+            this.props.setFullScreenMode(FullScreenMode.ACTIVE);
         }
-        this.props.setFullScreenMode(FullScreenMode.ACTIVE);
     };
 
     protected doNotGoFullScreen = () => {
