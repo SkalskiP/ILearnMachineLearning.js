@@ -1,6 +1,7 @@
 .HomeView {
     width: 100%;
     height: calc(100vh - #{$topBarHeight});
+    touch-action: none;
 
     .Wrapper {
         position: absolute;
@@ -14,7 +15,7 @@
         align-content: center;
 
         > img {
-            width: 60%;
+            width: 50%;
             max-width: 400px;
         }
     }

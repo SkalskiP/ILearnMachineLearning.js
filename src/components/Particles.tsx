@@ -115,7 +115,7 @@ export class Particles extends React.Component {
                     const distanceVector:IPoint = MathUtil.subtract(circle as IPoint, this.mousePosition);
                     if (MathUtil.getLength(distanceVector) < this.gravityReach) {
                         const directionVector:IPoint = MathUtil.normalize(distanceVector);
-                        circle.translateByVector(MathUtil.scale(directionVector, 1));
+                        circle.translateByVector(MathUtil.scale(directionVector, 2));
                     }
 
                 }

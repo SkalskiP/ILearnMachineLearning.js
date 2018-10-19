@@ -1,9 +1,12 @@
-import { applyMiddleware, createStore, Store } from 'redux';
+import { createStore, Store } from 'redux';
 import { ApplicationState, reducers } from './store';
-import { MnistState } from './store/mnist/types';
 
 
 const initialApplicationState: ApplicationState = {
+    app: {
+        isMobile: false,
+        isFullScreen: false
+    },
     predictions: {
         predictionValues: []
     }

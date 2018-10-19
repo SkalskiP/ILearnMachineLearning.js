@@ -5,12 +5,19 @@ import { TopBar } from './components/TopBar';
 import { HomeView } from './components/HomeView';
 import { ObjectDetectionView } from './components/ObjectDetectionView';
 import {AppSettings} from "./settings/AppSettings";
+import {connect, Dispatch} from "react-redux";
+import {ApplicationState} from "./store";
+import {setDeviceAsMobile} from "./store/app/actions";
+
+interface IProps {
+    isDeviceMobile: (isMobile:boolean) => any;
+}
 
 interface IState {
     isMobile:boolean;
 }
 
-export class RootView extends React.Component<{}, IState> {
+export class RootViewComponent extends React.Component<IProps, IState> {
 
     constructor(props) {
         super(props);
@@ -22,24 +29,19 @@ export class RootView extends React.Component<{}, IState> {
     public componentDidMount() {
         this.handleResize();
         window.addEventListener("resize", this.handleResize);
-        window.addEventListener("touchmove", this.handleTouchMove);
     };
 
     public componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
-        window.removeEventListener("touchmove", this.handleTouchMove);
     };
 
     protected handleResize = () => {
         const isMobile:boolean = window.innerWidth < AppSettings.MOBILE_BORDER_WIDTH;
 
         if (isMobile !== this.state.isMobile) {
+            this.props.isDeviceMobile(isMobile);
             this.setState({isMobile});
         }
-    };
-
-    public handleTouchMove = (event:TouchEvent) => {
-        event.preventDefault();
     };
 
     public render() {
@@ -58,3 +60,11 @@ export class RootView extends React.Component<{}, IState> {
         );
     };
 }
+
+const mapDispatchToProps = (dispatch: Dispatch<ApplicationState>) => ({
+    isDeviceMobile: (isMobile:boolean) => dispatch(setDeviceAsMobile(isMobile))
+});
+
+export const RootView = connect(null, mapDispatchToProps)(
+    RootViewComponent
+);

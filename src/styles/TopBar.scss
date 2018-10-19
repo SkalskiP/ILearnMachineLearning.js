@@ -6,6 +6,7 @@
     background-color: $topBarBackgroundColor;
     color: $topBarTexColor;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
+    //box-shadow: 0 0 4px rgba(255,255,255,.14), 0 4px 8px rgba(255,255,255,.28);
 
     box-sizing: border-box;
     user-select: none;
@@ -15,6 +16,8 @@
     justify-content: space-between;
     align-content: space-between;
     align-items: center;
+
+    touch-action: none;
 
     .TopBarGroup {
         display: flex;
