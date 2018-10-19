@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Dispatch, connect } from 'react-redux';
-import { ApplicationState } from '../store/index';
-import { updateModelPredictions } from '../store/mnist/actions';
-import { Point } from '../utils/geometry/Point';
-import { Rect } from '../utils/geometry/Rect';
-import { DrawUtil } from '../utils/DrawUtil';
-import { AppSettings } from '../settings/AppSettings';
+import { ApplicationState } from '../../store/index';
+import { updateModelPredictions } from '../../store/mnist/actions';
+import { Point } from '../../utils/geometry/Point';
+import { Rect } from '../../utils/geometry/Rect';
+import { DrawUtil } from '../../utils/DrawUtil';
+import { AppSettings } from '../../settings/AppSettings';
 
 interface Props {
     predictions:number[];

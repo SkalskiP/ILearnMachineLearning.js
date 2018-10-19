@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { DrawingBoard } from '../containers/DrawingBoard';
-import { CircleChart } from '../containers/CircleChart';
-import { PreetyBox } from './PreetyBox';
+import { DrawingBoard } from './DrawingBoard';
+import { CircleChart } from './CircleChart';
+import { PreetyBox } from '../commonViews/PreetyBox';
 
 export const MnistView = () => {
 

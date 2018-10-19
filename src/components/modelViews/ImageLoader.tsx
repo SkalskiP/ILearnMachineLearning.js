@@ -1,13 +1,13 @@
 import * as tf from '@tensorflow/tfjs';
 import * as smartcrop from 'smartcrop';
 import * as React from 'react';
-import { AppSettings } from '../settings/AppSettings';
-import classNames from '../assets/models/cocoClasses'
-import { DrawUtil } from '../utils/DrawUtil';
-import { IDetectedObject } from '../interfaces/IDetectedObject';
-import { LoadingScreen } from './LoadingScreen';
-import { Rect } from '../utils/geometry/Rect';
-import { YoloDataProcessingUtil } from '../utils/YoloDataProcessingUtil';
+import { AppSettings } from '../../settings/AppSettings';
+import classNames from '../../assets/models/cocoClasses'
+import { DrawUtil } from '../../utils/DrawUtil';
+import { IDetectedObject } from '../../interfaces/IDetectedObject';
+import { LoadingScreen } from '../commonViews/LoadingScreen';
+import { Rect } from '../../utils/geometry/Rect';
+import { YoloDataProcessingUtil } from '../../utils/YoloDataProcessingUtil';
 
 interface State {
     isPredictionActive:boolean;

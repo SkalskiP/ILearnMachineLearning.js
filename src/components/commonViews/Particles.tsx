@@ -1,10 +1,10 @@
 import * as React from "react";
-import {DrawUtil} from "../utils/DrawUtil";
-import {AnimatedCircle} from "../utils/geometry/AnimatiedCircle";
-import {ParticlesAnimationUtil} from "../utils/ParticlesAnimationUtil";
-import {MathUtil} from "../utils/MathUtil";
-import {IPoint} from "../interfaces/IPoint";
-import {MouseUtil} from "../utils/MouseUtil";
+import {DrawUtil} from "../../utils/DrawUtil";
+import {AnimatedCircle} from "../../utils/geometry/AnimatiedCircle";
+import {ParticlesAnimationUtil} from "../../utils/ParticlesAnimationUtil";
+import {MathUtil} from "../../utils/MathUtil";
+import {IPoint} from "../../interfaces/IPoint";
+import {MouseUtil} from "../../utils/MouseUtil";
 
 export class Particles extends React.Component {
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { PreetyBox } from './PreetyBox';
-import { ImageLoader } from '../containers/ImageLoader';
+import { PreetyBox } from '../commonViews/PreetyBox';
+import { ImageLoader } from './ImageLoader';
 
 export const ObjectDetectionView = () => {
 

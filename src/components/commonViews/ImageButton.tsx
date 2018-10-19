@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ISize } from '../interfaces/ISize';
+import { ISize } from '../../interfaces/ISize';
 
 interface Props {
     size:ISize,

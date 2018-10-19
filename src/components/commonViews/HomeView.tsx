@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Particles} from "./Particles";
-import ILMLLogo from './../assets/images/logo_color.png';
+import ILMLLogo from '../../assets/images/logo_color.png';
 
 export const HomeView = () => {
 

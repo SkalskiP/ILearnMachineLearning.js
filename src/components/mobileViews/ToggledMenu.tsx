@@ -1,6 +1,6 @@
 import * as React from "react";
 import classNames from "classnames";
-import {ISize} from "../interfaces/ISize";
+import {ISize} from "../../interfaces/ISize";
 
 interface IProps {
     buttonSize:ISize;

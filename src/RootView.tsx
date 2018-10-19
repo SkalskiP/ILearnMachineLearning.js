@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { MnistView } from './components/MnistView';
-import { TopBar } from './components/TopBar';
-import { HomeView } from './components/HomeView';
-import { ObjectDetectionView } from './components/ObjectDetectionView';
+import { MnistView } from './components/modelViews/MnistView';
+import { TopBar } from './components/commonViews/TopBar';
+import { HomeView } from './components/commonViews/HomeView';
+import { ObjectDetectionView } from './components/modelViews/ObjectDetectionView';
 import {AppSettings} from "./settings/AppSettings";
 import {connect, Dispatch} from "react-redux";
 import {ApplicationState} from "./store";

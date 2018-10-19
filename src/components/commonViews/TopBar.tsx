@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ImageButton } from './ImageButton';
-import ILMLLogo from './../assets/images/logo_white.png';
+import ILMLLogo from '../../assets/images/logo_white.png';
 import { Route } from 'react-router-dom';
-import {ToggledMenu} from "./ToggledMenu";
-import SocialMediaData from "../data/SocialMediaData";
-import {ISocialMedia} from "../interfaces/ISocialMedia";
-import {ISize} from "../interfaces/ISize";
+import {ToggledMenu} from "../mobileViews/ToggledMenu";
+import SocialMediaData from "../../data/SocialMediaData";
+import {ISocialMedia} from "../../interfaces/ISocialMedia";
+import {ISize} from "../../interfaces/ISize";
 
 interface IProps {
     isMobile:boolean;

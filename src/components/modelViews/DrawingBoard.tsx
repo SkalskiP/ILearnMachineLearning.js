@@ -1,12 +1,12 @@
 import * as tf from '@tensorflow/tfjs';
 import * as React from 'react'
-import { DrawUtil } from '../utils/DrawUtil';
+import { DrawUtil } from '../../utils/DrawUtil';
 import { Dispatch, connect } from 'react-redux';
-import { ApplicationState } from '../store/index';
-import { updateModelPredictions } from '../store/mnist/actions';
-import { SimpleButton } from '../components/SimpleButton';
-import { IPoint } from '../interfaces/IPoint';
-import { AppSettings } from '../settings/AppSettings';
+import { ApplicationState } from '../../store/index';
+import { updateModelPredictions } from '../../store/mnist/actions';
+import { SimpleButton } from '../commonViews/SimpleButton';
+import { IPoint } from '../../interfaces/IPoint';
+import { AppSettings } from '../../settings/AppSettings';
 
 interface Props {
     onNewPrediction: (predictions:number[]) => any;
