@@ -10,7 +10,6 @@ export const appReducer: Reducer<AppState> = (
 ) => {
     switch (action.type) {
         case '@@app/SET_DEVICE_AS_MOBILE':
-            console.log("isMobile", action.payload.isMobile);
             return {
                 ...state,
                 isMobile: action.payload.isMobile
