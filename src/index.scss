@@ -6,7 +6,13 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Titillium Web', sans-serif;
-  background-color: $homePageBgColor;
+  background-color: $homePageBackgroundColor;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+body {
+  position: fixed;
 }
 
 #root {
@@ -24,7 +30,12 @@ body, html {
 @import 'styles/MnistView';
 @import 'styles/DrawingBoard';
 @import 'styles/ImageButton';
+@import 'styles/TextButton';
 @import 'styles/PreetyBox';
 @import 'styles/RootView';
 @import 'styles/SimpleButton';
-@import 'styles/TopNavbar';
+@import 'styles/TopBar';
+@import 'styles/ToggledMenu';
+@import 'styles/ToggledMenuButton';
+@import 'styles/Particles';
+@import 'styles/HomeViewComplement';

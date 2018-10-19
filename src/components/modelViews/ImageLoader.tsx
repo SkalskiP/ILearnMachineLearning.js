@@ -1,14 +1,13 @@
 import * as tf from '@tensorflow/tfjs';
 import * as smartcrop from 'smartcrop';
 import * as React from 'react';
-import { AppSettings } from '../settings/AppSettings';
-import classNames from '../assets/models/cocoClasses'
-import { IRect } from '../interfaces/IRect';
-import { DrawUtil } from '../utils/DrawUtil';
-import { IDetectedObject } from '../interfaces/IDetectedObject';
-import { LoadingScreen } from './LoadingScreen';
-import { Rect } from '../utils/geometry/Rect';
-import { YoloDataProcessingUtil } from '../utils/YoloDataProcessingUtil';
+import { AppSettings } from '../../settings/AppSettings';
+import classNames from '../../assets/models/cocoClasses'
+import { DrawUtil } from '../../utils/DrawUtil';
+import { IDetectedObject } from '../../interfaces/IDetectedObject';
+import { LoadingScreen } from '../commonViews/LoadingScreen';
+import { Rect } from '../../utils/geometry/Rect';
+import { YoloDataProcessingUtil } from '../../utils/YoloDataProcessingUtil';
 
 interface State {
     isPredictionActive:boolean;
@@ -28,9 +27,9 @@ export class ImageLoader extends React.Component<{}, State> {
     protected predictions:number[];
     protected predictionsRect:Rect;
     protected model:tf.Model;
-    protected iouThreshold:number = AppSettings.yoloModelIouThreshold;
-    protected classProbThreshold:number = AppSettings.yoloModelClassProbThreshold;
-    protected maxPix:number = AppSettings.yoloModelInputPixelSize;
+    protected iouThreshold:number = AppSettings.YOLO_MODEL_IOU_THRESHOLD;
+    protected classProbThreshold:number = AppSettings.YOLO_MODEL_CLASS_PROB_THRESHOLD;
+    protected maxPix:number = AppSettings.YOLO_MODEL_INPUT_PIXEL_SIZE;
     protected img:HTMLImageElement = new Image();
 
     public componentDidMount() {
@@ -41,14 +40,14 @@ export class ImageLoader extends React.Component<{}, State> {
     }
 
     protected async loadModel() {
-        this.model = await tf.loadModel(AppSettings.yoloModelUrl); 
+        this.model = await tf.loadModel(AppSettings.YOLO_MODEL_URL);
     }
 
     protected async predict():Promise<IDetectedObject[]> {
 
         // Load model settings from app settings
-        const anchors = AppSettings.yoloModelAnchors;
-        const numClasses = AppSettings.yoloModelClassCount;
+        const anchors = AppSettings.YOLO_MODEL_ANCHORS;
+        const numClasses = AppSettings.YOLO_MODEL_CLASS_COUNT;
 
         let imageData = this.passiveCanvas.getContext("2d").getImageData(0, 0, this.passiveCanvas.width, this.passiveCanvas.height);
 
@@ -60,9 +59,6 @@ export class ImageLoader extends React.Component<{}, State> {
             batchedImage = batchedImage.toFloat().div(tf.scalar(255))
 
             let modelOutput:tf.Tensor4D = this.model.predict(batchedImage) as tf.Tensor4D;
-
-            console.log(tf.ENV);
-            
 
             const [boxXY, boxWH, boxConfidence, boxClassProbs] = YoloDataProcessingUtil.yoloHead(modelOutput, anchors, numClasses);
             const allBoxes = YoloDataProcessingUtil.boxesToCorners(boxXY, boxWH);

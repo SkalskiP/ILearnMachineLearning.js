@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Rect } from '../utils/geometry/Rect';
-import { Point } from '../utils/geometry/Point';
-import { DrawUtil } from '../utils/DrawUtil';
-import { UnitUtil } from '../utils/UnitUtil';
+import { Rect } from '../../utils/geometry/Rect';
+import { Point } from '../../utils/geometry/Point';
+import { DrawUtil } from '../../utils/DrawUtil';
 
 export class LoadingScreen extends React.Component {
 

@@ -1,0 +1,121 @@
+.ToggledMenu {
+  border-radius: 50%;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: background-color 0.7s ease;
+  margin: 5px 2px;
+
+  .Button {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #ffffff;
+    transition: background-color 0.7s ease;
+    box-sizing: border-box;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+    .BarsContainer {
+      width: 30px;
+      height: 20px;
+      position: relative;
+
+      .Bar {
+        width: 30px;
+        height: 4px;
+        border-radius: 2px;
+        background-color: $topBarBackgroundColor;
+        position: absolute;
+        transition: all 0.3s ease-in-out;
+      }
+
+      #first {
+        top: 0;
+      }
+
+      #second {
+        top: 8px;
+      }
+
+      #third {
+        bottom: 0;
+      }
+    }
+
+    .Button:hover {
+      cursor: pointer;
+    }
+
+    .Button:focus {
+      outline: 0;
+    }
+  }
+
+  .Panel {
+    position: absolute;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    right: -100%;
+    top: 0;
+    background-color: $toggleMenuBackgroundColor;
+    z-index: 900;
+    transition: right 300ms linear;
+  }
+
+  &.opened {
+    .Button {
+      .BarsContainer {
+        .Bar {
+          background-color: black;
+        }
+        #first {
+          transform: rotate(45deg);
+          top: 8px
+        }
+
+        #second {
+          opacity: 0;
+        }
+
+        #third {
+          transform: rotate(-45deg);
+          bottom: 8px;
+        }
+      }
+    }
+
+    .Panel {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      right: 0px;
+      top: 0;
+      background-color: $toggleMenuBackgroundColor;
+      z-index: 900;
+      transition: right 300ms linear;
+
+      .ToggledMenuContentWrapper {
+        width: 100%;
+        height: 100%;
+        padding: calc(#{$topBarHeight} + 20px) 20px 20px;
+        box-sizing: border-box;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+      }
+    }
+  }
+}
+
+.ToggledMenu:hover {
+  background-color: $buttonPrimaryHoverColor;
+}

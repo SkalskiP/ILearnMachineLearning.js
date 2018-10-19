@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ISize } from '../interfaces/ISize';
 
 interface IProps {
     name:string,

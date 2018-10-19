@@ -1,12 +1,22 @@
 .HomeView {
     width: 100%;
-    height: 100%;
-    padding: 25px 0 0 0;
+    height: calc(100vh - #{$topBarHeight});
+    touch-action: none;
 
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    align-content: stretch;
-    align-items: center;
+    .Wrapper {
+        position: absolute;
+        width: 100%;
+        height: calc(100vh - #{$topBarHeight});
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+
+        > img {
+            width: 50%;
+            max-width: 300px;
+        }
+    }
 }

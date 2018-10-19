@@ -23,4 +23,4 @@ export const ProjectTile = (props:IProps) => {
             </Link>
         </div>
     );
-}
+};
