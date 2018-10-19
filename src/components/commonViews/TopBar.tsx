@@ -11,6 +11,7 @@ import {ToggledMenuButton} from "../mobileViews/ToggledMenuButton";
 
 interface IProps {
     isMobile:boolean;
+    backgroudImageSrc?:string;
 }
 
 export const TopBar = (props:IProps) => {
@@ -48,8 +49,11 @@ export const TopBar = (props:IProps) => {
         });
     };
 
+    const style:React.CSSProperties = props.backgroudImageSrc ?
+        {backgroundImage: 'url(' + props.backgroudImageSrc + ')'} : {};
+
     return(
-        <div className="TopBar">
+        <div className="TopBar" style={style}>
             <div className="TopBarGroup">
                 <div className="Logo">
                     <Link to="/" style={{maxHeight: 45}}>

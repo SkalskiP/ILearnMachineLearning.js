@@ -25,9 +25,9 @@ export class Particles extends React.Component {
         window.addEventListener("deviceorientation", this.handleResize);
 
         if (!!this.canvas) {
-            window.addEventListener("mousemove", this.handleMouseMove);
-            window.addEventListener("touchmove", this.handleMouseMove);
-            window.addEventListener("touchend", this.clearMousePosition);
+            // window.addEventListener("mousemove", this.handleMouseMove);
+            // window.addEventListener("touchmove", this.handleMouseMove);
+            // window.addEventListener("touchend", this.clearMousePosition);
         }
 
         this.animate();
@@ -38,9 +38,9 @@ export class Particles extends React.Component {
         window.removeEventListener("deviceorientation", this.handleResize);
 
         if (!!this.canvas) {
-            window.removeEventListener("mousemove", this.handleMouseMove);
-            window.removeEventListener("touchmove", this.handleMouseMove);
-            window.removeEventListener("touchend", this.clearMousePosition);
+            // window.removeEventListener("mousemove", this.handleMouseMove);
+            // window.removeEventListener("touchmove", this.handleMouseMove);
+            // window.removeEventListener("touchend", this.clearMousePosition);
         }
     };
 
@@ -98,7 +98,7 @@ export class Particles extends React.Component {
                     const distance:number = MathUtil.getDistance(firstPoint, secondPoint);
                     if (i !== j && distance < this.maxLineLength) {
                         const lineAlpha:number = (this.maxLineLength - distance)/this.maxLineLength;
-                        const lineColor:string = `rgba(204, 204, 204, ${lineAlpha})`;
+                        const lineColor:string = `rgba(187, 187, 187, ${lineAlpha})`;
                         DrawUtil.drawLine(this.canvas, firstPoint, secondPoint, lineColor, 1);
                     }
                 }
@@ -107,7 +107,7 @@ export class Particles extends React.Component {
             // DRAWING AND POINT UPDATE
 
             circles.forEach((circle:AnimatedCircle) => {
-                DrawUtil.drawFullCircle(this.canvas, {x: circle.x, y: circle.y}, circle.radius, "#cccccc");
+                DrawUtil.drawFullCircle(this.canvas, {x: circle.x, y: circle.y}, circle.radius, "#bbb");
                 circle.bounceOf(0, animationWidth, 0, animationHeight);
                 circle.setNewPositionWhenOut(0, animationWidth, 0, animationHeight);
                 circle.update();

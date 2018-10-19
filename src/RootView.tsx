@@ -50,6 +50,7 @@ export class RootViewComponent extends React.Component<IProps, IState> {
             <div className="RootView">
                 <TopBar
                     isMobile={isMobile}
+                    backgroudImageSrc={"/images/top_bar.svg"}
                 />
                 <Switch>
                     <Route exact={true} path="/" component={HomeView} />
