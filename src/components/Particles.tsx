@@ -8,9 +8,16 @@ import {MouseUtil} from "../utils/MouseUtil";
 
 export class Particles extends React.Component {
 
-    private canvas:HTMLCanvasElement;
-    private mainDiv:HTMLDivElement;
-    private mousePosition:IPoint = null;
+    protected canvas:HTMLCanvasElement;
+    protected mainDiv:HTMLDivElement;
+    protected mousePosition:IPoint = null;
+
+    // SETTINGS - MAGIC NUMBERS
+
+    protected dotsToAreaRatio:number = 1/7500;
+    protected inactivePadding:number = 10;
+    protected maxLineLength:number = 150;
+    protected gravityReach:number = 200;
 
     public componentDidMount() {
         this.handleResize();
@@ -21,7 +28,6 @@ export class Particles extends React.Component {
             window.addEventListener("mousemove", this.handleMouseMove);
             window.addEventListener("touchmove", this.handleMouseMove);
             window.addEventListener("touchend", this.clearMousePosition);
-            // this.canvas.addEventListener("mouseleave", this.clearMousePosition);
         }
 
         this.animate();
@@ -35,7 +41,6 @@ export class Particles extends React.Component {
             window.removeEventListener("mousemove", this.handleMouseMove);
             window.removeEventListener("touchmove", this.handleMouseMove);
             window.removeEventListener("touchend", this.clearMousePosition);
-            // this.canvas.removeEventListener("mouseleave", this.clearMousePosition);
         }
     };
 
@@ -45,7 +50,16 @@ export class Particles extends React.Component {
         event.stopPropagation();
         if (clientMousePosition && !!this.canvas) {
             const canvasRect = this.canvas.getBoundingClientRect();
-            this.mousePosition = {x: clientMousePosition.x - canvasRect.left, y: clientMousePosition.y - canvasRect.top};
+            const padding = this.inactivePadding;
+            const newPositionX:number = clientMousePosition.x - canvasRect.left;
+            const newPositionY:number = clientMousePosition.y - canvasRect.top;
+            if (newPositionX < padding || newPositionX > canvasRect.width - padding ||
+                newPositionY < padding || newPositionY > canvasRect.height - padding) {
+                this.clearMousePosition()
+            }
+            else {
+                this.mousePosition = {x: newPositionX, y: newPositionY};
+            }
         }
     };
 
@@ -65,7 +79,7 @@ export class Particles extends React.Component {
     public animate = () => {
         let animationWidth:number = this.canvas.width;
         let animationHeight:number = this.canvas.height;
-        const quantity:number = Math.floor(animationHeight * animationWidth / 5000);
+        const quantity:number = Math.floor(animationHeight * animationWidth * this.dotsToAreaRatio);
         const circles:AnimatedCircle[] = ParticlesAnimationUtil.generateRandomAnimatedCircles(quantity, animationWidth, animationHeight);
 
         const loop = () => {
@@ -74,24 +88,32 @@ export class Particles extends React.Component {
             let animationHeight:number = this.canvas.height;
             DrawUtil.clearCanvas(this.canvas);
 
+            // DRAWING LINES
+
             for(let i = 0; i < circles.length; i ++) {
                 for(let j = i + 1; j < circles.length; j ++) {
                     let firstPoint = {x: circles[i].x, y: circles[i].y};
                     let secondPoint = {x: circles[j].x, y: circles[j].y};
 
                     const distance:number = MathUtil.getDistance(firstPoint, secondPoint);
-                    if (i !== j && distance < 150) {
-                        DrawUtil.drawLine(this.canvas, firstPoint, secondPoint, "rgba(204, 204, 204, " + ((150 - distance)/150) + ")", 1);
+                    if (i !== j && distance < this.maxLineLength) {
+                        const lineAlpha:number = (this.maxLineLength - distance)/this.maxLineLength;
+                        const lineColor:string = `rgba(204, 204, 204, ${lineAlpha})`;
+                        DrawUtil.drawLine(this.canvas, firstPoint, secondPoint, lineColor, 1);
                     }
                 }
             }
 
+            // DRAWING AND POINT UPDATE
+
             circles.forEach((circle:AnimatedCircle) => {
                 DrawUtil.drawFullCircle(this.canvas, {x: circle.x, y: circle.y}, circle.radius, "#cccccc");
-                circle.update(0, animationWidth, 0, animationHeight);
+                circle.bounceOf(0, animationWidth, 0, animationHeight);
+                circle.setNewPositionWhenOut(0, animationWidth, 0, animationHeight);
+                circle.update();
                 if (this.mousePosition) {
                     const distanceVector:IPoint = MathUtil.subtract(circle as IPoint, this.mousePosition);
-                    if (MathUtil.getLength(distanceVector) < 200) {
+                    if (MathUtil.getLength(distanceVector) < this.gravityReach) {
                         const directionVector:IPoint = MathUtil.normalize(distanceVector);
                         circle.translateByVector(MathUtil.scale(directionVector, 1));
                     }
@@ -104,7 +126,6 @@ export class Particles extends React.Component {
     };
 
     public render() {
-
         return(
             <div className="Particles"
                  ref={(ref) => this.mainDiv = ref}

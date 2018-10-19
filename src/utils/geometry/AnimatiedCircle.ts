@@ -11,20 +11,22 @@ export class AnimatedCircle extends Circle {
         this.dy = dy;
     }
 
-    public update(minX:number, maxX:number, minY:number, maxY:number) {
-        const padding:number = 10;
-
+    public bounceOf(minX:number, maxX:number, minY:number, maxY:number) {
         if (this.x + this.radius > maxX || this.x - this.radius < minX)
             this.dx = - this.dx;
 
         if (this.y + this.radius > maxY || this.y - this.radius < minY)
             this.dy = - this.dy;
+    }
 
-        if (this.x > maxX + padding || this.x < minX - padding || this.y > maxY + padding || this.y < minY - padding) {
+    public setNewPositionWhenOut(minX:number, maxX:number, minY:number, maxY:number) {
+        if (this.x > maxX || this.x < minX || this.y > maxY || this.y < minY) {
             this.x = Math.random() * maxX;
             this.y = Math.random() * maxY;
         }
+    }
 
+    public update() {
         this.translateByVector({x: this.dx, y: this.dy})
     }
 }

@@ -22,10 +22,12 @@ export class RootView extends React.Component<{}, IState> {
     public componentDidMount() {
         this.handleResize();
         window.addEventListener("resize", this.handleResize);
+        window.addEventListener("touchmove", this.handleTouchMove);
     };
 
     public componentWillUnmount() {
         window.removeEventListener("resize", this.handleResize);
+        window.removeEventListener("touchmove", this.handleTouchMove);
     };
 
     protected handleResize = () => {
@@ -34,6 +36,10 @@ export class RootView extends React.Component<{}, IState> {
         if (isMobile !== this.state.isMobile) {
             this.setState({isMobile});
         }
+    };
+
+    public handleTouchMove = (event:TouchEvent) => {
+        event.preventDefault();
     };
 
     public render() {
