@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ImageButton } from './ImageButton';
-import ILMLLogo from '../../assets/images/logo_white.png';
 import { Route } from 'react-router-dom';
 import {ToggledMenu} from "../mobileViews/ToggledMenu";
 import SocialMediaData from "../../data/SocialMediaData";
@@ -11,9 +10,6 @@ import {ToggledMenuButton} from "../mobileViews/ToggledMenuButton";
 import {connect, Dispatch} from "react-redux";
 import {ApplicationState} from "../../store";
 import {FullScreenMode} from "../../data/FullScreenMode";
-import AllOptionsIco from './../../assets/images/AllOptions.png';
-import ExitFullScreenIco from './../../assets/images/ExitFullScreen.png';
-import EnterFullScreenIco from './../../assets/images/EnterFullScreen.png';
 import {setFullScreenMode} from "../../store/app/actions";
 import * as screenfull from "screenfull";
 
@@ -76,7 +72,7 @@ export const TopBarComponent = (props:IProps) => {
         buttons.push(
             <ToggledMenuButton
                 key={"Explore projects"}
-                image={AllOptionsIco}
+                image={"/images/ico/AllOptions.png"}
                 imageAlt={"All options icon"}
                 label={"Explore projects"}
                 rout={"/projects/"}
@@ -86,7 +82,7 @@ export const TopBarComponent = (props:IProps) => {
             buttons.push(
                 <ToggledMenuButton
                     key={"Exit full-screen"}
-                    image={ExitFullScreenIco}
+                    image={"/images/ico/ExitFullScreen.png"}
                     imageAlt={"Exit full-screen"}
                     label={"Exit full-screen"}
                     onClick={exitFullScreenCallback}
@@ -96,7 +92,7 @@ export const TopBarComponent = (props:IProps) => {
             buttons.push(
                 <ToggledMenuButton
                     key={"Enter full-screen"}
-                    image={EnterFullScreenIco}
+                    image={"/images/ico/EnterFullScreen.png"}
                     imageAlt={"Enter full-screen"}
                     label={"Enter full-screen"}
                     onClick={enterFullScreenCallback}
@@ -128,7 +124,7 @@ export const TopBarComponent = (props:IProps) => {
                 <div className="Logo">
                     <Link to="/" style={{maxHeight: 45}}>
                         <img alt={"I Learn Machine Learning Logo"} 
-                            src={ILMLLogo} 
+                            src={"/images/logo/logo_white.png"}
                             style={{maxHeight: 45}}
                         />
                     </Link>
