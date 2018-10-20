@@ -111,6 +111,15 @@
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
+
+        .ToggledMenuSection {
+          padding: 20px 0;
+          border-top: solid 1px #fff;
+
+          &:first-child {
+            border-top: none;
+          }
+        }
       }
     }
   }

@@ -40,7 +40,7 @@ export class ToggledMenu extends React.Component<IProps, IState> {
 
         return(
             <div className={this.getMenuClassName()} style={buttonStyle}>
-                <div className="Panel">
+                <div className="Panel" onClick={this.toggleBurger}>
                      {isOpened && contentRenderer()}
                 </div>
                 <div className="Button" onClick={this.toggleBurger}>

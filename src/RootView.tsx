@@ -11,7 +11,7 @@ export const RootView = () => {
         return(
             <div className="RootView">
                 <TopBar
-                    backgroudImageSrc={"/images/top_bar.svg"}
+                    backgroundImageSrc={"/images/top_bar.svg"}
                 />
                 <Switch>
                     <Route exact={true} path="/" component={HomeView} />
