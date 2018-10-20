@@ -8,12 +8,20 @@ import SocialMediaData from "../../data/SocialMediaData";
 import {ISocialMedia} from "../../interfaces/ISocialMedia";
 import {ISize} from "../../interfaces/ISize";
 import {ToggledMenuButton} from "../mobileViews/ToggledMenuButton";
-import {connect} from "react-redux";
+import {connect, Dispatch} from "react-redux";
 import {ApplicationState} from "../../store";
+import {FullScreenMode} from "../../data/FullScreenMode";
+import AllOptionsIco from './../../assets/images/AllOptions.png';
+import ExitFullScreenIco from './../../assets/images/ExitFullScreen.png';
+import EnterFullScreenIco from './../../assets/images/EnterFullScreen.png';
+import {setFullScreenMode} from "../../store/app/actions";
+import * as screenfull from "screenfull";
 
 interface IProps {
     isMobile?:boolean;
-    backgroudImageSrc?:string;
+    fullScreenMode?:FullScreenMode;
+    backgroundImageSrc?:string;
+    setFullScreenMode?: (mode:FullScreenMode) => any;
 }
 
 export const TopBarComponent = (props:IProps) => {
@@ -22,7 +30,18 @@ export const TopBarComponent = (props:IProps) => {
     const renderToggleMenu = () => {
         return(
             <div className="ToggledMenuContentWrapper">
-                {getToggleMenuButtons()}
+                <div
+                    key={1}
+                    className="ToggledMenuSection"
+                >
+                    {getMainToggleButtons()}
+                </div>
+                <div
+                    key={2}
+                    className="ToggledMenuSection"
+                >
+                    {getSocialMediaToggleMenuButtons()}
+                </div>
             </div>
         );
     };
@@ -39,7 +58,7 @@ export const TopBarComponent = (props:IProps) => {
         });
     };
 
-    const getToggleMenuButtons = () => {
+    const getSocialMediaToggleMenuButtons = () => {
         return SocialMediaData.map((data:ISocialMedia) => {
             return <ToggledMenuButton
                 key={data.displayName}
@@ -51,8 +70,57 @@ export const TopBarComponent = (props:IProps) => {
         });
     };
 
-    const style:React.CSSProperties = props.backgroudImageSrc ?
-        {backgroundImage: 'url(' + props.backgroudImageSrc + ')'} : {};
+    const getMainToggleButtons = () => {
+        const buttons:React.ReactNode[] = [];
+        console.log(props.fullScreenMode);
+        buttons.push(
+            <ToggledMenuButton
+                key={"Explore projects"}
+                image={AllOptionsIco}
+                imageAlt={"All options icon"}
+                label={"Explore projects"}
+                rout={"/projects/"}
+            />
+        );
+        if(props.fullScreenMode === FullScreenMode.ACTIVE)
+            buttons.push(
+                <ToggledMenuButton
+                    key={"Exit full-screen"}
+                    image={ExitFullScreenIco}
+                    imageAlt={"Exit full-screen"}
+                    label={"Exit full-screen"}
+                    onClick={exitFullScreenCallback}
+                />
+            );
+        else
+            buttons.push(
+                <ToggledMenuButton
+                    key={"Enter full-screen"}
+                    image={EnterFullScreenIco}
+                    imageAlt={"Enter full-screen"}
+                    label={"Enter full-screen"}
+                    onClick={enterFullScreenCallback}
+                />
+            );
+        return buttons;
+    };
+
+    const exitFullScreenCallback = () => {
+        if (screenfull && screenfull.enabled) {
+            screenfull.exit();
+            props.setFullScreenMode(FullScreenMode.INACTIVE);
+        }
+    };
+
+    const enterFullScreenCallback = () => {
+        if (screenfull && screenfull.enabled) {
+            screenfull.request();
+            props.setFullScreenMode(FullScreenMode.ACTIVE);
+        }
+    };
+
+    const style:React.CSSProperties = props.backgroundImageSrc ?
+        {backgroundImage: 'url(' + props.backgroundImageSrc + ')'} : {};
 
     return(
         <div className="TopBar" style={style}>
@@ -80,10 +148,19 @@ export const TopBarComponent = (props:IProps) => {
     );
 };
 
-const mapStateToProps = (state: ApplicationState) => ({
+export interface ITopBarProps {
+    backgroundImageSrc?:string;
+}
+
+const mapStateToProps = (state: ApplicationState, ownProps: ITopBarProps) => ({
     isMobile: state.app.isMobile,
+    fullScreenMode: state.app.fullScreenMode,
 });
 
-export const TopBar = connect(mapStateToProps, null)(
+const mapDispatchToProps = (dispatch: Dispatch<ApplicationState>) => ({
+    setFullScreenMode: (mode:FullScreenMode) => dispatch(setFullScreenMode(mode)),
+});
+
+export const TopBar = connect(mapStateToProps, mapDispatchToProps)(
     TopBarComponent
 );

@@ -22,25 +22,26 @@
     display: block;
     text-decoration: none;
     color: #fff;
+  }
 
-    .MenuButtonWrapper {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      align-items: center;
-      align-content: center;
+  .MenuButtonWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
 
-      > img {
-        width: 40px;
-        height: 40px;
-        margin: 0 25px 0 0;
-      }
+    > img {
+      width: 40px;
+      height: 40px;
+      margin: 0 20px 0 0;
+    }
 
-      .ButtonLabel {
-        font-size: 20px;
-        letter-spacing: 1px;
-      }
+    .ButtonLabel {
+      font-size: 20px;
+      letter-spacing: 1px;
+      font-weight: 700;
     }
   }
 }
