@@ -47,7 +47,7 @@ export const TopBarComponent = (props:IProps) => {
             return <ImageButton
                 key={data.displayName}
                 size={size}
-                image={data.image}
+                image={data.imageSrc}
                 imageAlt={data.imageAlt}
                 href={data.href}
             />
@@ -58,7 +58,7 @@ export const TopBarComponent = (props:IProps) => {
         return SocialMediaData.map((data:ISocialMedia) => {
             return <ToggledMenuButton
                 key={data.displayName}
-                image={data.image}
+                image={data.imageSrc}
                 imageAlt={data.imageAlt}
                 label={data.displayName}
                 href={data.href}

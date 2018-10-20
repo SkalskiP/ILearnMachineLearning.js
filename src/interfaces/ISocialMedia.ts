@@ -1,6 +1,6 @@
 export interface ISocialMedia {
     displayName:string;
-    image:string;
+    imageSrc:string;
     imageAlt:string;
     href:string;
 }
