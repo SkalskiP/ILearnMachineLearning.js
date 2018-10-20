@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img height="150" src="src/assets/images/logo_color.png">
+    <img height="150" src="/public/images/logo/logo_color.png">
 </p>
 
 <h1 align="center">ILearnMachineLearning.js</h1>
