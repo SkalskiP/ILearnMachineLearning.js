@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Particles} from "./Particles";
-import ILMLLogo from '../../assets/images/logo_color.png';
 import {ApplicationState} from "../../store";
 import {connect} from "react-redux";
 import {HomeViewMobile} from "../mobileViews/HomeViewMobileComplement";
@@ -15,7 +14,7 @@ export const HomeViewComponent = (props:IProps) => {
         <div className="HomeView">
             <div className="Wrapper">
                 <img alt={"I Learn Machine Learning Logo"}
-                     src={ILMLLogo}
+                     src={"/images/logo/logo_color.png"}
                 />
                 {props.isMobile && <HomeViewMobile/>}
                 {!props.isMobile && <div className="HomeViewComplement">
