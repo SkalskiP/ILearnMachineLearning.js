@@ -1,16 +1,27 @@
 .ProjectsList {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - #{$topBarHeight});
+    box-shadow: inset 0px 10px 30px -10px black;
+}
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-content: space-between;
-    align-items: flex-start;
-
-    //background-image: url("./images/logo/background_logo.png");
-    background-repeat:no-repeat;
-    background-position: center;
-    background-size: 30%;
+.InnerProjectsList {
+    &.desktop {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: space-around;
+    }
+    &.mobile {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        box-sizing: border-box;
+    }
 }
