@@ -48,6 +48,17 @@
             margin: 0 25px;
         }
     }
+
+    &::after {
+        background: linear-gradient(to right, $topBarAlternativeColorFirst, $topBarAlternativeColorSecond);
+        content: '';
+        width: 100%;
+        position: absolute;
+        top: 64px;
+        height: 3.5px;
+        left: 0;
+        z-index: 500;
+    }
 }
 
 
