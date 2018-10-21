@@ -15,7 +15,7 @@ export class Particles extends React.Component {
 
     // SETTINGS - MAGIC NUMBERS
 
-    protected dotsToAreaRatio:number = 1/7500;
+    protected dotsToAreaRatio:number = 1/10000;
     protected inactivePadding:number = 10;
     protected maxLineLength:number = 150;
     protected gravityReach:number = 200;
@@ -103,7 +103,7 @@ export class Particles extends React.Component {
                     const distance:number = MathUtil.getDistance(firstPoint, secondPoint);
                     if (i !== j && distance < this.maxLineLength) {
                         const lineAlpha:number = (this.maxLineLength - distance)/this.maxLineLength;
-                        const lineColor:string = `rgba(187, 187, 187, ${lineAlpha})`;
+                        const lineColor:string = `rgba(221, 221, 221, ${lineAlpha})`;
                         DrawUtil.drawLine(this.canvas, firstPoint, secondPoint, lineColor, 1);
                     }
                 }
@@ -112,7 +112,7 @@ export class Particles extends React.Component {
             // DRAWING AND POINT UPDATE
 
             circles.forEach((circle:AnimatedCircle) => {
-                DrawUtil.drawFullCircle(this.canvas, {x: circle.x, y: circle.y}, circle.radius, "#bbb");
+                DrawUtil.drawFullCircle(this.canvas, {x: circle.x, y: circle.y}, circle.radius, "#ddd");
                 circle.bounceOf(0, animationWidth, 0, animationHeight);
                 circle.setNewPositionWhenOut(0, animationWidth, 0, animationHeight);
                 circle.update();
