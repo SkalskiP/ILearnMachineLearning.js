@@ -1,5 +1,5 @@
 import {ActionCreator} from 'redux';
-import {SetDataConsumptionNotificationStatus, SetDeviceAsMobile, SetFullScreenMode} from './types';
+import {SetDataConsumptionNotificationStatus, SetDeviceAsMobile, SetFullScreenMode, SetModelLoadingStatus} from './types';
 import {FullScreenMode} from "../../data/FullScreenMode";
 
 export const setDeviceAsMobile: ActionCreator<SetDeviceAsMobile> = (status:boolean) => ({
@@ -23,3 +23,11 @@ export const setDataConsumptionNotificationStatus: ActionCreator<SetDataConsumpt
         isNotifiedOfDataConsumption: status
     }
 });
+
+export const setModelLoadingStatus: ActionCreator<SetModelLoadingStatus> =
+    (status:boolean) => ({
+        type: '@@app/SET_MODEL_LOADING_STATUS',
+        payload: {
+            isModelLoading: status
+        }
+    });

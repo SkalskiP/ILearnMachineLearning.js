@@ -24,6 +24,11 @@ export const appReducer: Reducer<AppState> = (
                 ...state,
                 isNotifiedOfDataConsumption: action.payload.isNotifiedOfDataConsumption
             };
+        case '@@app/SET_MODEL_LOADING_STATUS':
+            return {
+                ...state,
+                    isModelLoading: action.payload.isModelLoading
+            };
         default:
             return state;
     }

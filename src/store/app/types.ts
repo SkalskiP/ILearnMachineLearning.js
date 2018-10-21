@@ -5,6 +5,7 @@ export interface AppState {
     isMobile:boolean;
     fullScreenMode:FullScreenMode;
     isNotifiedOfDataConsumption:boolean;
+    isModelLoading:boolean;
 }
 
 export interface SetDeviceAsMobile extends Action {
@@ -28,7 +29,15 @@ export interface SetDataConsumptionNotificationStatus extends Action {
     }
 }
 
+export interface SetModelLoadingStatus extends Action {
+    type: '@@app/SET_MODEL_LOADING_STATUS';
+    payload: {
+        isModelLoading:boolean;
+    }
+}
+
 export type AppActions =
     | SetDeviceAsMobile
     | SetFullScreenMode
     | SetDataConsumptionNotificationStatus
+    | SetModelLoadingStatus

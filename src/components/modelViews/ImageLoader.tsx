@@ -189,12 +189,11 @@ export class ImageLoader extends React.Component<{}, State> {
     }
 
     public render() {
-
         return(
-            this.state.isLoading ? 
-            <LoadingScreen/> : 
+            this.state.isLoading ?
+            <LoadingScreen/> :
             <div className={"ImageLoader"}>
-                {this.state.isPredictionActive && 
+                {this.state.isPredictionActive &&
                 <div className={"BoardWrapper"} ref = {ref => this.canvasWrapper = ref}>
                     <canvas className={"PredictionsBoard"} ref = {ref => this.activeCanvas = ref}/>
                     <canvas className={"ImageBoard"} ref = {ref => this.passiveCanvas = ref}/>

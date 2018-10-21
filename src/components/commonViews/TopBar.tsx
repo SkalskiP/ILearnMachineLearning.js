@@ -12,10 +12,12 @@ import {ApplicationState} from "../../store";
 import {FullScreenMode} from "../../data/FullScreenMode";
 import {setFullScreenMode} from "../../store/app/actions";
 import * as screenfull from "screenfull";
+import classNames from "classnames";
 
 interface IProps {
     isMobile?:boolean;
     fullScreenMode?:FullScreenMode;
+    isModelLoading:boolean;
     backgroundImageSrc?:string;
     setFullScreenMode?: (mode:FullScreenMode) => any;
 }
@@ -118,8 +120,17 @@ export const TopBarComponent = (props:IProps) => {
     const style:React.CSSProperties = props.backgroundImageSrc ?
         {backgroundImage: 'url(' + props.backgroundImageSrc + ')'} : {};
 
+    const getTopBarClassName = () => {
+        return classNames(
+            "TopBar",
+            {
+                "loading": props.isModelLoading,
+            }
+        );
+    };
+
     return(
-        <div className="TopBar" style={style}>
+        <div className={getTopBarClassName()} style={style}>
             <div className="TopBarGroup">
                 <div className="Logo">
                     <Link to="/" style={{maxHeight: 45}}>
@@ -151,6 +162,8 @@ export interface ITopBarProps {
 const mapStateToProps = (state: ApplicationState, ownProps: ITopBarProps) => ({
     isMobile: state.app.isMobile,
     fullScreenMode: state.app.fullScreenMode,
+    isModelLoading: state.app.isModelLoading,
+
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ApplicationState>) => ({

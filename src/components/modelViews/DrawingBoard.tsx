@@ -7,6 +7,7 @@ import { updateModelPredictions } from '../../store/mnist/actions';
 import { SimpleButton } from '../commonViews/SimpleButton';
 import { IPoint } from '../../interfaces/IPoint';
 import { AppSettings } from '../../settings/AppSettings';
+import {TextButton} from "../commonViews/TextButton";
 
 interface Props {
     onNewPrediction: (predictions:number[]) => any;
@@ -150,14 +151,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
 
         let boardTextStyle:React.CSSProperties = {
             fontSize: this.state.drawingBoardScale * AppSettings.MNIST_DRAWING_BOARD_BASE_TEXT_SIZE
-        }
-
-        let buttonStyle:React.CSSProperties = {
-            width: "40%",
-            maxWidth: 100,
-            minWidth: 50,
-            height: 45
-        }
+        };
  
         return(
             <div className={"DrawingBoard"}>
@@ -173,8 +167,8 @@ class DrawingBoardComponent extends React.Component<Props, State> {
                     </div>
                 </div>
                 <div className={"ButtonsRow"}>
-                    <SimpleButton name={"Predict"} style={buttonStyle} onClick={this.makePrediction}/>
-                    <SimpleButton name={"Clear"} style={buttonStyle} onClick={this.clearPrediction}/>
+                    <TextButton label={"Predict"} onClick={this.makePrediction}/>
+                    <TextButton label={"Clear"} onClick={this.clearPrediction}/>
                 </div>
             </div>
         );

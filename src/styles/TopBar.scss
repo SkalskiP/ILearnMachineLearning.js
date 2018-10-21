@@ -61,6 +61,26 @@
     }
 }
 
+.TopBar.loading::after {
+    background: -webkit-linear-gradient(right, $topBarAlternativeColorFirst, $topBarAlternativeColorSecond, $topBarAlternativeColorFirst);
+    background: linear-gradient(270deg, $topBarAlternativeColorFirst, $topBarAlternativeColorSecond, $topBarAlternativeColorFirst);
+    background-size: 400% 400%;
+    -webkit-animation: single13anim 3s ease-in-out infinite;
+    animation: single13anim 3s ease-in-out infinite;
+}
+
+@-webkit-keyframes single13anim {
+    0%{background-position: 0% 50%}
+    50%{background-position: 100% 50%}
+    100%{background-position: 0% 50%}
+}
+
+@keyframes single13anim {
+    0%{background-position: 0% 50%}
+    50%{background-position: 100% 50%}
+    100%{background-position: 0% 50%}
+}
+
 
 
 
