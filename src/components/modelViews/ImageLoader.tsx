@@ -18,7 +18,10 @@ export class ImageLoader extends React.Component<{}, State> {
 
     constructor(props: any) {
         super(props);
-        this.state = { isPredictionActive: false, isLoading:true};
+        this.state = {
+            isPredictionActive: false,
+            isLoading:true
+        };
     }
 
     protected passiveCanvas:HTMLCanvasElement;
