@@ -9,9 +9,11 @@ import { AppSettings } from '../../settings/AppSettings';
 import {TextButton} from "../commonViews/TextButton";
 import {LoadingScreen} from "../commonViews/LoadingScreen";
 import {MouseUtil} from "../../utils/MouseUtil";
+import classNames from "classnames";
 
 interface Props {
     onNewPrediction: (predictions:number[]) => any;
+    isMobile: boolean;
 }
 
 interface State {
@@ -40,6 +42,8 @@ class DrawingBoardComponent extends React.Component<Props, State> {
             this.setState({ isLoading: false })
         );
         window.addEventListener("resize", this.setUpCanvas);
+        window.addEventListener("mouseup", this.handleDrawEnd);
+        window.addEventListener("touchend", this.handleDrawEnd);
     }
 
     public componentDidUpdate() {
@@ -49,32 +53,18 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     public componentWillUnmount() {
         this.props.onNewPrediction([]);
         window.removeEventListener("resize", this.setUpCanvas);
+        window.removeEventListener("mouseup", this.handleDrawEnd);
+        window.removeEventListener("touchend", this.handleDrawEnd);
     }
 
-    protected onMouseDown = (event) => {
+    protected handleDrawStart = (event) => {
         this.isDrawing = true;
-        // this.updateMousePosition({x: event.clientX, y: event.clientY});
-        // this.draw();
-        window.addEventListener("mouseup", this.onMouseUp);
+        this.handleMouseMove(event);
     };
 
-    protected onTouchStart = (event) => {
-        this.isDrawing = true;
-        // this.updateMousePosition({x: event.touches[0].clientX, y: event.touches[0].clientY});
-        // this.draw();
-        window.addEventListener("touchend", this.onTouchEnd);
-    };
-
-    protected onMouseUp = () => {
+    protected handleDrawEnd = () => {
         this.isDrawing = false;
         this.previousMousePosition = null;
-        window.removeEventListener("mouseup", this.onMouseUp);
-    };
-
-    protected onTouchEnd = () => {
-        this.isDrawing = false;
-        this.previousMousePosition = null;
-        window.removeEventListener("touchend", this.onTouchEnd);
     };
 
     protected handleMouseMove = (event) => {
@@ -87,21 +77,15 @@ class DrawingBoardComponent extends React.Component<Props, State> {
                 x: clientMousePosition.x - canvasRect.left,
                 y: clientMousePosition.y - canvasRect.top
             };
-
             this.updateMousePosition(newPosition);
         }
-
-        if(this.isDrawing) {
+        if (this.isDrawing) {
             this.draw();
             this.makePrediction();
         }
     };
 
     protected draw() {
-
-        console.log("PREVIOUS", this.previousMousePosition);
-        console.log("CURRENT", this.mousePosition);
-
         const brushDiameter = this.drawingBoardScale * AppSettings.MNIST_DRAWING_BOARD_BASE_BRUSH_DIAMETER;
         const brushColor = AppSettings.MNIST_DRAWING_BOARD_BASE_BRUSH_COLOR;
         DrawUtil.drawLine(this.canvas, this.previousMousePosition, this.mousePosition, brushColor, brushDiameter);
@@ -110,14 +94,14 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     protected clearPrediction = () => {
         DrawUtil.clearCanvas(this.canvas);
         this.props.onNewPrediction([]);
-    }
+    };
 
     protected makePrediction = () => {
         const pixSize:number = AppSettings.MNIST_MODEL_INPUT_PIXEL_SIZE;
         let image = DrawUtil.getImageDataAndScale(this.canvas, {width: pixSize, height: pixSize});        
         this.predict(image);
         this.props.onNewPrediction(this.predictions);
-    }
+    };
 
     protected updateMousePosition (newMousePosition:IPoint) {
         this.previousMousePosition = this.previousMousePosition ? this.mousePosition : newMousePosition;
@@ -139,30 +123,40 @@ class DrawingBoardComponent extends React.Component<Props, State> {
             img = img.div(tf.scalar(255));
 
             const output = this.model.predict(img) as any;
-
             this.predictions = Array.from(output.dataSync());
         });
     }
 
     protected setUpCanvas = () => {
-        const maxDim:number = AppSettings.MNIST_DRAWING_BOARD_BASE_DIM;
-        const boardWrapperRect = this.boardWrapper.getBoundingClientRect();
+        if (!!this.canvas && !!this.boardWrapper) {
+            const maxDim:number = AppSettings.MNIST_DRAWING_BOARD_BASE_DIM;
+            const boardWrapperRect = this.boardWrapper.getBoundingClientRect();
 
-        if(boardWrapperRect.width >= maxDim && boardWrapperRect.height >= maxDim) {
-            this.canvas.width = maxDim;
-            this.canvas.height = maxDim;
+            if(boardWrapperRect.width >= maxDim && boardWrapperRect.height >= maxDim) {
+                this.canvas.width = maxDim;
+                this.canvas.height = maxDim;
+            }
+            else if (boardWrapperRect.width >= boardWrapperRect.height) {
+                this.canvas.width = boardWrapperRect.height;
+                this.canvas.height = boardWrapperRect.height;
+            }
+            else {
+                this.canvas.width = boardWrapperRect.width;
+                this.canvas.height = boardWrapperRect.width;
+            }
+
+            this.drawingBoardScale = this.canvas.width/maxDim;
         }
-        else if (boardWrapperRect.width >= boardWrapperRect.height) {
-            this.canvas.width = boardWrapperRect.height;
-            this.canvas.height = boardWrapperRect.height;
-        }
-        else {
-            this.canvas.width = boardWrapperRect.width;
-            this.canvas.height = boardWrapperRect.width;
-        }
-   
-        this.drawingBoardScale = this.canvas.width/maxDim;
-    }
+    };
+
+    protected getClassName = () => {
+        return classNames(
+            "DrawingBoard", {
+                "mobile": this.props.isMobile,
+                "desktop": !this.props.isMobile
+            }
+        );
+    };
 
     public render() {
 
@@ -176,16 +170,12 @@ class DrawingBoardComponent extends React.Component<Props, State> {
                 {!this.state.isLoading && <div className={"BoardWrapper"} ref = {ref => this.boardWrapper = ref}>
                     <canvas className={"Board"} ref = {ref => this.canvas = ref}
                         onMouseMove={this.handleMouseMove}
-                        onMouseDown={this.onMouseDown}
-                        onTouchStart={this.onTouchStart}
+                        onMouseDown={this.handleDrawStart}
+                        onTouchStart={this.handleDrawStart}
                         onTouchMove={this.handleMouseMove}
                     />
-                    <div className={"BoardText"} style={boardTextStyle}>
-                        <b>DRAW HERE</b>
-                    </div>
                 </div>}
                 {!this.state.isLoading && <div className={"ButtonsRow"}>
-                    {/*<TextButton label={"Predict"} onClick={this.makePrediction}/>*/}
                     <TextButton label={"Clear"} onClick={this.clearPrediction}/>
                 </div>}
             </div>
@@ -193,14 +183,14 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     }
 }
 
-// const mapStateToProps = (state: ApplicationState) => ({
-//     predictions: state.predictions.predictionValues
-// });
+const mapStateToProps = (state: ApplicationState) => ({
+    isMobile: state.app.isMobile
+});
 
 const mapDispatchToProps = (dispatch: Dispatch<ApplicationState>) => ({
     onNewPrediction: (predictions:number[]) => dispatch(updateModelPredictions(predictions))
 });
 
-export const DrawingBoard = connect(null, mapDispatchToProps)(
+export const DrawingBoard = connect(mapStateToProps, mapDispatchToProps)(
     DrawingBoardComponent
 );
