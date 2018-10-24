@@ -81,7 +81,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
         }
         if (this.isDrawing) {
             this.draw();
-            this.makePrediction();
+            setTimeout(this.makePrediction, 0);
         }
     };
 
@@ -96,10 +96,10 @@ class DrawingBoardComponent extends React.Component<Props, State> {
         this.props.onNewPrediction([]);
     };
 
-    protected makePrediction = () => {
+    protected makePrediction = async () => {
         const pixSize:number = AppSettings.MNIST_MODEL_INPUT_PIXEL_SIZE;
         let image = DrawUtil.getImageDataAndScale(this.canvas, {width: pixSize, height: pixSize});        
-        this.predict(image);
+        await this.predict(image);
         this.props.onNewPrediction(this.predictions);
     };
 
@@ -132,11 +132,7 @@ class DrawingBoardComponent extends React.Component<Props, State> {
             const maxDim:number = AppSettings.MNIST_DRAWING_BOARD_BASE_DIM;
             const boardWrapperRect = this.boardWrapper.getBoundingClientRect();
 
-            if(boardWrapperRect.width >= maxDim && boardWrapperRect.height >= maxDim) {
-                this.canvas.width = maxDim;
-                this.canvas.height = maxDim;
-            }
-            else if (boardWrapperRect.width >= boardWrapperRect.height) {
+            if (boardWrapperRect.width >= boardWrapperRect.height) {
                 this.canvas.width = boardWrapperRect.height;
                 this.canvas.height = boardWrapperRect.height;
             }
@@ -144,7 +140,6 @@ class DrawingBoardComponent extends React.Component<Props, State> {
                 this.canvas.width = boardWrapperRect.width;
                 this.canvas.height = boardWrapperRect.width;
             }
-
             this.drawingBoardScale = this.canvas.width/maxDim;
         }
     };
@@ -159,11 +154,6 @@ class DrawingBoardComponent extends React.Component<Props, State> {
     };
 
     public render() {
-
-        let boardTextStyle:React.CSSProperties = {
-            fontSize: this.drawingBoardScale * AppSettings.MNIST_DRAWING_BOARD_BASE_TEXT_SIZE
-        };
- 
         return(
             <div className={"DrawingBoard"}>
                 {this.state.isLoading && <LoadingScreen/>}

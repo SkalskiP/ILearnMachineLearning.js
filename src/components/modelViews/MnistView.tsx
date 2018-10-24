@@ -23,31 +23,18 @@ export const MnistViewComponent = (props:IProps) => {
 
     const getContent = () => {
         if (!props.isMobile) {
-
-            let prettyBoxLeftStyle:React.CSSProperties = {
-                width: "40%",
-                height: "100%"
-            };
-
-            let prettyBoxRightStyle:React.CSSProperties = {
-                width: "60%",
-                height: "100%"
-            };
-
             return [
-                <PreetyBox
-                    key="Draw"
-                    name="Draw"
-                    style={prettyBoxLeftStyle}
+                <RoundedCornersBox
+                    key={"Draw"}
+                    name={"Draw"}
                     payload={<DrawingBoard/>}
                 />,
-                <PreetyBox
-                    key="Predictions"
-                    name="Predictions"
-                    style={prettyBoxRightStyle}
+                <RoundedCornersBox
+                    key={"Predictions"}
+                    name={"Predictions"}
                     payload={<CircleChart/>}
                 />
-            ]
+            ];
         }
         else {
             return [
@@ -61,7 +48,7 @@ export const MnistViewComponent = (props:IProps) => {
                     name={"Draw"}
                     payload={<DrawingBoard/>}
                 />
-            ];
+            ]
         }
     };
 

@@ -16,6 +16,7 @@ interface State {
 class LineChartComponent extends React.Component<Props, State> {
     protected canvas:HTMLCanvasElement = null;
     protected mainDiv:HTMLDivElement = null;
+    protected padding:number = 10;
 
     constructor(props: Props) {
         super(props);
@@ -36,40 +37,25 @@ class LineChartComponent extends React.Component<Props, State> {
 
     protected setUpCanvas() {
         if (!!this.canvas && !!this.mainDiv) {
-            this.canvas.style.width ='100%';
-            this.canvas.style.height='100%';
-            this.canvas.width  = this.canvas.offsetWidth;
-            this.canvas.height = this.canvas.offsetHeight;
-
-            const ctx = this.canvas.getContext("2d");
-            const linearGradient = ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-            linearGradient.addColorStop(0, AppSettings.SECOND_ALTERNATIVE_COLOR);
-            linearGradient.addColorStop(1, AppSettings.ALTERNATIVE_COLOR);
-            ctx.fillStyle = linearGradient;
-            ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
+            const mainDivRect = this.mainDiv.getBoundingClientRect();
+            this.canvas.width  = mainDivRect.width;
+            this.canvas.height = mainDivRect.height;
+            this.fillCanvasWithGradient();
         }
     }
 
     protected drawChart(prediction:number[]) {
         DrawUtil.clearCanvas(this.canvas);
+        this.fillCanvasWithGradient();
 
         const ctx = this.canvas.getContext("2d");
-        const linearGradient = ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        linearGradient.addColorStop(0, AppSettings.SECOND_ALTERNATIVE_COLOR);
-        linearGradient.addColorStop(1, AppSettings.ALTERNATIVE_COLOR);
-        ctx.fillStyle = linearGradient;
-        ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
-
         const width:number = this.canvas.width;
         const height: number = this.canvas.height;
-        const horizontalTick: number = width/(prediction.length - 1);
-
+        const horizontalTick: number = (width - this.padding)/(prediction.length - 1);
         const points:IPoint[] = [];
-
         prediction.forEach((pred:number, index:number) => {
-            points.push({x: index * horizontalTick, y: height * (1 - pred)});
+            points.push({x: index * horizontalTick, y: this.padding + height * (1 - pred)});
         });
-
         ctx.fillStyle = '#fff';
         ctx.beginPath();
         ctx.moveTo(0, height);
@@ -79,6 +65,15 @@ class LineChartComponent extends React.Component<Props, State> {
         ctx.lineTo(width, height);
         ctx.closePath();
         ctx.fill();
+    }
+
+    protected fillCanvasWithGradient() {
+        const ctx = this.canvas.getContext("2d");
+        const linearGradient = ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+        linearGradient.addColorStop(0, AppSettings.SECOND_ALTERNATIVE_COLOR);
+        linearGradient.addColorStop(1, AppSettings.ALTERNATIVE_COLOR);
+        ctx.fillStyle = linearGradient;
+        ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
     }
 
     public render() {

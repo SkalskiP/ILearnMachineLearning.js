@@ -8,6 +8,7 @@
     align-items: center;
     user-select: none;
     touch-action: none;
+    background-color: #fff;
 
     .BoardWrapper {
         display: flex;
@@ -24,6 +25,7 @@
 
         .Board {
             position: absolute;
+            background-color: #000;
         }
     }
     
