@@ -6,6 +6,7 @@ import {ApplicationState} from "../../store";
 import {connect} from "react-redux";
 import classNames from "classnames";
 import {RoundedCornersBox} from "../commonViews/RoundedCornersBox";
+import {LineChart} from "./LineChart";
 
 interface IProps {
     isMobile:boolean;
@@ -53,7 +54,7 @@ export const MnistViewComponent = (props:IProps) => {
                 <RoundedCornersBox
                     key={"Predictions"}
                     name={"Predictions"}
-                    payload={null}
+                    payload={<LineChart/>}
                 />,
                 <RoundedCornersBox
                     key={"Draw"}

@@ -15,14 +15,14 @@
         flex-direction: column;
         padding: 20px;
 
-        > div {
+        .RoundedCornersBox {
             margin-bottom: 20px;
             width: 100%;
             flex: 1 0 auto;
 
             &:last-child {
                 margin-bottom: 0px;
-                height: 70%;
+                height: 65%;
                 flex:none;
             }
         }
