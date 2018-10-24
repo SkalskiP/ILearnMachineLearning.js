@@ -7,7 +7,8 @@ const initialApplicationState: ApplicationState = {
     app: {
         isMobile: false,
         fullScreenMode: FullScreenMode.UNKNOWN,
-        isNotifiedOfDataConsumption: false
+        isNotifiedOfDataConsumption: false,
+        isModelLoading: false
     },
     predictions: {
         predictionValues: []

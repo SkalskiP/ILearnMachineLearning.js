@@ -1,0 +1,12 @@
+.LineChart {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: space-around;
+  align-items: center;
+  flex: 1 0 auto;
+  .Board {
+    display: block;
+  }
+}

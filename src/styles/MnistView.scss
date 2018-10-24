@@ -1,14 +1,47 @@
 .MnistView {
     width: 100%;
     height: calc(100vh - #{$topBarHeight});
-    padding: 25px 0 0 0;
+    box-shadow: inset 0px 10px 30px -10px rgba(0,0,0,1);
+    box-sizing: border-box;
 
-    display: inline-flex;
-    flex-direction: row;
+    display: flex;
     flex-wrap: nowrap;
     justify-content: space-around;
     align-content: stretch;
     align-items: center;
-    box-shadow: inset 0px 10px 30px -10px rgba(0,0,0,1);
-    background-color: $projectPageBgColor;
+
+    &.mobile {
+        background-color: $projectPageLightBackgroundColor;
+        flex-direction: column;
+        padding: 20px;
+
+        .RoundedCornersBox {
+            margin-bottom: 20px;
+            width: 100%;
+            flex: 1 0 auto;
+
+            &:last-child {
+                margin-bottom: 0px;
+                height: 65%;
+                flex:none;
+            }
+        }
+    }
+
+    &.desktop {
+        background-color: $projectPageLightBackgroundColor;
+        flex-direction: row;
+        padding: 20px;
+
+        .RoundedCornersBox {
+            margin-right: 20px;
+            height: 100%;
+            flex: 2;
+
+            &:last-child {
+                margin-right: 0px;
+                flex: 1;
+            }
+        }
+    }
 }

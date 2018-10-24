@@ -1,0 +1,32 @@
+.RoundedCornersBox {
+  border-radius: 3px;
+  border: 1px solid #e6e6e6;
+  background-color: #fff;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+
+  box-sizing: border-box;
+
+  .Header {
+    flex: 0 0 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 0 30px;
+    font-weight: 700;
+    color: #999;
+
+  }
+  .Content {
+      flex: 1 0 auto;
+      background-color: #000;
+      display: flex;
+      flex-direction: row;
+  }
+}

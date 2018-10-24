@@ -56,19 +56,22 @@ class CircleChartComponent extends React.Component<Props, State> {
         this.setUpCanvas();
         this.initCirclePaths();
         this.initChart();
-    }
+    };
 
     protected setUpCanvas = () => {
         const chartRect = this.chart.getBoundingClientRect();
 
+        this.passiveCanvas.width = 0;
+        this.passiveCanvas.height = 0;
+
         this.passiveCanvas.width = chartRect.width;
-        this.passiveCanvas.height = chartRect.height
+        this.passiveCanvas.height = chartRect.height;
 
         this.activeCanvas.width = chartRect.width;
-        this.activeCanvas.height = chartRect.height
+        this.activeCanvas.height = chartRect.height;
 
         this.canvasRect = new Rect(0, 0, chartRect.width, chartRect.height);
-    }
+    };
 
     protected initCirclePaths():void {
         let diameter:number = Math.min(this.canvasRect.height, this.canvasRect.width, AppSettings.CIRCLE_CHART_BASE_DIAMETER)

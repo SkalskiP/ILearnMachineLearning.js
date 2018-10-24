@@ -10,6 +10,7 @@ export class AppSettings {
     public static readonly PRIMARY_COLOR:string = "#212121";
     public static readonly SECONDARY_COLOR:string = "#ffffff";
     public static readonly ALTERNATIVE_COLOR:string = "#ef6c00";
+    public static readonly SECOND_ALTERNATIVE_COLOR:string = "#ffB700";
     public static readonly MOBILE_BORDER_WIDTH = 768;
 
     /* -------------------------------- MNIST MODEL SETTINGS -------------------------------- */
