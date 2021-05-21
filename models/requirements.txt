@@ -56,7 +56,7 @@ singledispatch==3.4.0.3
 six==1.11.0
 sklearn==0.0
 tensorboard==1.7.0
-tensorflow==1.7.0
+tensorflow==2.5.0
 tensorflow-hub==0.1.0
 tensorflowjs==0.3.1
 termcolor==1.1.0
