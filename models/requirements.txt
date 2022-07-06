@@ -13,7 +13,7 @@ gast==0.2.0
 gnureadline==6.3.3
 grpcio==1.11.0
 h5py==2.7.1
-html5lib==0.9999999
+html5lib==0.999999999
 ipykernel==4.2.2
 ipython==4.0.1
 ipython-genutils==0.1.0
